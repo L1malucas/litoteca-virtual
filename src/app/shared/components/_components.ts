@@ -10,10 +10,11 @@
 
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { DefaultLoginLayoutComponent } from "./default-login-layout/default-login-layout.component";
+import { ErrorComponent } from "./error/error.component";
 
 export const COMPONENTS = [
   //   PaginationComponent,
-  //   ErrorComponent,
+  ErrorComponent,
   DefaultLoginLayoutComponent,
   //   FooterComponent,
   //   HeaderComponent,
