@@ -1,0 +1,35 @@
+.footer {
+  height: 56px;
+  border-top: 1px solid var(--primary-light);
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+}
+
+.footer__label {
+  font-size: 12px;
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+.footer__logo {
+  width: 50px;
+  padding: 0 40px;
+}
+
+.footer a {
+  margin: 0 5px;
+}
+
+@media screen and (max-width: 420px) {
+  .footer__label {
+    font-size: 10px;
+  }
+
+  .footer__logo {
+    right: 20px;
+  }
+}

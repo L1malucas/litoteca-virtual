@@ -11,12 +11,13 @@
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 import { DefaultLoginLayoutComponent } from "./default-login-layout/default-login-layout.component";
 import { ErrorComponent } from "./error/error.component";
+import { FooterComponent } from "./footer/footer.component";
 
 export const COMPONENTS = [
   //   PaginationComponent,
   ErrorComponent,
   DefaultLoginLayoutComponent,
-  //   FooterComponent,
+  FooterComponent,
   //   HeaderComponent,
   //   LoadingComponent,
   //   NavbarComponent,
