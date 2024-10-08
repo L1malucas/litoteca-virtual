@@ -1,0 +1,61 @@
+<div class="login-container">
+  <!-- <div class="logo">
+    <img src="assets/images/svg/logo-cbpm_login.svg" alt="CBPM Logo" />
+  </div>
+
+  <div class="social-media-icons">
+    <a href="#" class="x" tabindex="0">
+      <img src="assets/images/svg/VectorX.svg" alt="x" />
+    </a>
+    <a href="#" class="instagram" tabindex="0">
+      <img src="assets/images/svg/VectorInsta.svg" alt="instagram" />
+    </a>
+    <a href="#" class="linkedIn" tabindex="0">
+      <img src="assets/images/svg/VectorLinkedIn.svg" alt="linkedIn" />
+    </a>
+  </div> -->
+  <app-header></app-header>
+
+  <div class="login-form">
+    <div class="title">
+      <span>BEM VINDO A <b>LITOTECA VIRTUAL</b></span>
+      <p>
+        Acesse sua conta ou <b (click)="registerPage()">Cadastre-se aqui!</b>
+      </p>
+    </div>
+
+    <form>
+      <div class="input-group">
+        <input
+          type="email"
+          placeholder="Digite seu email..."
+          formControlName="email"
+        />
+      </div>
+      <div class="input-group">
+        <input
+          type="password"
+          placeholder="*************"
+          id="password"
+          formControlName="senha"
+        />
+        <img
+          src="../../../assets/images/svg/eye-slash-fill.svg"
+          id="btn-password"
+          class="password-icon"
+          (click)="viewPassword()"
+        />
+      </div>
+      <div class="options">
+        <label>
+          <input type="checkbox" />
+          Lembrar de mim
+        </label>
+        <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+      </div>
+      <button type="submit" class="login-button" tabindex="0">ENTRAR</button>
+    </form>
+  </div>
+
+  <div class="copy">© 2024, Renova Soluções em Tecnologia LTDA.</div>
+</div>
