@@ -1,0 +1,260 @@
+variables:
+  - template: variables.yml
+
+pool:
+  vmImage: "ubuntu-latest"
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.x"
+      addToPath: true
+
+  - script: |
+      pip install azure-devops
+    displayName: "Instalar Azure DevOps CLI"
+
+  - script: |
+      echo $(secretvariables) | az devops login --organization https://dev.azure.com/$(organization_azure_devops)
+    displayName: "Login no Azure DevOps"
+
+  - script: |
+      # Definir o caminho correto para o arquivo variables.yml
+      VARIABLES_FILE="azure-pipelines/variables.yml"
+
+      echo "Lendo versão do arquivo $VARIABLES_FILE"
+
+      # Ler a versão atual usando yq ou awk para parsing YAML estruturado
+      # Primeiro, tentamos usar yq se estiver disponível
+      if command -v yq >/dev/null 2>&1; then
+        current_version=$(yq e '.variables[] | select(.name == "current_version") | .value' "$VARIABLES_FILE")
+      else
+        # Fallback para awk se yq não estiver disponível
+        current_version=$(awk '/current_version/{getline; print}' "$VARIABLES_FILE" | awk -F': ' '{print $2}' | tr -d "'")
+      fi
+
+      echo "Versão atual: $current_version"
+
+      # Incrementar o minor
+      IFS='.' read -r major minor patch <<< "$current_version"
+      new_minor=$((minor + 1))
+      new_version="$major.$new_minor.$patch"
+
+      echo "Nova versão: $new_version"
+
+      # Atualizar o arquivo variables.yml mantendo a estrutura
+      if [ -f "$VARIABLES_FILE" ]; then
+        # Criar arquivo temporário
+        temp_file=$(mktemp)
+
+        # Atualizar a versão mantendo a estrutura do arquivo
+        awk -v new_ver="$new_version" '
+        /current_version/{
+          print $0
+          getline
+          sub(/value: .*/, "value: " new_ver)
+        }
+        {print}' "$VARIABLES_FILE" > "$temp_file"
+
+        # Substituir o arquivo original
+        mv "$temp_file" "$VARIABLES_FILE"
+      fi
+
+      # Configurar Git para commit
+      git config user.email "micael.santos@suporterenova.onmicrosoft.com"
+      git config user.name "Micael Santos"
+
+      # Remover e readicionar o remote para garantir as credenciais corretas
+      git remote remove origin || true
+      git remote add origin https://$(organization_azure_devops):$(secretvariables)@dev.azure.com/$(organization_azure_devops)/$(AZURE_DEVOPS_PROJECT)/_git/$(REPO_NAME)
+
+      # Debug: Mostrar alterações
+      echo "Alterações no arquivo variables.yml:"
+      git diff "$VARIABLES_FILE"
+
+      # Commit e push da alteração no variables.yml
+      git add "$VARIABLES_FILE"
+      git commit -m "ci: atualiza versão para $new_version"
+
+      echo "Tentando push para branch: $(Build.SourceBranchName)"
+      git push origin HEAD:$(Build.SourceBranchName)
+
+      echo "##vso[task.setvariable variable=New]$new_version"
+    displayName: "Calcular nova versão"
+
+  - script: |
+      # Configura autenticação
+      git remote remove origin || true
+      git remote add origin https://$(organization_azure_devops):$(secretvariables)@dev.azure.com/$(organization_azure_devops)/$(AZURE_DEVOPS_PROJECT)/_git/$(REPO_NAME)
+
+      git config user.email "micael.santos@suporterenova.onmicrosoft.com"
+      git config user.name "Micael Santos"
+      git tag -a "v$(New)" -m "Release v$(New)"
+      git push origin "v$(New)"
+    displayName: "Criar e enviar Git Tag"
+
+  - task: XplatGenerateReleaseNotes@4
+    inputs:
+      outputfile: "$(Build.ArtifactStagingDirectory)$(Build.BuildNumber).md"
+      templateLocation: "InLine"
+      inlinetemplate: |
+        {{log 'Debug: Starting release notes generation'}}
+        ## v$(New)🚀
+        * **Nome da Branch**: {{buildDetails.sourceBranch}}
+        * **Tags**: {{buildDetails.tags}}
+        * **Concluído**: {{buildDetails.finishTime}}
+        * **Build Anterior**: {{compareBuildDetails.buildNumber}}
+        ## Pull Requests ({{pullRequests.length}})🌵
+        {{#forEach pullRequests}}
+        {{log 'Debug: Processing Pull Request'}}
+        {{log this.pullRequestId}}
+        * **[{{this.pullRequestId}}]({{replace (replace this.url "_apis/git/repositories" "_git") "pullRequests" "pullRequest"}})** {{this.title}}
+        * Tarefas Relacionadas🔧
+        {{log 'Debug: Conteúdo de this.associatedWorkitems'}}
+        {{log this.associatedWorkitems}}
+        {{#if this.associatedWorkitems}}
+          {{#forEach this.associatedWorkitems}}
+            {{log 'Debug: Processing associated workitem'}}
+            {{log this.id}}
+            {{#with (lookup_a_work_item ../../relatedWorkItems this.url)}}
+              {{log 'Debug: Resultado de lookup_a_work_item'}}
+              {{log this}}
+              - [{{this.id}}]({{replace this.url "_apis/wit/workItems" "_workitems/edit"}}) - {{lookup this.fields 'System.Title'}}
+            {{else}}
+              {{log 'Debug: lookup_a_work_item não retornou resultados para o work item' this.id}}
+            {{/with}}
+          {{/forEach}}
+        {{else}}
+          {{log 'Debug: Nenhum work item associado encontrado para o PR' this.pullRequestId}}
+        {{/if}}
+        * Commits Realizados📝 (this includes commits on the PR source branch not associated directly with the build)📝
+        {{#forEach this.associatedCommits}}
+            {{log 'Debug: Processing associated commit'}}
+            {{log this.commitId}}
+            - [{{this.commitId}}]({{this.remoteUrl}}) -  {{this.comment}}
+        {{/forEach}}
+        {{/forEach}}
+        # Global list of WI with PRs, parents and children
+        {{#forEach this.workItems}}
+        {{log 'Debug: Processing work item'}}
+        {{log this.id}}
+        {{#if isFirst}}### WorkItems {{/if}}
+        *  **{{this.id}}**  {{lookup this.fields 'System.Title'}}
+            - **WIT** {{lookup this.fields 'System.WorkItemType'}}
+            - **Tags** {{lookup this.fields 'System.Tags'}}
+            - **Assigned** {{#with (lookup this.fields 'System.AssignedTo')}} {{displayName}} {{/with}}
+            - **Description** {{{lookup this.fields 'System.Description'}}}
+            - **PRs**
+        {{#forEach this.relations}}
+        {{#if (contains this.attributes.name 'Pull Request')}}
+        {{#with (lookup_a_pullrequest ../../pullRequests  this.url)}}
+              {{log 'Debug: Processing related PR'}}
+              {{log this.pullRequestId}}
+              - {{this.pullRequestId}} - {{this.title}}
+        {{/with}}
+        {{/if}}
+        {{/forEach}}
+            - **Parents**
+        {{#forEach this.relations}}
+        {{#if (contains this.attributes.name 'Parent')}}
+        {{#with (lookup_a_work_item ../../relatedWorkItems  this.url)}}
+              {{log 'Debug: Processing parent work item'}}
+              {{log this.id}}
+              - {{this.id}} - {{lookup this.fields 'System.Title'}}
+              {{#forEach this.relations}}
+              {{#if (contains this.attributes.name 'Parent')}}
+              {{#with (lookup_a_work_item ../../../../relatedWorkItems  this.url)}}
+                  {{log 'Debug: Processing grandparent work item'}}
+                  {{log this.id}}
+                  - {{this.id}} - {{lookup this.fields 'System.Title'}}
+              {{/with}}
+              {{/if}}
+              {{/forEach}}
+        {{/with}}
+        {{/if}}
+        {{/forEach}}
+            - **Children**
+        {{#forEach this.relations}}
+        {{#if (contains this.attributes.name 'Child')}}
+        {{#with (lookup_a_work_item ../../relatedWorkItems  this.url)}}
+              {{log 'Debug: Processing child work item'}}
+              {{log this.id}}
+              - {{this.id}} - {{lookup this.fields 'System.Title'}}
+        {{/with}}
+        {{/if}}
+        {{/forEach}}
+            - **Tested By**
+        {{#forEach this.relations}}
+        {{#if (contains this.attributes.name 'Tested By')}}
+        {{#with (lookup_a_work_item ../../testedByWorkItems  this.url)}}
+              {{log 'Debug: Processing tested by work item'}}
+              {{log this.id}}
+              - {{this.id}} - {{lookup this.fields 'System.Title'}}
+        {{/with}}
+        {{/if}}
+        {{/forEach}}
+        {{/forEach}}
+        # Global list of CS ({{commits.length}})
+        {{#forEach commits}}
+        {{log 'Debug: Processing commit'}}
+        {{log this.id}}
+        {{#if isFirst}}### Commits Associados{{/if}}
+        * **Id do Commit:** **{{this.id}}**
+            -  **Mensagem:** {{this.message}}
+            -  **Commitado por:** {{this.author.displayName}}
+            -  **Arquivo(s) Commitado(s)** {{this.changes.length}}
+        {{#forEach this.changes}}
+              {{log 'Debug: Processing file change'}}
+              {{log this.item.path}}
+              -  **Caminho do Arquivo:** {{this.item.path}}
+              -  **Nome do Arquivo:** {{this.filename}}
+        {{/forEach}}
+        {{/forEach}}
+        ## List of WI returned by WIQL ({{queryWorkItems.length}})
+        {{#forEach queryWorkItems}}
+        {{log 'Debug: Processing WIQL work item'}}
+        {{log this.id}}
+        *  **{{this.id}}** {{lookup this.fields 'System.Title'}}
+        {{/forEach}}
+        {{log 'Debug: Finished release notes generation'}}
+      dumpPayloadToConsole: true
+      dumpPayloadToFile: true
+      replaceFile: true
+      getParentsAndChildren: False
+      getAllParents: False
+      getIndirectPullRequests: False
+      stopOnError: False
+      considerPartiallySuccessfulReleases: False
+      checkForManuallyLinkedWI: False
+      wiqlFromTarget: "WorkItems"
+
+  - script: |
+      # Configurar variáveis
+      WIKI_REPO_URL="https://$(secretvariables)@dev.azure.com/$(organization_azure_devops)/$(AZURE_DEVOPS_PROJECT)/_git/$(AZURE_DEVOPS_PROJECT).wiki"
+      WIKI_FILE_PATH="ReleaseNotes/releasenote$(Build.BuildNumber).md"
+      RELEASE_NOTES_FILE="$(Build.ArtifactStagingDirectory)$(Build.BuildNumber).md"
+
+      # Configurar Git
+      git config --global user.email "$(Build.RequestedForEmail)"
+      git config --global user.name "$(Build.RequestedFor)"
+
+      # Criar e entrar na pasta ReleaseNotes
+      mkdir -p rn
+      cd rn
+
+      # Inicializar git e conectar ao repositório wiki
+      git init
+      git remote add origin "$WIKI_REPO_URL"
+      git fetch origin wikiMaster
+      git checkout wikiMaster
+
+      # Copiar arquivo de release notes
+      mkdir -p "ReleaseNotes/$(REPO_NAME)"
+      cp "$RELEASE_NOTES_FILE" "ReleaseNotes/$(REPO_NAME)/v$(New).md"
+
+      # Commit e push das alterações
+      echo "Fazendo commit e push das alterações em $WIKI_REPO_URL..."
+      git add .
+      git commit -m "ci: adiciona release notes para v$(New)"
+      git push origin wikiMaster
+    displayName: "Atualizar Wiki"

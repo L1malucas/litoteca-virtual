@@ -1,0 +1,9 @@
+variables:
+  - name: AZURE_DEVOPS_PROJECT
+    value: CBPM-COMPANHIA-BAIANA-DE-PESQUISA-MINERAL
+  - name: REPO_NAME
+    value: LitotecaVirtual
+  - name: current_version
+    value: 0.7.0
+  - name: organization_azure_devops
+    value: renova-ti
