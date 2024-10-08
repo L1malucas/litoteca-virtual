@@ -17,6 +17,7 @@ import { LoadingComponent } from "./loading/loading.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { PaginationComponent } from "./pagination/pagination.component";
 import { PrimaryInputComponent } from "./primary-input/primary-input.component";
+import { TextRowComponent } from "./text-row/text-row.component";
 
 export const COMPONENTS = [
   //   PaginationComponent,
@@ -30,5 +31,5 @@ export const COMPONENTS = [
   ConfirmDialogComponent,
   PaginationComponent,
   PrimaryInputComponent,
-  //   TextRowComponent,
+  TextRowComponent,
 ];
