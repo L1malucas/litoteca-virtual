@@ -17,7 +17,12 @@ import { AuthService } from "@services/system/auth.service";
 import { ConfigService } from "@config/config.service";
 import { environment } from "src/environments/environment";
 import { CustomMatPaginatorIntl } from "@components/pagination/CustonPaginatiorConfiguration";
-import { provideNgxWebstorage } from "ngx-webstorage";
+import {
+  provideNgxWebstorage,
+  withLocalStorage,
+  withNgxWebstorageConfig,
+  withSessionStorage,
+} from "ngx-webstorage";
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,7 +55,11 @@ import { provideNgxWebstorage } from "ngx-webstorage";
       deps: [ConfigService],
       multi: true,
     },
-    provideNgxWebstorage(),
+    provideNgxWebstorage(
+      withNgxWebstorageConfig({ separator: ":", caseSensitive: true }),
+      withLocalStorage(),
+      withSessionStorage(),
+    ),
   ],
   bootstrap: [AppComponent],
 })
