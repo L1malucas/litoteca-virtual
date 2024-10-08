@@ -15,6 +15,7 @@ import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
 import { LoadingComponent } from "./loading/loading.component";
 import { NavbarComponent } from "./navbar/navbar.component";
+import { PaginationComponent } from "./pagination/pagination.component";
 import { PrimaryInputComponent } from "./primary-input/primary-input.component";
 
 export const COMPONENTS = [
@@ -27,7 +28,7 @@ export const COMPONENTS = [
   NavbarComponent,
   //   SidebarComponent,
   ConfirmDialogComponent,
-  //   PaginationComponent,
+  PaginationComponent,
   PrimaryInputComponent,
   //   TextRowComponent,
 ];
