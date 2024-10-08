@@ -1,0 +1,21 @@
+<!-- // Componente HTML para exibir a barra de carregamento -->
+<!-- <hr [ngClass]="loading$ | async" /> -->
+
+<!-- // Condicional para exibir o div de carregamento -->
+@if (loadingDiv) {
+  <div class="loading-div">
+    <svg>
+      <g>
+        <!-- Primeiro caminho em forma de diamante -->
+        <path d="M 100,160 L 300,235 L 100,310 L -100,235 Z" />
+      </g>
+      <g>
+        <!-- // Segundo caminho, transladado -->
+        <path
+          d="M 100,160 L 300,235 L 100,310 L -100,235 Z"
+          transform="translate(0, 50)"
+        />
+      </g>
+    </svg>
+  </div>
+}

@@ -1,0 +1,10 @@
+export enum FormTemplateTypeEnum {
+  SELECT = "SELECT",
+  TEXT = "TEXT",
+  CHECKBOX = "CHECKBOX",
+  TOGGLE = "TOGGLE",
+  TEXT_AREA = "TEXT_AREA",
+  INPUT_DATE = "INPUT_DATE",
+  GENERIC = "GENERIC",
+  BUTTON = "BUTTON",
+}

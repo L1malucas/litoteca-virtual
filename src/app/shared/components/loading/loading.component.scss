@@ -1,0 +1,100 @@
+:host {
+  // Estilo para o elemento de carregamento
+  .loading {
+    position: fixed; // O elemento fica fixo na janela
+    top: 10px; // Posicionado no topo
+    width: 100%; // Largura total da janela
+    margin: 0; // Sem margem
+    background: linear-gradient(
+      270deg,
+      #ff241a,
+      #ff9e99
+    ); // Fundo gradiente de vermelho
+    animation: progress 3s ease; // Animação 'progress' com duração de 3s
+    height: 0.4em; // Altura do elemento
+    border: #ff241a; // Sem borda
+
+    // Estilo para o fundo de carregamento
+    &.loading-background {
+      position: absolute; // Posição absoluta
+      width: 100vw; // Largura total da viewport
+      height: 100vh; // Altura total da viewport
+      background-color: rgba(0, 0, 0, 0.5); // Fundo semi-transparente preto
+    }
+  }
+
+  // Definição da animação 'progress'
+  @keyframes progress {
+    0% {
+      width: 0; // Começa com largura 0
+    }
+
+    100% {
+      width: 100%; // Termina com largura total
+    }
+  }
+
+  // Estilo para o elemento parado
+  .stopped {
+    display: none; // Não exibido
+  }
+
+  // Variáveis SCSS
+  $transition-duration: 4s; // Duração da transição
+  $path-length: 860px; // Comprimento do caminho SVG
+
+  // Estilo para o div de carregamento
+  .loading-div {
+    margin: 0; // Sem margem
+    position: fixed; // Posição absoluta
+    top: 0; // Topo da janela
+    left: 0; // Esquerda da janela
+    width: 100vw; // Largura total da viewport
+    height: 100vh; // Altura total da viewport
+    background-color: rgba(0, 0, 0, 0.5); // Fundo semi-transparente preto
+    z-index: 2000; // Alta prioridade de empilhamento
+
+    display: flex; // Flexbox para centralização
+    align-items: center; // Alinhar ao centro verticalmente
+    justify-content: center; // Alinhar ao centro horizontalmente
+
+    svg {
+      overflow: visible; // Permitir transbordo visível
+      width: 150px; // Largura do SVG
+      height: 320px; // Altura do SVG
+      margin-bottom: 170px; // Margem do loading
+
+      g {
+        animation: slide $transition-duration linear infinite; // Animação de deslize infinita
+      }
+
+      path {
+        stroke: #fd7200; // Cor do traço
+        stroke-width: 6px; // Largura do traço
+        fill: none; // Sem preenchimento
+        stroke-dasharray: 0 $path-length; // Padrão do traço
+        stroke-dashoffset: 0; // Sem deslocamento
+        animation: escalade $transition-duration cubic-bezier(0.8, 0, 0.2, 1)
+          infinite; // Animação 'escalade'
+      }
+    }
+  }
+
+  // Animação 'escalade' para o caminho SVG
+  @keyframes escalade {
+    0% {
+      stroke-dasharray: 0 $path-length; // Começa com traço vazio
+      stroke-dashoffset: 0; // Sem deslocamento
+    }
+
+    50% {
+      stroke-dasharray: $path-length - 1 $path-length; // Metade do caminho com traço completo
+      stroke-dashoffset: 0; // Sem deslocamento
+    }
+
+    100% {
+      stroke-dasharray: $path-length - 1 $path-length; // Final do caminho com traço completo
+      stroke-dashoffset: -($path-length - 1); // Deslocamento completo do traço
+    }
+  }
+}
