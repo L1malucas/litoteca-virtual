@@ -3,14 +3,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   text-align: center;
+  height: 100vh;
   color: #333;
+  gap: 1rem;
 
-  h1 {
-    font-size: 10rem;
-    margin: 0;
-    color: #ffa500;
+  img {
+    width: 14vw;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
   }
 
   p {
@@ -19,21 +24,28 @@
   }
 
   button {
-    background-color: #fff;
+    background-color: var(--white);
     font-size: 1.25rem;
-    color: #ffa500;
+    color: var(--primary);
     text-decoration: none;
-    border: 1px solid #ffa500;
+    border: 1px solid var(--primary);
     padding: 0.5rem 1rem;
-    border-radius: 5px;
+    border-radius: 1rem;
     transition:
       background-color 0.3s,
       color 0.3s;
 
     &:hover {
+      transform: scale(1.05);
       cursor: pointer;
-      background-color: #ffa500;
-      color: #fff;
+      background-color: var(--primary);
+      color: var(--white);
+    }
+  }
+
+  @media (max-width: 768px) {
+    img {
+      width: 30vw;
     }
   }
 }

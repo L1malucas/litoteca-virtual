@@ -9,6 +9,6 @@ import { Router } from "@angular/router";
 export class ErrorComponent {
   _router = inject(Router);
   redirect() {
-    this._router.navigate(["/home"]);
+    this._router.navigate(["/login"]);
   }
 }
