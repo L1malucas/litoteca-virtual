@@ -18,18 +18,18 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { PaginationComponent } from "./pagination/pagination.component";
 import { PrimaryInputComponent } from "./primary-input/primary-input.component";
 import { TextRowComponent } from "./text-row/text-row.component";
+import { ToastComponent } from "./toast/toast.component";
 
 export const COMPONENTS = [
-  //   PaginationComponent,
   ErrorComponent,
   DefaultLoginLayoutComponent,
   FooterComponent,
   HeaderComponent,
   LoadingComponent,
   NavbarComponent,
-  //   SidebarComponent,
   ConfirmDialogComponent,
   PaginationComponent,
   PrimaryInputComponent,
   TextRowComponent,
+  ToastComponent,
 ];
