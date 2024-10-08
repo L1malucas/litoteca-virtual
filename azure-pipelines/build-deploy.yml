@@ -13,11 +13,11 @@ steps:
       arguments: "--force"
 
   - task: Npm@1
-    displayName: "npm run build_prod"
+    displayName: "npm run build_dev"
     inputs:
       command: custom
       verbose: false
-      customCommand: "run build_prod"
+      customCommand: "run build_dev"
 
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: drop"
