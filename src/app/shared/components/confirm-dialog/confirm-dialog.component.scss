@@ -1,0 +1,35 @@
+.section-confirm-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid var(--secondary);
+  width: 20vw;
+  overflow: hidden;
+
+  .mat-dialog-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .mat-icon-info {
+    transform: scale(2);
+    margin-bottom: 10px;
+  }
+
+  .btn-icon-confirm {
+    color: var(--white);
+  }
+
+  .btn-text-confirm {
+    color: var(--white);
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 50vw;
+  }
+}
