@@ -9,8 +9,13 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [*.ts]
-quote_type = single
-ij_typescript_use_double_quotes = false
+quote_type = double
+
+[*.json]
+  trailingComma = es5,
+  tabWidth =4,
+  semi = false,
+  singleQuote = true
 
 [*.md]
 max_line_length = off

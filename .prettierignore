@@ -1,0 +1,12 @@
+# Ignore artifacts:
+build
+coverage
+package.json
+package-lock.json
+yarn.lock
+node_modules
+dist
+
+#Ignore files
+*.pdf
+/assets

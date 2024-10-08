@@ -1,0 +1,19 @@
+#!/bin/sh
+echo "Executando prettier nos arquivos modificados no git"
+# Get the list of staged files
+FILES=$(git diff --cached --name-only --diff-filter=ACMR)
+echo "Executando prettier nos seguintes arquivos:"
+# Exit if no files are staged
+[ -z "$FILES" ] && exit 0
+
+# Prettify all staged files
+echo "$FILES" | tr '\n' '\0' | xargs -0 ./node_modules/.bin/prettier --ignore-unknown --write
+
+# Executa o lint com correções
+echo 'EXECUTANDO ESLINT...'
+npm run lint
+
+# Add back the modified/prettified files to staging
+echo "$FILES" | tr '\n' '\0' | xargs -0 git add
+
+exit 0

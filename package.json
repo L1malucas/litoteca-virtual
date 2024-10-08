@@ -1,12 +1,30 @@
 {
   "name": "litoteca-virtual",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://renova-ti.visualstudio.com/CBPM%20-%20Companhia%20Baiana%20de%20Pesquisa%20Mineral/_git/litoteca-virtual"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --open",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "serve": "compodoc -s src/tsconfig.app.json",
+    "start_prod": "ng serve --open --configuration production",
+    "start_hmg": "ng serve --open --configuration homologation",
+    "start_dev": "ng serve --open --configuration development",
+    "build": "ng build",
+    "build_prod": "ng build --configuration production",
+    "build_hmg": "ng build --configuration homologation",
+    "build_dev": "ng build --configuration development",
+    "test": "ng test",
+    "lint": "ng lint --fix",
+    "prettier": "npx prettier --write .",
+    "prepare": "husky",
+    "compodoc": "npx compodoc -p tsconfig.doc.json",
+    "compodoc:build": "compodoc -p tsconfig.doc.json",
+    "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
+    "compodoc:serve": "compodoc -s"
   },
   "private": true,
   "dependencies": {
@@ -18,6 +36,8 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "moment": "^2.30.1",
+    "ngx-webstorage": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
@@ -27,12 +47,18 @@
     "@angular/cli": "^18.2.7",
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "18.3.1",
+    "eslint": "^9.9.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.6",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.2"
+    "prettier": "3.3.3",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "8.2.0"
   }
 }

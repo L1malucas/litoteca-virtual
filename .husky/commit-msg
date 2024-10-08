@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+echo 'VALIDANDO MENSAGEM DO COMMIT...'
+
+# Lê a mensagem do commit a partir do arquivo passado como argumento
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Define os prefixos permitidos e suas descrições
+ALLOWED_PREFIXES=('chore' 'feat' 'fix' 'refactor' 'docs' 'perf' 'style' 'test' 'build' 'ci' 'env' 'major' 'minor' 'patch')
+
+# Define o padrão da mensagem do commit
+ALLOWED_PREFIXES_PATTERN=$(IFS=$'|' ; echo "${ALLOWED_PREFIXES[*]}")
+VALID_COMMIT_MSG_PATTERN="^($ALLOWED_PREFIXES_PATTERN): .+$"
+
+if [[ ! $COMMIT_MSG =~ $VALID_COMMIT_MSG_PATTERN ]]; then
+    echo -e "\033[31mERRO\033[0m A mensagem do commit é inválida. \nAs mensagens de commit devem seguir o padrão: \033[1mPREFIXO: Descrição\033[0m. \n\nPrefixos permitidos:\n"
+    echo -e "\t\033[32m$ALLOWED_PREFIXES\033[0m\n"
+    echo -e "Exemplos: \n\t\033[32mfeat: Adicionar cadastro de usuário\033[0m, \n\t\033[32mfix: Corrigir problema de login\033[0m, \n\t\033[32mrefactor: Melhorar estrutura do código\033[0m.\n"
+    exit 1
+fi
+
+echo -e "\033[32mMensagem do commit é válida.\033[0m"
+
+# Verifica se a mensagem contém o prefixo para versão (major, minor, patch)
+if [[ $COMMIT_MSG =~ ^(major|minor|patch):\ (.*) ]]; then
+    echo -e "\033[32mDetectado prefixo de versão...\033[0m"
+
+    # Obter a última tag
+    LAST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+
+    # Separar a versão MAJOR.MINOR.PATCH
+    MAJOR=$(echo $LAST_TAG | cut -d'.' -f1)
+    MINOR=$(echo $LAST_TAG | cut -d'.' -f2)
+    PATCH=$(echo $LAST_TAG | cut -d'.' -f3)
+
+    TYPE=${BASH_REMATCH[1]}
+    DESCRIPTION=${BASH_REMATCH[2]}
+
+    case "$TYPE" in
+        major)
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+            ;;
+        minor)
+            MINOR=$((MINOR + 1))
+            PATCH=0
+            ;;
+        patch)
+            PATCH=$((PATCH + 1))
+            ;;
+    esac
+
+    NEW_TAG="V.$MAJOR.$MINOR.$PATCH"
+
+    # Atualizar o arquivo README.md
+    README_FILE="README.md"
+
+    # Verifica se o cabeçalho "# Versões" já existe
+    if grep -q "^# Versões" "$README_FILE"; then
+        # Se existir, adiciona a nova versão
+        sed -i "/^# Versões/a - $NEW_TAG - $(date +'%Y-%m-%d')" "$README_FILE"
+    else
+        # Se não existir, cria o cabeçalho e adiciona a nova versão
+        {
+            echo "# Versões"
+            echo "- $NEW_TAG - $(date +'%Y-%m-%d')"
+            echo "" # Linha em branco
+        } >> "$README_FILE"
+    fi
+
+    # Adicionar README.md ao último commit
+    git add "$README_FILE"
+    git commit --amend --no-edit
+    # Criar a tag
+    git tag -a "$NEW_TAG" -m "$DESCRIPTION"
+
+fi
+
+exit 0

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+echo 'VALIDANDO NOME DA BRANCH...'
+BRANCH_PREFIX_SEPARATOR='/'
+COMMON_LIST_SEPARATOR='|'
+LOCAL_BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+
+# Verificar se a branch é uma exceção
+EXCEPTION_BRANCHES=('main' 'develop' 'hmg')
+if [[ " ${EXCEPTION_BRANCHES[@]} " =~ " ${LOCAL_BRANCH_NAME} " ]]; then
+    exit 0
+fi
+
+# Estágio de Validação do Prefixo da Branch
+ALLOWED_PREFIXES=('feature' 'fix' 'hotfix' 'style' 'refactor' 'test' 'chore' 'docs')
+ALLOWED_PREFIXES_PATTERN=$(IFS=$COMMON_LIST_SEPARATOR ; echo "${ALLOWED_PREFIXES[*]}")
+VALID_PREFIX_PATTERN="^(($ALLOWED_PREFIXES_PATTERN)\/([0-9]+)\-([a-zA-Z0-9\-]+))$"
+
+if [[ ! $LOCAL_BRANCH_NAME =~ $VALID_PREFIX_PATTERN ]]; then
+    echo -e "\033[31mERRO\033[0m Algo está errado com o prefixo ou nome da branch. \nOs nomes das branches devem seguir o padrão: \033[1mPREFIXO/TASK-NOME-DA-TAREFA\033[0m. \nUse o comando git branch -m para corrigir o nome da branch. \n\nExemplos: \n\t\033[32mfeature/1234-cadastro-usuario\033[0m, \n\t\033[32mfix/5678-cadastro-usuario\033[0m, \n\t\033[32mhotfix/91011-cadastro-usuario\033[0m.\n"
+    exit 1
+fi
+
+exit 0
+
