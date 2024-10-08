@@ -1,0 +1,35 @@
+<aside class="sidebar">
+  <div class="logo-crop">
+    <a routerLink="/home">
+      <img src="../../../assets/images/R-Cropping 1.png" />
+    </a>
+  </div>
+  <nav class="sidebar__nav">
+    <ul class="sidebar__list">
+      <li class="sidebar__item">
+        <a (click)="navigateTo('/home')" class="sidebar__link">
+          <i class="material-icons">home</i>
+          HOME
+        </a>
+      </li>
+      <li class="sidebar__item">
+        <a
+          (click)="navigateTo('/consulta')"
+          class="sidebar__link"
+          style="white-space: nowrap"
+        >
+          <i class="material-icons">search</i>
+          CONSULTA POLÍCIA CIVIL
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="sidebar__bottom">
+    <img
+      src="../../../../assets/svg/sair.svg"
+      alt="Sair"
+      (click)="logout()"
+      class="sair"
+    />
+  </div>
+</aside>

@@ -13,6 +13,8 @@ import { DefaultLoginLayoutComponent } from "./default-login-layout/default-logi
 import { ErrorComponent } from "./error/error.component";
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
+import { LoadingComponent } from "./loading/loading.component";
+import { NavbarComponent } from "./navbar/navbar.component";
 
 export const COMPONENTS = [
   //   PaginationComponent,
@@ -20,8 +22,8 @@ export const COMPONENTS = [
   DefaultLoginLayoutComponent,
   FooterComponent,
   HeaderComponent,
-  //   LoadingComponent,
-  //   NavbarComponent,
+  LoadingComponent,
+  NavbarComponent,
   //   SidebarComponent,
   ConfirmDialogComponent,
   //   PaginationComponent,
