@@ -1,0 +1,20 @@
+.mat-icon {
+  &.mat-success {
+    color: var(--success);
+  }
+
+  &.mat-info {
+    color: var(--info);
+  }
+
+  &.mat-error {
+    color: var(--error);
+  }
+
+  &.mat-white {
+    color: var(--white);
+  }
+  &.mat-black {
+    color: var(--black);
+  }
+}

@@ -1,0 +1,193 @@
+mat-form-field {
+  &.mat-form-field {
+    &.mat-form-field-appearance-outline {
+      & > div {
+        &.mat-form-field-wrapper {
+          & > div {
+            &.mat-form-field-flex {
+              & > div {
+                &.mat-form-field-infix {
+                  padding: 0em 0px 0.5em 0px;
+
+                  & > span {
+                    &.mat-form-field-label-wrapper {
+                      top: -1.3em;
+                      font-size: 14px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.mat-form-field-can-float {
+        &.mat-form-field-should-float {
+          .mat-form-field-label {
+            transform: translateY(-1.5em) scale(0.85);
+            width: 133.33333%;
+          }
+        }
+      }
+
+      .mat-select-arrow-wrapper {
+        transform: translateY(0%);
+      }
+
+      .mat-form-field-label {
+        top: 1.84375em;
+        margin-top: 0;
+        font-size: 12px;
+      }
+
+      .mat-select-value-text {
+        font-size: 14px;
+      }
+    }
+
+    .mat-form-field-label {
+      margin-top: 0;
+      font-size: 12px;
+    }
+  }
+
+  .mat-form-field-wrapper {
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-end,
+    .mat-form-field-outline-gap {
+      border-color: var(--gray-light);
+    }
+  }
+
+  .mat-form-field-suffix {
+    border-left: unset;
+
+    .mat-icon {
+      color: var(--gray-light);
+      padding-left: 2px;
+      padding-right: 5px;
+      height: 20px;
+      width: 12px;
+      transform: translateY(0.1em) scale(0.85);
+    }
+  }
+
+  &.ng-valid.ng-dirty {
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-end,
+    .mat-form-field-outline-gap {
+      border-color: var(--secondary);
+    }
+
+    &.content {
+      .mat-form-field-outline-gap {
+        border-top: none;
+      }
+    }
+
+    .mat-form-field-infix .mat-select .mat-select-trigger {
+      .mat-select-arrow-wrapper {
+        border-left-color: var(--secondary);
+
+        .mat-select-arrow {
+          &::before {
+            border-color: var(--secondary);
+          }
+
+          &:after {
+            border-color: var(--secondary);
+          }
+        }
+      }
+    }
+
+    .mat-form-field-suffix {
+      border-left: 0px solid var(--secondary);
+      .mat-icon {
+        color: var(--secondary);
+        padding-left: 2px;
+        padding-right: 5px;
+        height: 20px;
+        width: 12px;
+        transform: translateY(0.1em) scale(0.85);
+      }
+    }
+  }
+
+  &.ng-invalid.ng-touched {
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-end,
+    .mat-form-field-outline-gap {
+      border-color: var(--error);
+    }
+
+    .mat-form-field-infix .mat-select .mat-select-trigger {
+      .mat-select-arrow-wrapper {
+        border-left-color: var(--error);
+
+        .mat-select-arrow {
+          &::before {
+            border-color: var(--error);
+          }
+
+          &:after {
+            border-color: var(--error);
+          }
+        }
+      }
+    }
+
+    .mat-form-field-suffix {
+      border-left: unset;
+
+      .mat-icon {
+        color: var(--error);
+        padding-left: 2px;
+        padding-right: 5px;
+        height: 20px;
+        width: 12px;
+        transform: translateY(0.1em) scale(0.85);
+      }
+    }
+  }
+
+  &:hover {
+    .mat-form-field-wrapper {
+      .mat-form-field-outline-start,
+      .mat-form-field-outline-end,
+      .mat-form-field-outline-gap {
+        border-color: var(--primary);
+      }
+    }
+
+    .mat-form-field-wrapper {
+      .mat-form-field-infix .mat-select .mat-select-trigger {
+        .mat-select-arrow-wrapper {
+          .mat-select-arrow {
+            &::before {
+              border-color: var(--primary) !important;
+            }
+
+            &:after {
+              border-color: var(--primary) !important;
+            }
+          }
+        }
+      }
+    }
+
+    .mat-form-field-suffix {
+      border-left: unset;
+
+      .mat-icon {
+        color: var(--primary) !important;
+        padding-left: 2px;
+        padding-right: 5px;
+        height: 20px;
+        width: 12px;
+        transform: translateY(0.1em) scale(0.85);
+      }
+    }
+  }
+}

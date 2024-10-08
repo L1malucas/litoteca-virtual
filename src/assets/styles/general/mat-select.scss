@@ -1,0 +1,96 @@
+/*Existe CSS que influencia no mat-select também no arquivo mat-form-fiel.scss*/
+
+mat-select {
+  .mat-select-arrow-wrapper {
+    border-left: unset;
+
+    .mat-select-arrow {
+      width: 6px;
+      height: 6px;
+      box-sizing: border-box;
+      transform: rotate(-225deg);
+      border-left: unset;
+      border-right: unset;
+      border-top: unset;
+      margin: unset;
+      margin-left: 13px;
+
+      &::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-width: 0.3vmin 0.3vmin 0 0;
+        border-style: solid;
+        border-color: var(--gray-light);
+        transition: 0.2s ease;
+        display: block;
+        transform-origin: 100% 0;
+        margin-top: -2px;
+      }
+    }
+  }
+
+  &.ng-valid.mat-select-empty {
+    .mat-select-trigger {
+      .mat-select-arrow-wrapper {
+        border-left: unset;
+
+        .mat-select-arrow {
+          &::before {
+            border-color: var(--gray-light);
+          }
+
+          &:after {
+            border-color: var(--gray-light);
+          }
+        }
+      }
+    }
+  }
+
+  &.ng-valid {
+    .mat-select-trigger {
+      .mat-select-arrow-wrapper {
+        border-left: unset;
+
+        .mat-select-arrow {
+          &::before {
+            border-color: var(--gray-light);
+          }
+
+          &:after {
+            border-color: var(--gray-light);
+          }
+        }
+      }
+    }
+  }
+
+  &.ng-touched.ng-invalid {
+    .mat-select-trigger {
+      .mat-select-arrow-wrapper {
+        border-left: 0px solid var(--error);
+
+        .mat-select-arrow {
+          &::before {
+            border-color: var(--error);
+          }
+
+          &:after {
+            border-color: var(--error);
+          }
+        }
+      }
+    }
+  }
+
+  &:hover {
+    .mat-select-arrow-wrapper {
+      border-left: unset;
+
+      .mat-select-arrow::before {
+        border-color: var(--primary);
+      }
+    }
+  }
+}

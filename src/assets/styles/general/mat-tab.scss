@@ -1,0 +1,20 @@
+.mat-tab-group {
+  .mat-tab-header {
+    .mat-tab-label-container {
+      .mat-tab-list {
+        .mat-tab-labels {
+          .mat-tab-label {
+            width: 50% !important;
+            height: 40px !important;
+            background-color: var(--primary) !important;
+            color: var(--white) !important;
+
+            &.mat-tab-label-active {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

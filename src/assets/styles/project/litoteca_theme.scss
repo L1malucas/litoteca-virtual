@@ -1,0 +1,115 @@
+@use "@angular/material" as mat;
+
+// Define custom palettes
+$cbpm-dark-burgundy: (
+  50: #f7e6e6,
+  100: #eac0c0,
+  200: #dc9797,
+  300: #ce6d6d,
+  400: #c55151,
+  500: #4e0101,
+  600: #4b0101,
+  700: #450101,
+  800: #3e0101,
+  900: #320000,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$cbpm-light-pink: (
+  50: #fff7f5,
+  100: #ffe4df,
+  200: #ffd1c7,
+  300: #ffbeb0,
+  400: #ffaea0,
+  500: #ffded7,
+  600: #ffcdc9,
+  700: #ffbbb8,
+  800: #ffaa9e,
+  900: #ff8f7f,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.87),
+    600: rgba(black, 0.87),
+    700: rgba(black, 0.87),
+    800: white,
+    900: white,
+  ),
+);
+
+// Define theme colors using the new m2- prefixed functions
+$cbpm-primary: mat.m2-define-palette($cbpm-dark-burgundy, 500);
+$cbpm-accent: mat.m2-define-palette($cbpm-light-pink, 500);
+$cbpm-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+// Create the theme object using the new m2- prefixed function
+$cbpm-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $cbpm-primary,
+      accent: $cbpm-accent,
+      warn: $cbpm-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+@include mat.all-component-themes($cbpm-theme);
+
+// Define custom CSS variables
+:root {
+  --white: #ffffff;
+  --primary: #4e0101;
+  --primary-rgb: 78, 1, 1;
+  --primary-light: #ffded7;
+  --secondary: #6a3f2f;
+  --secondary-rgb: 106, 63, 47;
+  --tertiary: #68402f;
+  --tertiary-rgb: 104, 64, 47;
+  --accent: #fd7200;
+  --text-color: #000000;
+  --gray-dark: #6c6c6c;
+  --gray-light: #eeeeee;
+  --success: #4caf50;
+  --info: #2196f3;
+  --error: #f44336;
+}
+
+// Typography using the new m2- prefixed functions
+$my-typography: mat.m2-define-typography-config(
+  $font-family: "'Poppins'",
+  $body-1: mat.m2-define-typography-level(16px, 24px, 500),
+);
+
+@include mat.typography-hierarchy($my-typography);
+
+// Global styles
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins";
+  color: var(--text-color);
+}
+
+// Import other styles
+@import "../../fonts/fonts.scss";
+@import "../general/material-custom.scss";

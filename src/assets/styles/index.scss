@@ -1,0 +1,8 @@
+// estilos globais
+@import "./general/helpers.scss";
+@import "./general/functions.scss";
+@import "./general/general_classes.scss";
+
+// estilos especificos do projeto
+@import "./general/table-custom.component.scss";
+@import "./project/litoteca_theme.scss";

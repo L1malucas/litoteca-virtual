@@ -1,0 +1,85 @@
+mat-dialog-container {
+  &.mat-dialog-container {
+    padding: 0 !important;
+    border: 1px solid var(--secondary);
+    box-sizing: border-box;
+    border-radius: 15px;
+    min-width: 25vw;
+
+    @media (max-width: 1025px) {
+      min-width: 35vw;
+    }
+
+    .mat-dialog-title {
+      color: var(--primary);
+      margin: 0;
+
+      @media (max-width: 768px) {
+        font-size: 18px;
+        line-height: 36px !important;
+      }
+
+      h1 {
+        color: var(--primary);
+        font-style: normal;
+        font-weight: 300;
+        line-height: 49px;
+        margin: 0;
+        padding: 12px;
+      }
+
+      h2 {
+        color: var(--primary);
+        font-style: normal;
+        font-weight: 300;
+        line-height: 49px;
+        margin: 0;
+        padding: 12px;
+      }
+
+      .box {
+        min-height: 67px;
+        width: 100%;
+        background-color: rgba(var(--secondary-rgb), 0.5);
+        padding: 12px;
+
+        &-text {
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 19px;
+          color: rgba(65, 65, 65, 0.5);
+        }
+      }
+    }
+
+    .mat-dialog-content {
+      margin: 0;
+      padding: 24px 12px 0 12px;
+
+      @media (max-width: 768px) {
+        max-height: 40vh;
+        overflow: auto;
+      }
+
+      @media (max-height: 768px) {
+        max-height: 55vh;
+      }
+
+      .item {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 24px;
+        color: var(--text-color);
+      }
+    }
+
+    .mat-dialog-actions {
+      padding: 24px 12px 24px 12px;
+      margin: 0;
+    }
+  }
+}
