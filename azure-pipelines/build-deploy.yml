@@ -13,7 +13,7 @@ steps:
       arguments: "--force"
 
   - task: Npm@1
-    displayName: "npm run build_prod"
+    displayName: "npm run build_dev"
     inputs:
       command: custom
       verbose: false
