@@ -152,6 +152,10 @@ $background-color: rgba(255, 222, 215, 0.18);
   margin-top: 4vh;
   font: 700 2rem;
 
+  a {
+    cursor: pointer;
+  }
+
   @media (max-width: 991px) {
     margin-top: 4vh;
   }
