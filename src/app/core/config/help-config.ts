@@ -8,14 +8,14 @@ export class HelpConfig {
   constructor(private configService: ConfigService) {}
 
   public get BASE_API(): string | null {
-    return this.configService.getUrl("CROP_WEB", "URL");
+    return this.configService.getUrl("LITOTECA", "URL");
   }
 
   public get BOX_ENDPOINT(): string {
-    return this.configService.getEndPoint("CROP_WEB", "BOX");
+    return this.configService.getEndPoint("LITOTECA", "BOX");
   }
 
   public get RECORDS_ENDPOINT(): string {
-    return this.configService.getEndPoint("CROP_WEB", "RECORDS");
+    return this.configService.getEndPoint("LITOTECA", "RECORDS");
   }
 }
