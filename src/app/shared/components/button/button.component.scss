@@ -1,0 +1,14 @@
+.custom-button {
+  background-color: var(--primary);
+  color: var(--white);
+  border-radius: 3rem;
+  border: none;
+  padding: 0.4rem 1.6rem;
+  font-weight: bold;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
