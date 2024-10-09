@@ -1,7 +1,19 @@
 <section class="section-confirm-dialog">
   <h3>Tem certeza que deseja alterar os dados?</h3>
   <div class="section-buttons">
-    <button class="editar-btn">EDITAR</button>
-    <button class="alterar-btn">ALTERAR DADOS</button>
+    <app-button
+      text="EDITAR"
+      [buttonStyle]="{
+        padding: '.6rem 1rem',
+        backgroundColor: 'transparent',
+        color: 'var(--primary)',
+        border: '1px solid var(--primary)',
+        borderRadius: '.8rem',
+      }"
+    ></app-button>
+    <app-button
+      text="ALTERAR DADOS"
+      [buttonStyle]="{ borderRadius: '.8rem', padding: '0.6rem 1rem' }"
+    ></app-button>
   </div>
 </section>

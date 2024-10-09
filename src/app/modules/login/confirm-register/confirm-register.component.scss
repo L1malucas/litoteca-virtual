@@ -9,37 +9,6 @@
   background-position: top right;
   padding-left: 8rem;
 
-  .logo {
-    position: absolute;
-    top: 50px;
-    left: 60px;
-
-    img {
-      width: 150px;
-      height: auto;
-
-      @media (max-width: 768px) {
-        width: 100px;
-        top: 20px;
-        left: 20px;
-      }
-    }
-  }
-
-  .social-media-icons {
-    position: absolute;
-    top: 50px;
-    right: 60px;
-
-    a {
-      padding-right: 10px;
-    }
-
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
-
   .text-section {
     text-align: start;
     max-width: 500px;
@@ -74,33 +43,6 @@
 
       @media (max-width: 480px) {
         font-size: 0.9rem;
-      }
-    }
-
-    button {
-      padding: 0.4rem 1.6rem;
-      background-color: var(--primary);
-      color: var(--white);
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-      border-radius: 3rem;
-      margin-top: 2rem;
-
-      &:hover {
-        background-color: #5a1414;
-        transform: scale(1.05);
-      }
-
-      @media (max-width: 768px) {
-        padding: 0.4rem 1.2rem;
-        font-size: 0.9rem;
-      }
-
-      @media (max-width: 480px) {
-        padding: 0.3rem 1rem;
-        font-size: 0.8rem;
       }
     }
   }

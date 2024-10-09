@@ -5,10 +5,26 @@
   border: none;
   padding: 0.4rem 1.6rem;
   font-weight: bold;
-  transition: 0.2s;
+  font-size: 1rem;
+  transition: 0.3s;
   cursor: pointer;
 
   &:hover {
     transform: scale(1.05);
+  }
+}
+
+.hover-primary {
+  &:hover {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+}
+
+.hover-transparent {
+  &:hover {
+    background-color: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
   }
 }

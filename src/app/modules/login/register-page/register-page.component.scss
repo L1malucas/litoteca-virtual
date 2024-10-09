@@ -173,22 +173,3 @@ $background-color: rgba(255, 222, 215, 0.18);
   object-fit: contain;
   width: 25px;
 }
-
-.submit-button {
-  border-radius: 2.5rem;
-  background-color: var(--primary);
-  color: var(--white);
-  padding: 0.6rem 2.9rem;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-
-  &:hover {
-    background-color: #5a1414;
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 991px) {
-    padding: 0.6rem 2rem;
-  }
-}

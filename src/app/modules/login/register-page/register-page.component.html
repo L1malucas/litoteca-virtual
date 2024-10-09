@@ -101,13 +101,13 @@
             />
             Voltar para LOGIN
           </a>
-          <button
-            type="submit"
-            class="submit-button"
+          <app-button
+            text="CRIAR CONTA"
             (click)="navigateConfirmRegister()"
-          >
-            CRIAR CONTA
-          </button>
+            [buttonStyle]="{
+              padding: '.6rem 2.9rem',
+            }"
+          ></app-button>
         </div>
       </div>
     </form>

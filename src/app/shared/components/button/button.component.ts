@@ -11,4 +11,5 @@ export class ButtonComponent {
   @Input() disabled: boolean = false;
   @Input() onClick: any = () => {};
   @Input() buttonStyle: { [klass: string]: any } = {};
+  @Input() customClass: string = "";
 }
