@@ -1,94 +1,125 @@
+<app-header></app-header>
+
 <main class="registration-page">
-  <div class="logo">
-    <img src="assets/images/svg/logo-cbpm_login.svg" alt="CBPM Logo" />
-  </div>
-
-  <div class="social-media-icons">
-    <a href="#" class="x" tabindex="0">
-      <img src="assets/images/svg/VectorX.svg" alt="x" />
-    </a>
-    <a href="#" class="instagram" tabindex="0">
-      <img src="assets/images/svg/VectorInsta.svg" alt="instagram" />
-    </a>
-    <a href="#" class="linkedIn" tabindex="0">
-      <img src="assets/images/svg/VectorLinkedIn.svg" alt="linkedIn" />
-    </a>
-  </div>
-
   <section class="registration-form-container">
     <h1 class="form-title">Cadastre-se</h1>
 
-    <form class="registration-form">
+    <form class="registration-form" #form="ngForm">
       <div class="form-content">
         <div class="form-row">
           <div class="form-group full-width">
-            <label for="fullName" class="form-label">Nome Completo</label>
-            <input type="text" id="fullName" class="form-input" />
+            <label class="form-label">Nome Completo</label>
+            <input app-primary-input type="text" />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="phone" class="form-label">Telefone</label>
-            <input type="tel" id="phone" class="form-input" />
+            <label class="form-label">Telefone</label>
+            <input
+              app-primary-input
+              type="text"
+              placeholder="(00) 00000-0000"
+              formControlName="phone"
+              mask="(00) 00000-0000"
+            />
           </div>
 
           <div class="form-group">
-            <label for="occupation" class="form-label"
-              >Profissão/Ocupação</label
-            >
-            <input type="text" id="occupation" class="form-input" />
+            <label class="form-label">Profissão/Ocupação</label>
+            <input app-primary-input type="text" formControlName="occupation" />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="country" class="form-label">País</label>
-            <select id="country" class="form-select">
-              <option value="Brasil">Brasil</option>
+            <label class="form-label">País</label>
+            <select app-primary-input formControlName="country">
+              <option
+                *ngFor="
+                  let option of [
+                    { value: 'option1', label: 'Option 1' },
+                    { value: 'option2', label: 'Option 2' },
+                    { value: 'option3', label: 'Option 3' },
+                  ]
+                "
+                [value]="option.value"
+              >
+                {{ option.label }}
+              </option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="state" class="form-label">Estado</label>
-            <select id="state" class="form-select">
-              <option value="BA">BA</option>
+            <label class="form-label">Estado</label>
+            <select app-primary-input formControlName="state">
+              <option
+                *ngFor="
+                  let option of [
+                    { value: 'option1', label: 'Option 1' },
+                    { value: 'option2', label: 'Option 2' },
+                    { value: 'option3', label: 'Option 3' },
+                  ]
+                "
+                [value]="option.value"
+              >
+                {{ option.label }}
+              </option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="city" class="form-label">Cidade</label>
-            <select id="city" class="form-select">
-              <option value="">Selecione uma cidade</option>
+            <label class="form-label">Cidade</label>
+            <select app-primary-input formControlName="city">
+              <option
+                *ngFor="
+                  let option of [
+                    { value: 'option1', label: 'Option 1' },
+                    { value: 'option2', label: 'Option 2' },
+                    { value: 'option3', label: 'Option 3' },
+                  ]
+                "
+                [value]="option.value"
+              >
+                {{ option.label }}
+              </option>
             </select>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" class="form-input" />
+            <label class="form-label">Email</label>
+            <input app-primary-input type="email" formControlName="email" />
           </div>
 
           <div class="form-group">
-            <label for="confirmEmail" class="form-label"
-              >Confirme seu email*</label
-            >
-            <input type="email" id="confirmEmail" class="form-input" />
+            <label class="form-label">Confirme seu email</label>
+            <input
+              app-primary-input
+              type="email"
+              formControlName="confirmEmail"
+            />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="password" class="form-label">Senha</label>
-            <input type="password" id="password" class="form-input" />
+            <label class="form-label">Senha</label>
+            <input
+              app-primary-input
+              type="password"
+              formControlName="password"
+            />
           </div>
 
           <div class="form-group">
-            <label for="confirmPassword" class="form-label"
-              >Confirme sua senha*</label
-            >
-            <input type="password" id="confirmPassword" class="form-input" />
+            <label class="form-label">Confirme sua senha</label>
+            <input
+              app-primary-input
+              type="password"
+              formControlName="confirmPassword"
+            />
           </div>
         </div>
 
@@ -96,7 +127,7 @@
           <a href="#" class="back-to-login">
             <img
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/d01365446799f5ae7ba400a67cd8def220013c025ac53b0476e2744b77b8f41e?placeholderIfAbsent=true&apiKey=a1c783c1fea844e8a9d4918a3ccfb90a"
-              alt=""
+              alt="Voltar para Login"
               class="back-icon"
             />
             Voltar para LOGIN

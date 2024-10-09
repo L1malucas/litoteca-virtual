@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ConfirmRegisterComponent } from "./confirm-register/confirm-register.component";
 import { ComponentsModule } from "../../shared/components/components.module";
 import { LoginRoutingModule } from "./login.routing.module";
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { LoginRoutingModule } from "./login.routing.module";
     FormsModule,
     ReactiveFormsModule,
     LoginRoutingModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [
     AuthGuard,
@@ -41,6 +44,7 @@ import { LoginRoutingModule } from "./login.routing.module";
       useClass: LoadingInterceptor,
       multi: true,
     },
+    provideNgxMask(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
