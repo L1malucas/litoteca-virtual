@@ -1,0 +1,190 @@
+$background-color: rgba(255, 222, 215, 0.18);
+
+.logo {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+
+  img {
+    width: 150px;
+    height: auto;
+
+    @media (max-width: 992px) {
+      width: 100px;
+      top: 20px;
+      left: 20px;
+      display: none;
+    }
+
+    @media (max-height: 712px) {
+      width: 80px;
+    }
+  }
+
+  @media (max-height: 712px) {
+    width: 70px;
+    top: 20px;
+    left: 30px;
+  }
+}
+
+.social-media-icons {
+  position: absolute;
+  top: 40px;
+  right: 60px;
+
+  a {
+    padding-right: 10px;
+  }
+
+  img {
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (max-width: 991px) {
+    display: none;
+  }
+
+  @media (max-height: 712px) {
+    top: 20px;
+    right: 40px;
+
+    img {
+      width: 20px;
+    }
+  }
+}
+
+.registration-page {
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  @media (max-width: 991px) {
+    padding: 0 2vw;
+  }
+}
+
+.registration-form-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem 2rem 0 0;
+  background-color: rgba(255, 222, 215, 0.18);
+  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 12vh;
+  overflow-y: auto !important;
+  width: 95%;
+  height: 100%;
+  padding-bottom: 2rem;
+
+  @media (max-width: 991px) {
+    max-width: 100%;
+    margin-top: 4vh;
+    padding: 0 2vw;
+  }
+}
+
+.form-title {
+  color: #000;
+  align-self: flex-start;
+  font-size: 36px;
+  font-weight: bold;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 2.8rem;
+  }
+}
+
+.registration-form {
+  width: 100%;
+  max-width: 100%;
+}
+
+.form-content {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+
+  & .full-width {
+    grid-column: span 2;
+  }
+}
+
+.form-row:nth-of-type(3) {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.form-label {
+  color: var(--primary);
+  font: 400 2.4rem;
+  display: block;
+  margin-bottom: 0.9rem;
+}
+
+.form-input,
+.form-select {
+  border-radius: 2.4rem;
+  border: 1px solid var(--primary);
+  height: 30px;
+  width: 100%;
+  background-color: transparent;
+  padding-left: 0.6rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4vh;
+  font: 700 2rem;
+
+  @media (max-width: 991px) {
+    margin-top: 4vh;
+  }
+}
+
+.back-to-login {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.back-icon {
+  object-fit: contain;
+  width: 25px;
+}
+
+.submit-button {
+  border-radius: 2.5rem;
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 0.6rem 2.9rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #5a1414;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 991px) {
+    padding: 0.6rem 2rem;
+  }
+}

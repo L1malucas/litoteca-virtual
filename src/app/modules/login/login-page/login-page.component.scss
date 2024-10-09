@@ -1,0 +1,219 @@
+$font-size-base: 16px;
+$font-size-small: 12px;
+$font-size-large: 40px;
+
+@mixin input-style {
+  width: 100%;
+  padding: 12px;
+  font-size: $font-size-base;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--gray-light);
+  height: 30px;
+  display: flex;
+  white-space: nowrap;
+}
+
+@mixin button-style($bg-color, $text-color, $bg-color-hovered) {
+  width: 100%;
+  max-width: 150px;
+  padding: 12px;
+  background-color: $bg-color;
+  color: $text-color;
+  font-size: $font-size-base;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $bg-color-hovered;
+  }
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--white);
+  background: url("../../../../assets/images/svg/imgfundo_login.svg") no-repeat
+    center center;
+  background-size: cover;
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  .logo {
+    position: absolute;
+    top: 50px;
+    left: 60px;
+
+    img {
+      width: 150px;
+      height: auto;
+
+      @media (max-width: 768px) {
+        width: 100px;
+        top: 20px;
+        left: 20px;
+      }
+    }
+  }
+
+  .social-media-icons {
+    position: absolute;
+    top: 50px;
+    right: 60px;
+
+    a {
+      padding-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .login-form {
+    max-width: 400px;
+    width: 100%;
+    max-height: 550px;
+    text-align: center;
+    margin-left: 850px;
+
+    @media (max-width: 768px) {
+      margin-left: 80px;
+      margin-top: 50px;
+      max-width: 200px;
+    }
+
+    .title {
+      text-align: start;
+
+      span {
+        color: var(--primary);
+        font-size: $font-size-large;
+        font-weight: bold;
+        line-height: 1.2;
+
+        b {
+          font-size: $font-size-large + 2;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 18px;
+        }
+      }
+
+      p {
+        font-size: $font-size-small + 2;
+        margin-top: 20px;
+        margin-bottom: 40px;
+
+        b {
+          cursor: pointer;
+        }
+
+        a {
+          color: var(--primary);
+          text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 13px;
+        }
+      }
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      input {
+        @include input-style;
+
+        @media (max-width: 768px) {
+          height: 10px;
+          font-size: 14px;
+        }
+      }
+
+      .password-icon {
+        cursor: pointer;
+        width: 25px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        @media (max-width: 768px) {
+          width: 15px;
+          right: 10px;
+        }
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 12px;
+        cursor: pointer;
+      }
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      label {
+        input {
+          margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 10px;
+        }
+      }
+
+      .forgot-password {
+        font-size: $font-size-small;
+        color: var(--primary);
+
+        @media (max-width: 768px) {
+          font-size: 10px;
+        }
+      }
+    }
+
+    .login-button {
+      margin-top: 20px;
+      @include button-style(var(--primary), var(--white), var(--secondary));
+
+      @media (max-width: 768px) {
+        width: 100px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .copy {
+    color: #cecece;
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    font-size: 12px;
+    font-weight: regular;
+
+    @media (max-width: 768px) {
+      bottom: 20px;
+      right: 20px;
+      font-size: 12px;
+    }
+  }
+}

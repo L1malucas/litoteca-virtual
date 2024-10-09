@@ -1,0 +1,25 @@
+.text-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #b2ebf2;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.text-item {
+  text-align: center;
+  margin: 0 10px;
+}
+
+.text-item p {
+  margin: 0;
+  font-weight: bold;
+  /* Texto em negrito */
+}
+
+.text-item span {
+  display: block;
+  font-weight: normal;
+  /* Número normal */
+}
