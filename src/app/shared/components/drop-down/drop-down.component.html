@@ -1,9 +1,8 @@
 <div (click)="toggleDropdown()" class="dropdown-container">
   <div class="dropdown-header">
-    {{ selectedProject ? selectedProject.name : "Selecione um Alvo" }}
+    {{ selectedProject ? selectedProject.name : "Selecione um Item" }}
     <mat-icon>{{ isOpen ? "expand_less" : "expand_more" }}</mat-icon>
   </div>
-
   <ul class="dropdown-list" *ngIf="isOpen">
     <li
       class="dropdown-item"
@@ -13,9 +12,4 @@
       {{ project.name }}
     </li>
   </ul>
-
-  <!-- <div class="dropdown-content" *ngIf="selectedProject">
-    <h3>Dados de {{ selectedProject.name }}</h3>
-    <p>{{ selectedProject.description }}</p>
-  </div> -->
 </div>

@@ -10,15 +10,9 @@ export class DropdownComponent {
   selectedProject: any = null;
 
   projects = [
-    { name: "RIACHO SECO", description: "Dados sobre o alvo Riacho Seco." },
-    {
-      name: "CA DE LOURDES",
-      description: "Informações sobre o alvo Ca de Lourdes.",
-    },
-    {
-      name: "FAZENDA COQUEIROS",
-      description: "Informações sobre o alvo Fazenda Coqueiros.",
-    },
+    { name: "RIACHO SECO" },
+    { name: "CA DE LOURDES" },
+    { name: "FAZENDA COQUEIROS" },
   ];
 
   toggleDropdown() {
