@@ -3,8 +3,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { COMPONENTS } from "./_components";
 import { CoreModule } from "src/app/core/core.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
 
 @NgModule({
   declarations: [COMPONENTS],
@@ -14,7 +15,11 @@ import { MatInputModule } from "@angular/material/input";
     RouterModule,
     CoreModule,
     MatInputModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
+    ReactiveFormsModule,
   ],
+  providers: [provideNgxMask()],
   exports: [COMPONENTS],
 })
 export class ComponentsModule {}

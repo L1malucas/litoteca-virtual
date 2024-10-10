@@ -1,11 +1,40 @@
-:host {
-  border: solid 1px var(--primary);
-  border-radius: 2.4rem;
-  background-color: transparent;
-  padding: 12px 0 12px 20px;
-  width: 100%;
+:host.ng-invalid.ng-touched {
+  .input-wrapper {
+    label {
+      color: red;
+    }
 
-  &:disabled {
-    background-color: #cecece;
+    .input-content {
+      input {
+        border-color: red;
+      }
+    }
+  }
+}
+
+.input-wrapper {
+  color: var(--primary);
+  text-align: start;
+
+  label {
+    color: var(--primary);
+    font: 400 2.4rem;
+    display: block;
+    margin-bottom: 0.9rem;
+  }
+
+  .input-content {
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+
+    input {
+      border-radius: 2.4rem;
+      border: 1px solid var(--primary);
+      height: 30px;
+      width: 100%;
+      background-color: transparent;
+      padding-left: 0.6rem;
+    }
   }
 }
