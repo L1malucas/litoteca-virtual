@@ -9,7 +9,6 @@
   .section-img {
     display: flex;
     flex-direction: column;
-    width: 100%;
     z-index: 999;
     background-image: url(../../../../assets/images/jpeg/BannerHome.jpg);
     background-repeat: no-repeat;
@@ -89,5 +88,18 @@
   }
   .darkgreen {
     background-color: #c4c32e;
+  }
+
+  .img-map {
+    width: 550px;
+    height: 550px;
+    position: relative;
+    left: 60%;
+    bottom: 48%;
+
+    &:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
   }
 }
