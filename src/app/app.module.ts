@@ -23,9 +23,10 @@ import {
   withNgxWebstorageConfig,
   withSessionStorage,
 } from "ngx-webstorage";
+import { HomeComponent } from "./modules/main/home/home.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     CoreModule,
     BrowserModule,
