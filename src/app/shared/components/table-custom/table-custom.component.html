@@ -1,0 +1,52 @@
+<div class="project-table">
+  <div class="region">
+    <h2>REGIÃO: {{ region }}</h2>
+  </div>
+  <div class="pavilhao">
+    <h3>PAVILHÃO</h3>
+    <div class="pavilhao-numbers">
+      <span [class.active]="selectedPavilhao === 1" (click)="selectPavilhao(1)"
+        >1</span
+      >
+      <span [class.active]="selectedPavilhao === 2" (click)="selectPavilhao(2)"
+        >2</span
+      >
+      <span [class.active]="selectedPavilhao === 3" (click)="selectPavilhao(3)"
+        >3</span
+      >
+    </div>
+  </div>
+  <div class="projects">
+    <h3>PROJETOS</h3>
+    <input
+      type="text"
+      placeholder="Riacho Seco"
+      [(ngModel)]="searchTerm"
+      (input)="filterProjects()"
+    />
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>PAVILHÃO</th>
+        <th>ALVO</th>
+        <th>FURO</th>
+        <th>AÇÕES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of filteredProjects">
+        <td>{{ project.id }}</td>
+        <td>{{ project.name }}</td>
+        <td>{{ project.alvo }}</td>
+        <td>{{ project.furo }}</td>
+        <td class="actions">
+          <button class="action-btn document"></button>
+          <button class="action-btn image"></button>
+          <button class="action-btn location"></button>
+          <button class="action-btn edit"></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

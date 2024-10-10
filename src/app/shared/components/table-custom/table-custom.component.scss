@@ -1,0 +1,94 @@
+.project-table {
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.region {
+  background-color: #800000;
+  color: white;
+  padding: 10px;
+}
+
+.pavilhao {
+  margin-top: 10px;
+}
+
+.pavilhao-numbers span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.pavilhao-numbers span.active {
+  background-color: #800000;
+  color: white;
+}
+
+.projects {
+  margin-top: 10px;
+}
+
+.projects input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #800000;
+  color: white;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.actions button {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.actions button.document::before {
+  content: "\f15c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #800000;
+}
+
+.actions button.image::before {
+  content: "\f03e";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #800000;
+}
+
+.actions button.location::before {
+  content: "\f041";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #800000;
+}
+
+.actions button.edit::before {
+  content: "\f044";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #800000;
+}

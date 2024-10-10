@@ -5,7 +5,7 @@ import {
   transition,
   animate,
 } from "@angular/animations";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
@@ -14,6 +14,7 @@ import { Variables } from "@constants/variables";
 import { ConfirmDialogInterface } from "@customTypes/system/ConfirmDialog.interface";
 import { AuthService } from "@services/system/auth.service";
 import { LocalStorageService } from "ngx-webstorage";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-login",
@@ -38,15 +39,12 @@ import { LocalStorageService } from "ngx-webstorage";
     ]),
   ],
 })
-export class LoginPageComponent implements OnInit {
-  email: string = "";
-  password: string = "";
-  rememberMe: boolean = false;
-
+export class LoginPageComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   loading = false;
   showPassword = false;
   isLoged = false;
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private _router: Router,
@@ -60,8 +58,13 @@ export class LoginPageComponent implements OnInit {
     this._buildForm();
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   verifyLogin() {
-    this.isLoged = this._storage.retrieve(Variables.STORAGE_AUTH)?.access_token;
+    this.isLoged = !!this._storage.retrieve(Variables.STORAGE_AUTH)
+      ?.access_token;
     if (this.isLoged) {
       this._router.navigate(["home"]);
     }
@@ -69,90 +72,93 @@ export class LoginPageComponent implements OnInit {
 
   submit() {
     if (this.form.invalid) {
-      let invalidFieldsMessage = "";
-
-      Object.keys(this.form.controls).forEach((field) => {
-        const control = this.form.get(field);
-        if (control && control.invalid) {
-          invalidFieldsMessage += `O campo ${field} é inválido. \n`;
-        }
-      });
-
-      this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-        ConfirmDialogComponent,
-        {
-          data: {
-            title: "Formulário inválido!",
-            subtitle:
-              invalidFieldsMessage ||
-              "Por favor, preencha todos os campos corretamente.",
-            onlyOkButton: true,
-          },
-        },
-      );
+      this.showInvalidFormDialog();
       return;
     }
 
-    const data = this.form.getRawValue();
+    const { email, senha } = this.form.getRawValue();
     this.loading = true;
 
-    this._authService.authenticate(
-      data,
-      () => {
-        this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-          ConfirmDialogComponent,
-          {
-            data: {
-              title: "Login feito com sucesso!",
-              subtitle: "Você será redirecionado para a página inicial.",
-              onlyOkButton: true,
-            },
-          },
-        );
+    this.subscription.add(
+      this._authService.authenticate(
+        { username: email, senha },
+        this.onLoginSuccess.bind(this),
+        this.onLoginError.bind(this),
+      ),
+    );
+  }
 
-        this.loading = false;
-        this._router.navigate(["home"]);
-      },
-      (err: any) => {
-        this.loading = false;
+  private showInvalidFormDialog() {
+    let invalidFieldsMessage = "";
+    Object.keys(this.form.controls).forEach((field) => {
+      const control = this.form.get(field);
+      if (control && control.invalid) {
+        invalidFieldsMessage += `O campo ${field} é inválido. \n`;
+      }
+    });
 
-        if (err.status === 401) {
-          this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-            ConfirmDialogComponent,
-            {
-              data: {
-                title: "Usuário ou senha inválidos!",
-                subtitle: "Por favor, tente novamente.",
-                onlyOkButton: true,
-              },
-            },
-          );
-        } else if (err.status === 400) {
-          this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-            ConfirmDialogComponent,
-            {
-              data: {
-                title: "Erro ao fazer login!",
-                subtitle: "Por favor, tente novamente.",
-                onlyOkButton: true,
-              },
-            },
-          );
-        }
+    this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
+      ConfirmDialogComponent,
+      {
+        data: {
+          title: "Formulário inválido!",
+          subtitle:
+            invalidFieldsMessage ||
+            "Por favor, preencha todos os campos corretamente.",
+          onlyOkButton: true,
+        },
       },
     );
   }
 
+  private onLoginSuccess() {
+    this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
+      ConfirmDialogComponent,
+      {
+        data: {
+          title: "Login feito com sucesso!",
+          subtitle: "Você será redirecionado para a página inicial.",
+          onlyOkButton: true,
+        },
+      },
+    );
+
+    this.loading = false;
+    this._router.navigate(["home"]);
+  }
+
+  private onLoginError(err: any) {
+    this.loading = false;
+
+    if (err.status === 401) {
+      this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
+        ConfirmDialogComponent,
+        {
+          data: {
+            title: "Usuário ou senha inválidos!",
+            subtitle: "Por favor, tente novamente.",
+            onlyOkButton: true,
+          },
+        },
+      );
+    } else if (err.status === 400) {
+      this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
+        ConfirmDialogComponent,
+        {
+          data: {
+            title: "Erro ao fazer login!",
+            subtitle: "Por favor, tente novamente.",
+            onlyOkButton: true,
+          },
+        },
+      );
+    }
+  }
+
   private _buildForm(): void {
     this.form = new FormGroup({
-      email: new FormControl("", [Validators.required, Validators.email]),
-      senha: new FormControl("", [
-        Validators.required,
-        // Validators.minLength(8),
-        // Validators.pattern(
-        //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-        // ),
-      ]),
+      email: new FormControl("", [Validators.required]),
+      senha: new FormControl("", [Validators.required]),
     });
   }
 
