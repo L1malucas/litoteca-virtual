@@ -1,15 +1,19 @@
-<div (click)="toggleDropdown()" class="dropdown-container">
+<div
+  (click)="toggleDropdown()"
+  class="dropdown-container"
+  [ngStyle]="styleDropDown"
+>
   <div class="dropdown-header">
-    {{ selectedProject ? selectedProject.name : "Selecione um Item" }}
+    {{ selectedProject ? selectedProject : textHeader }}
     <mat-icon>{{ isOpen ? "expand_less" : "expand_more" }}</mat-icon>
   </div>
   <ul class="dropdown-list" *ngIf="isOpen">
     <li
       class="dropdown-item"
-      *ngFor="let project of projects"
+      *ngFor="let project of options"
       (click)="selectProject(project)"
     >
-      {{ project.name }}
+      {{ project }}
     </li>
   </ul>
 </div>

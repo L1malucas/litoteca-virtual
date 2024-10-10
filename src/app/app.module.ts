@@ -24,9 +24,10 @@ import {
   withSessionStorage,
 } from "ngx-webstorage";
 import { HomeComponent } from "./modules/main/home/home.component";
+import { ConsultaRegiaoComponent } from "./modules/main/consulta-regiao/consulta-regiao.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, ConsultaRegiaoComponent],
   imports: [
     CoreModule,
     BrowserModule,

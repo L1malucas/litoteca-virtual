@@ -1,0 +1,47 @@
+<app-header></app-header>
+<div class="container-consultar-regiao">
+  <app-drop-down
+    textHeader="REGIÃO DA BAHIA"
+    [styleDropDown]="{ marginTop: '10rem', width: '40%' }"
+    [options]="options"
+  ></app-drop-down>
+  <div class="section-municipios">
+    <p>Municípios:</p>
+    <app-button
+      text="BARREIRAS"
+      [buttonStyle]="{
+        backgroundColor: 'var(--white)',
+        color: 'var(--primary)',
+        boxShadow: ' 2px 8px 6px rgba(0, 0, 0, 0.5)',
+      }"
+    ></app-button>
+    <app-button
+      text="LUÍS EDUARDO"
+      [buttonStyle]="{
+        backgroundColor: 'var(--white)',
+        color: 'var(--primary)',
+        boxShadow: ' 2px 8px 6px rgba(0, 0, 0, 0.5)',
+      }"
+    ></app-button>
+    <app-button
+      text="BOM JESUS DA LAPA"
+      [buttonStyle]="{
+        backgroundColor: 'var(--white)',
+        color: 'var(--primary)',
+        boxShadow: ' 2px 8px 6px rgba(0, 0, 0, 0.5)',
+      }"
+    ></app-button>
+    <app-button
+      text="SÃO DESIDÉRIO"
+      [buttonStyle]="{
+        backgroundColor: 'var(--white)',
+        color: 'var(--primary)',
+        boxShadow: ' 2px 8px 6px rgba(0, 0, 0, 0.5)',
+      }"
+    ></app-button>
+  </div>
+  <div class="back-to-login" (click)="backToHome()">
+    <i class="material-icons">arrow_back</i>
+    <a> Voltar para LOGIN </a>
+  </div>
+</div>

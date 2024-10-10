@@ -1,10 +1,10 @@
 .dropdown-container {
-  max-width: 300px;
   background-color: var(--primary);
   border-radius: 1rem;
   padding: 1rem;
   color: var(--white);
   cursor: pointer;
+  position: relative;
 }
 
 .dropdown-header {
@@ -19,8 +19,14 @@
 
 .dropdown-list {
   list-style-type: none;
-  padding: 0;
-  margin: 1rem 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--primary);
+  padding: 1rem;
+  border-radius: 1rem;
+  z-index: 1000;
+  width: 95%;
 }
 
 .dropdown-item {
@@ -28,6 +34,7 @@
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
+
   &:hover {
     background-color: var(--white);
     color: var(--primary);

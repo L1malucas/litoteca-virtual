@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 @Component({
   selector: "app-drop-down",
@@ -8,19 +8,16 @@ import { Component } from "@angular/core";
 export class DropdownComponent {
   isOpen = false;
   selectedProject: any = null;
-
-  projects = [
-    { name: "RIACHO SECO" },
-    { name: "CA DE LOURDES" },
-    { name: "FAZENDA COQUEIROS" },
-  ];
+  @Input() textHeader: string = "Selecione um Item";
+  @Input() options: any[] = [];
+  @Input() styleDropDown: { [klass: string]: any } = {};
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
 
-  selectProject(project: any) {
-    this.selectedProject = project;
+  selectProject(option: any) {
+    this.selectedProject = option;
     this.isOpen = true;
   }
 }

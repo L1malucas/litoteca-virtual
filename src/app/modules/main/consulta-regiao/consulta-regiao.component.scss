@@ -1,0 +1,48 @@
+.container-consultar-regiao {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url(../../../../assets/images/png/background-consulta-regiao.png);
+  background-size: calc(80%);
+  background-repeat: no-repeat;
+  background-position: right;
+  padding-left: 2rem;
+  gap: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+
+  .section-municipios {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    gap: 2.4rem;
+    width: 100%;
+    flex-wrap: wrap;
+
+    p {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+  }
+  .back-to-login {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    color: var(--primary);
+    position: absolute;
+    bottom: 4rem;
+    left: 2rem;
+
+    a {
+      display: flex;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
