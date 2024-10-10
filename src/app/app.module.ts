@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { RouterModule } from "@angular/router";
@@ -23,6 +23,8 @@ import {
   withNgxWebstorageConfig,
   withSessionStorage,
 } from "ngx-webstorage";
+import { LoadingInterceptor } from "@components/loading/loading.interceptor";
+import { HttpsRequestInterceptor } from "@services/_interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,6 +49,16 @@ import {
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpsRequestInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
     // { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
     AuthService,
     {
