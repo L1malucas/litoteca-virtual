@@ -44,6 +44,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   loading = false;
   showPassword = false;
   isLoged = false;
+  currentYear!: string;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -56,10 +57,15 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.verifyLogin();
     this._buildForm();
+    this.getCurrentYear();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  getCurrentYear(): void {
+    this.currentYear = new Date().getFullYear().toString();
   }
 
   verifyLogin() {
