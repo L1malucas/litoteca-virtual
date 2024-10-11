@@ -1,8 +1,8 @@
-<app-header></app-header>
 <div class="container-consultar-regiao">
+  <app-header></app-header>
   <app-drop-down
     textHeader="REGIÃO DA BAHIA"
-    [styleDropDown]="{ marginTop: '10rem', width: '40%' }"
+    [styleDropDown]="{ marginTop: '6rem', width: '40%' }"
     [options]="options"
   ></app-drop-down>
   <div class="section-municipios">
@@ -42,6 +42,6 @@
   </div>
   <div class="back-to-login" (click)="backToHome()">
     <i class="material-icons">arrow_back</i>
-    <a> Voltar para LOGIN </a>
+    <a> Voltar para Home </a>
   </div>
 </div>

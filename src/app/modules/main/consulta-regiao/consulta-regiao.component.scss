@@ -34,6 +34,7 @@
     position: absolute;
     bottom: 4rem;
     left: 2rem;
+    transition: 0.2s;
 
     a {
       display: flex;
@@ -43,6 +44,11 @@
 
     &:hover {
       transform: scale(1.05);
+    }
+
+    @media (max-height: 712px) {
+      bottom: 1.5rem;
+      left: 2rem;
     }
   }
 }
