@@ -25,9 +25,15 @@ import {
 } from "ngx-webstorage";
 import { HomeComponent } from "./modules/main/home/home.component";
 import { ConsultaRegiaoComponent } from "./modules/main/consulta-regiao/consulta-regiao.component";
+import { ConsultarRegiaoFiltroComponent } from "./modules/main/consultar-regiao-filtro/consultar-regiao-filtro.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ConsultaRegiaoComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ConsultaRegiaoComponent,
+    ConsultarRegiaoFiltroComponent,
+  ],
   imports: [
     CoreModule,
     BrowserModule,

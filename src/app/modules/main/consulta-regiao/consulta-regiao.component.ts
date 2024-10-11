@@ -26,6 +26,9 @@ export class ConsultaRegiaoComponent {
     this._router.navigate(["login/home"]);
   }
 
+  goConsultaFiltro() {
+    this._router.navigate(["login/consultar-regiao-filtro"]);
+  }
   onItemSelected(region: string) {
     this.selectedRegion = region;
 
