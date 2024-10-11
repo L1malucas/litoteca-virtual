@@ -1,6 +1,5 @@
 <div class="login-container">
   <app-header></app-header>
-
   <div class="login-form">
     <div class="title">
       <span>BEM VINDO A <b>LITOTECA VIRTUAL</b></span>
@@ -38,7 +37,14 @@
         </label>
         <a href="#" class="forgot-password">Esqueceu sua senha?</a>
       </div>
-      <button type="submit" class="login-button">ENTRAR</button>
+      <app-button
+        text="ENTRAR"
+        type="submit"
+        [buttonStyle]="{
+          padding: '1rem 2.4rem',
+          marginTop: '2rem',
+        }"
+      ></app-button>
     </form>
   </div>
 

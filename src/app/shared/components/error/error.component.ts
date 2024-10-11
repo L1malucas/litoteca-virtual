@@ -1,14 +1,14 @@
-import { Component, inject } from "@angular/core";
-import { Router } from "@angular/router";
-
+import { Component } from "@angular/core";
+import { Location } from "@angular/common";
 @Component({
   selector: "app-error",
   templateUrl: "./error.component.html",
-  styleUrl: "./error.component.scss",
+  styleUrls: ["./error.component.scss"],
 })
 export class ErrorComponent {
-  _router = inject(Router);
-  redirect() {
-    this._router.navigate(["/home"]);
+  constructor(private _location: Location) {}
+
+  goBack() {
+    this._location.back();
   }
 }

@@ -1,19 +1,5 @@
 <main class="registration-page">
-  <div class="logo">
-    <img src="assets/images/svg/logo-cbpm_login.svg" alt="CBPM Logo" />
-  </div>
-
-  <div class="social-media-icons">
-    <a href="#" class="x" tabindex="0">
-      <img src="assets/images/svg/VectorX.svg" alt="x" />
-    </a>
-    <a href="#" class="instagram" tabindex="0">
-      <img src="assets/images/svg/VectorInsta.svg" alt="instagram" />
-    </a>
-    <a href="#" class="linkedIn" tabindex="0">
-      <img src="assets/images/svg/VectorLinkedIn.svg" alt="linkedIn" />
-    </a>
-  </div>
+  <app-header></app-header>
 
   <section class="registration-form-container">
     <h1 class="form-title">Cadastre-se</h1>
@@ -93,7 +79,7 @@
         </div>
 
         <div class="form-actions">
-          <a href="#" class="back-to-login">
+          <a (click)="goBack()" class="back-to-login">
             <img
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/d01365446799f5ae7ba400a67cd8def220013c025ac53b0476e2744b77b8f41e?placeholderIfAbsent=true&apiKey=a1c783c1fea844e8a9d4918a3ccfb90a"
               alt=""
@@ -101,13 +87,13 @@
             />
             Voltar para LOGIN
           </a>
-          <button
-            type="submit"
-            class="submit-button"
+          <app-button
+            text="CRIAR CONTA"
             (click)="navigateConfirmRegister()"
-          >
-            CRIAR CONTA
-          </button>
+            [buttonStyle]="{
+              padding: '.6rem 2.9rem',
+            }"
+          ></app-button>
         </div>
       </div>
     </form>

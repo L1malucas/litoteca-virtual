@@ -1,24 +1,15 @@
+<app-header></app-header>
 <div class="container">
-  <div class="logo">
-    <img src="assets/images/svg/logo-cbpm_login.svg" alt="CBPM Logo" />
-  </div>
-
-  <div class="social-media-icons">
-    <a href="#" class="x" tabindex="0">
-      <img src="assets/images/svg/VectorX.svg" alt="x" />
-    </a>
-    <a href="#" class="instagram" tabindex="0">
-      <img src="assets/images/svg/VectorInsta.svg" alt="instagram" />
-    </a>
-    <a href="#" class="linkedIn" tabindex="0"> </a>
-    <a href="#" class="linkedIn" tabindex="0">
-      <img src="assets/images/svg/VectorLinkedIn.svg" alt="linkedIn" />
-    </a>
-  </div>
-
   <div class="text-section">
     <h1>Seu cadastro foi concluído!</h1>
     <p>Explore agora nossa <br /><strong>litoteca virtual.</strong></p>
-    <button>Acesse Aqui</button>
+    <app-button
+      text="Acesse Aqui"
+      (click)="goHome()"
+      [buttonStyle]="{
+        padding: '1.1rem 2rem',
+        marginTop: '2rem',
+      }"
+    ></app-button>
   </div>
 </div>

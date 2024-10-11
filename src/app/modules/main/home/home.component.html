@@ -1,0 +1,45 @@
+<div class="container-home">
+  <app-header-home></app-header-home>
+  <div class="section-img">
+    <p>
+      Descubra um mundo de minerais fascinantes na nossa <br />
+      Litoteca Virtual. Clique agora para explorar e desvendar <br />
+      as maravilhas da geologia ao seu alcance. Não perca a <br />
+      chance de mergulhar nessa jornada!
+    </p>
+    <app-button
+      text="EXPLORAR AGORA"
+      (click)="goConsultaFiltro()"
+      [buttonStyle]="{
+        backgroundColor: 'var(--white)',
+        color: 'var(--primary)',
+        fontSize: '1.1rem',
+      }"
+    ></app-button>
+  </div>
+  <h1>Explore por Região</h1>
+  <div class="section-info">
+    <p>Clique na região escolhida para verificar os <b>projetos ativos.</b></p>
+  </div>
+  <div class="legend">
+    <ul>
+      <li>
+        <img src="../../../../assets/images/png/pino 1.png" />Projeto Ativo
+      </li>
+      <li><span class="legend-color purple"></span> Extremo Oeste Baiano</li>
+      <li>
+        <span class="legend-color blue"></span> Vale São Francisco da Bahia
+      </li>
+      <li><span class="legend-color orange"></span> Nordeste Baiano</li>
+      <li><span class="legend-color yellow"></span> Centro Norte Baiano</li>
+      <li><span class="legend-color green"></span> Centro Sul Baiano</li>
+      <li><span class="legend-color pink"></span> Metropolitana de Salvador</li>
+      <li><span class="legend-color darkgreen"></span> Sul Baiano</li>
+    </ul>
+  </div>
+  <img
+    src="../../../../assets/images/png/Mapinha.png"
+    alt="Lupa Inteira"
+    class="img-map"
+  />
+</div>

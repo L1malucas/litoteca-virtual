@@ -28,8 +28,8 @@ export class TableCustomComponent {
   }
 
   filterProjects() {
-    this.filteredProjects = this.projects.filter((project) =>
-      {return project.name.toLowerCase().includes(this.searchTerm.toLowerCase())},
-    );
+    this.filteredProjects = this.projects.filter((project) => {
+      return project.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+    });
   }
 }

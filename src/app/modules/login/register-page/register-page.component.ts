@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-register",
@@ -13,6 +14,7 @@ export class RegisterPageComponent {
   constructor(
     private formBuilder: FormBuilder,
     private _router: Router,
+    private _location: Location,
   ) {
     this.registerForm = this.formBuilder.group(
       {
@@ -45,5 +47,9 @@ export class RegisterPageComponent {
 
   navigateConfirmRegister() {
     this._router.navigate(["login/confirmar-registro"]);
+  }
+
+  goBack() {
+    this._location.back();
   }
 }
