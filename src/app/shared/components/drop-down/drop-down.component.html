@@ -7,11 +7,11 @@
     {{ selectedProject ? selectedProject : textHeader }}
     <mat-icon>{{ isOpen ? "expand_less" : "expand_more" }}</mat-icon>
   </div>
-  <ul class="dropdown-list" *ngIf="isOpen">
+  <ul *ngIf="isOpen" class="dropdown-list">
     <li
-      class="dropdown-item"
       *ngFor="let project of options"
-      (click)="selectProject(project)"
+      class="dropdown-item"
+      (click)="selectItem(project)"
     >
       {{ project }}
     </li>

@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
   selector: "app-drop-down",
@@ -7,17 +7,19 @@ import { Component, Input } from "@angular/core";
 })
 export class DropdownComponent {
   isOpen = false;
-  selectedProject: any = null;
+  selectedProject: string | null = null;
   @Input() textHeader: string = "Selecione um Item";
-  @Input() options: any[] = [];
+  @Input() options: string[] = [];
   @Input() styleDropDown: { [klass: string]: any } = {};
+  @Output() itemSelected = new EventEmitter<string>();
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
 
-  selectProject(option: any) {
+  selectItem(option: string) {
     this.selectedProject = option;
     this.isOpen = true;
+    this.itemSelected.emit(option);
   }
 }

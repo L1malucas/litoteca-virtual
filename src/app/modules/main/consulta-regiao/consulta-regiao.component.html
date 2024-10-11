@@ -1,9 +1,14 @@
 <div class="container-consultar-regiao">
+  <div
+    class="background-image"
+    [ngStyle]="{ 'background-image': 'url(' + backgroundUrl + ')' }"
+  ></div>
   <app-header></app-header>
   <app-drop-down
     textHeader="REGIÃO DA BAHIA"
     [styleDropDown]="{ marginTop: '6rem', width: '40%' }"
     [options]="options"
+    (itemSelected)="onItemSelected($event)"
   ></app-drop-down>
   <div class="section-municipios">
     <p>Municípios:</p>
