@@ -17,6 +17,9 @@ export class AuthService {
   private userSubject = new BehaviorSubject<UserLoginModel>({});
   private _subscription: Subscription;
   private END_POINT: string = "identity/token";
+  private BASE_URL: string = "https://cbpm-dev-api.renova.app.br/";
+  private CLIENT_ID: string = "CBPM-RDiamond";
+  private CLIENT_SECRET: string = "Q2ne7gld9l3yTHSmJ9m9Lm0shHTIWqQ1";
   loading = false;
 
   constructor(
@@ -32,11 +35,11 @@ export class AuthService {
 
   authenticate(user: any, successCallBack: any, errorCallBack: any) {
     const payload = new HttpParams()
-      .set("username", user.cpf)
+      .set("username", user.username)
       .set("password", user.senha)
       .set("grant_type", "password")
-      .set("client_id", "RCroppingAPI")
-      .set("client_secret", "1sIIpCy4cUbPlbAxFSALhcTpITE1Fl67")
+      .set("client_id", "CBPM-RDiamond")
+      .set("client_secret", "Q2ne7gld9l3yTHSmJ9m9Lm0shHTIWqQ1")
       .set("scope", "openid");
 
     this._subscription.add(
@@ -56,8 +59,12 @@ export class AuthService {
     const headers = new HttpHeaders({
       "Content-Type": "application/x-www-form-urlencoded",
     });
+    headers.set(
+      "Authorization",
+      "Basic " + btoa(this.CLIENT_ID + ":" + this.CLIENT_SECRET),
+    );
     return this._httpClient.post(
-      `${this._helpConfig.BASE_API}${this.END_POINT}`,
+      this._helpConfig.BASE_API + this.END_POINT,
       payload.toString(),
       { headers },
     );
