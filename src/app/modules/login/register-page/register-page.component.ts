@@ -1,6 +1,11 @@
-import { Component, inject } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, inject, OnInit } from "@angular/core";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { Router } from "@angular/router";
+import { Location } from "@angular/common";
 import { Toast } from "@services/system/toast.service";
 
 @Component({
@@ -8,39 +13,65 @@ import { Toast } from "@services/system/toast.service";
   templateUrl: "./register-page.component.html",
   styleUrls: ["./register-page.component.scss"],
 })
-export class RegisterPageComponent {
+export class RegisterPageComponent implements OnInit {
   imageSrc: string = "";
+  protected form: FormGroup;
+
   private _router = inject(Router);
   private _toast = inject(Toast);
-  protected form = new FormGroup({
-    name: new FormControl(null, [Validators.required]),
-    phone: new FormControl("", [Validators.required]),
-    occupation: new FormControl("", [Validators.required]),
-    country: new FormControl("", [Validators.required]),
-    state: new FormControl("", [Validators.required]),
-    city: new FormControl("", [Validators.required]),
-    email: new FormControl("", [Validators.required, Validators.email]),
-    confirmEmail: new FormControl("", [Validators.required, Validators.email]),
-    password: new FormControl("", [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.pattern(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      ),
-    ]),
-    confirmPassword: new FormControl("", [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.pattern(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      ),
-    ]),
-  });
+  private _location = inject(Location);
+
+  constructor(private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group(
+      {
+        name: ["", Validators.required],
+        phone: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
+        occupation: ["", Validators.required],
+        country: ["", Validators.required],
+        state: ["", Validators.required],
+        city: ["", Validators.required],
+        email: ["", [Validators.required, Validators.email]],
+        confirmEmail: ["", [Validators.required, Validators.email]],
+        password: [
+          "",
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            ),
+          ],
+        ],
+        confirmPassword: [
+          "",
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            ),
+          ],
+        ],
+      },
+      { validator: this.matchPasswords },
+    );
+  }
 
   ngOnInit(): void {}
 
+  matchPasswords(group: FormGroup) {
+    const password = group.get("password")?.value;
+    const confirmPassword = group.get("confirmPassword")?.value;
+    return password === confirmPassword ? null : { notMatching: true };
+  }
+
   onSubmit() {
-    console.log(this.form);
+    if (this.form.valid) {
+      console.log(this.form.value);
+      this.navigateConfirmRegister();
+    } else {
+      this._toast.error("Erro", "Preencha todos os campos corretamente.");
+    }
   }
 
   navigateConfirmRegister() {
@@ -76,5 +107,9 @@ export class RegisterPageComponent {
     if (fileInput) {
       fileInput.click();
     }
+  }
+
+  goBack() {
+    this._location.back();
   }
 }

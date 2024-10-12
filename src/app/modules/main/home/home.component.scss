@@ -1,0 +1,102 @@
+.container-home {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url(../../../../assets/images/png/LupaInteira.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  .section-img {
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    background-image: url(../../../../assets/images/jpeg/BannerHome.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 2rem 0 2rem 0;
+    padding: 2rem 5rem;
+
+    p {
+      color: var(--white);
+    }
+  }
+  h1 {
+    font-weight: bold;
+    color: #6d3b30;
+    margin-left: 5rem;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+  }
+
+  .section-info {
+    max-width: 16rem;
+    padding: 0.6rem;
+    background-color: #d9d9d987;
+    border-radius: 0.8rem;
+    margin-left: 5rem;
+    margin-bottom: 2.5rem;
+
+    p {
+      color: #6d3b30;
+      text-align: center;
+    }
+  }
+
+  .legend {
+    margin-left: 5rem;
+  }
+
+  .legend ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #6c6c6c;
+  }
+
+  .legend-color {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 3px;
+  }
+
+  .purple {
+    background-color: #8d82ba;
+  }
+  .blue {
+    background-color: #554bf0;
+  }
+  .orange {
+    background-color: #242345;
+  }
+  .yellow {
+    background-color: #ebd13b;
+  }
+  .green {
+    background-color: #e27325;
+  }
+  .pink {
+    background-color: #53913a;
+  }
+  .darkgreen {
+    background-color: #c4c32e;
+  }
+
+  .img-map {
+    width: 550px;
+    height: 550px;
+    position: relative;
+    left: 60%;
+    bottom: 48%;
+
+    &:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+  }
+}

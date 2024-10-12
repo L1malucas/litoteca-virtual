@@ -1,60 +1,19 @@
 <section class="section-confirm-dialog">
-  <div class="mat-dialog-title">
-    <mat-icon class="mat-icon-info">info</mat-icon>
-    <h1 fxFlexAlign="start" [innerHTML]="data.title"></h1>
-    <div
-      class="box"
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
-      *ngIf="showSubtitle"
-    >
-      <span class="box-text" [innerHTML]="data.subtitle"></span>
-    </div>
+  <h3>Tem certeza que deseja alterar os dados?</h3>
+  <div class="section-buttons">
+    <app-button
+      text="EDITAR"
+      [buttonStyle]="{
+        padding: '.6rem 1rem',
+        backgroundColor: 'transparent',
+        color: 'var(--primary)',
+        border: '1px solid var(--primary)',
+        borderRadius: '.8rem',
+      }"
+    ></app-button>
+    <app-button
+      text="ALTERAR DADOS"
+      [buttonStyle]="{ borderRadius: '.8rem', padding: '0.6rem 1rem' }"
+    ></app-button>
   </div>
-
-  <mat-dialog-content
-    fxLayout="column"
-    fxLayoutAlign="start start"
-    *ngIf="data.descriptionFirst || data.descriptionSecond"
-  >
-    <span
-      class="item"
-      *ngIf="data.descriptionFirst"
-      [innerHTML]="data.descriptionFirst"
-    ></span>
-    <span
-      class="item"
-      *ngIf="data.descriptionSecond"
-      [innerHTML]="data.descriptionSecond"
-    ></span>
-  </mat-dialog-content>
-
-  <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
-    <span *ngIf="data.showConfirm" fxFlex="100" class="text-center">
-      <mat-checkbox
-        color="primary"
-        class="w-100 mb-2"
-        [(ngModel)]="confirmResult"
-      >
-        {{ data.confirmText }}
-      </mat-checkbox>
-    </span>
-    <div>
-      <button mat-dialog-close mat-stroked-button *ngIf="!data.onlyOkButton">
-        <mat-icon>close</mat-icon>
-        <span>NÃO</span>
-      </button>
-      <button
-        color="primary"
-        mat-raised-button
-        type="submit"
-        [mat-dialog-close]="data.showConfirm ? confirmResult : true"
-      >
-        <mat-icon class="btn-icon-confirm">check</mat-icon>
-        <span class="btn-text-confirm">{{
-          data.onlyOkButton ? "OK" : "SIM"
-        }}</span>
-      </button>
-    </div>
-  </mat-dialog-actions>
 </section>

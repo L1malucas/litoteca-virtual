@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { ErrorComponent } from "./shared/components/error/error.component";
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     },
   },
   { path: "", redirectTo: "/login", pathMatch: "full" },
-  { path: "**", redirectTo: "/login", pathMatch: "full" },
+  { path: "error", component: ErrorComponent },
+  { path: "**", redirectTo: "/error", pathMatch: "full" },
 ];
 
 @NgModule({

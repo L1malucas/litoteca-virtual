@@ -1,0 +1,27 @@
+<header [ngStyle]="styleHeader">
+  <div class="section-perfil">
+    <div class="avatar">
+      <img src="../../../../assets/images/png/img-perfil.png" alt="Perfil" />
+    </div>
+    <p>
+      Olá, <strong>{{ user.name }}</strong> <br />
+      <span>{{ user.info }}</span>
+    </p>
+  </div>
+  <div class="logo">
+    <a href="#" class="x" tabindex="0">
+      <img src="assets/images/svg/VectorX.svg" alt="x" />
+    </a>
+    <a href="#" class="instagram" tabindex="0">
+      <img src="assets/images/svg/VectorInsta.svg" alt="instagram" />
+    </a>
+    <a href="#" class="linkedIn" tabindex="0">
+      <img src="assets/images/svg/VectorLinkedIn.svg" alt="linkedIn" />
+    </a>
+    <img
+      src="assets/images/svg/logo-cbpm_login.svg"
+      alt="CBPM Logo"
+      class="logo-cbpm"
+    />
+  </div>
+</header>

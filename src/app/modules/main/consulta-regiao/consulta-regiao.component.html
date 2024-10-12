@@ -1,0 +1,29 @@
+<div class="container-consultar-regiao">
+  <app-header-home [styleHeader]="{ padding: '1rem 0' }"></app-header-home>
+  <div
+    class="background-image"
+    [ngStyle]="{ 'background-image': 'url(' + backgroundUrl + ')' }"
+  ></div>
+  <app-drop-down
+    textHeader="REGIÃO DA BAHIA"
+    [styleDropDown]="{ marginTop: '2rem', width: '40%' }"
+    [options]="options"
+    (itemSelected)="onItemSelected($event)"
+  ></app-drop-down>
+  <div class="section-municipios">
+    <p>Municípios:</p>
+    <app-button
+      text="BARREIRAS"
+      [buttonStyle]="{
+        backgroundColor: 'var(--white)',
+        color: 'var(--primary)',
+        boxShadow: ' 2px 8px 6px rgba(0, 0, 0, 0.5)',
+      }"
+      (click)="goConsultaFiltro()"
+    ></app-button>
+  </div>
+  <div class="back-to-login" (click)="backToHome()">
+    <i class="material-icons">arrow_back</i>
+    <a> Voltar para Home </a>
+  </div>
+</div>

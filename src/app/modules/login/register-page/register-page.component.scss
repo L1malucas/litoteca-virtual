@@ -26,11 +26,11 @@ $background-color: rgba(255, 222, 215, 0.18);
   height: 100%;
   padding-bottom: 2rem;
 
-  @media (max-width: 991px) {
-    max-width: 100%;
-    margin-top: 4vh;
-    padding: 0 2vw;
-  }
+  // @media (max-width: 768px) {
+  //   max-width: 100%;
+  //   margin-top: 4vh;
+  //   padding: 0 2vw;
+  // }
 }
 
 .form-title {
@@ -145,6 +145,10 @@ $background-color: rgba(255, 222, 215, 0.18);
   margin-top: 4vh;
   font: 700 2rem;
 
+  a {
+    cursor: pointer;
+  }
+
   @media (max-width: 991px) {
     margin-top: 4vh;
   }
@@ -161,23 +165,4 @@ $background-color: rgba(255, 222, 215, 0.18);
 .back-icon {
   object-fit: contain;
   width: 25px;
-}
-
-.submit-button {
-  border-radius: 2.5rem;
-  background-color: var(--primary);
-  color: var(--white);
-  padding: 0.6rem 2.9rem;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-
-  &:hover {
-    background-color: #5a1414;
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 991px) {
-    padding: 0.6rem 2rem;
-  }
 }

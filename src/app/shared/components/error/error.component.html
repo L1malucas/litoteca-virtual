@@ -1,7 +1,12 @@
+<app-header></app-header>
 <div class="page-not-found-container">
-  <h1>404</h1>
-  <p></p>
-  <p></p>
-  <h2>Oops! A página não existe ou ainda não foi criada!!</h2>
-  <button (click)="redirect()">Retornar a Home</button>
+  <img src="../../../../assets/images/svg/img-404.svg" alt="404" />
+  <h2>PÁGINA NÃO ENCONTRADA</h2>
+  <p>Parece que você não está conseguindo encontrar o que procura.</p>
+  <app-button
+    text="RETORNAR À PÁGINA ANTERIOR"
+    (click)="goBack()"
+    customClass="hover-transparent"
+    [buttonStyle]="{ padding: '0.6rem 1rem' }"
+  ></app-button>
 </div>
