@@ -52,6 +52,33 @@ header {
       &:hover {
         transform: none;
       }
+
+      @media (max-width: 745px) {
+        margin-left: 0;
+        width: 100px;
+      }
+    }
+  }
+  @media (max-width: 745px) {
+    padding: 1rem;
+    a {
+      display: none;
+    }
+    p {
+      font-size: 1rem;
+    }
+    .section-perfil {
+      .avatar {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  @media (max-width: 459px) {
+    justify-content: center;
+    .logo {
+      display: none;
     }
   }
 }
