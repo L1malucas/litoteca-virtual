@@ -6,6 +6,34 @@
 
     <form class="registration-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-content">
+        <div class="image-content">
+          <div class="avatar">
+            <label for="file-input">
+              <img
+                id="avatar-img"
+                [src]="imageSrc"
+                alt="Perfil"
+                *ngIf="imageSrc"
+              />
+              <i class="material-icons" *ngIf="!imageSrc">perm_identity</i>
+            </label>
+            <input
+              type="file"
+              id="file-input"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              style="display: none"
+            />
+          </div>
+          <button
+            class="btn-input-file"
+            (click)="triggerFileInput()"
+            matTooltip="Adicionar foto"
+          >
+            <i class="material-icons">edit</i>
+          </button>
+        </div>
+
         <!-- Nome Completo -->
         <div class="form-row">
           <div class="form-group full-width">

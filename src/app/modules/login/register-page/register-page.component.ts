@@ -1,6 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Toast } from "@services/system/toast.service";
 
 @Component({
   selector: "app-register",
@@ -8,7 +9,9 @@ import { Router } from "@angular/router";
   styleUrls: ["./register-page.component.scss"],
 })
 export class RegisterPageComponent {
+  imageSrc: string = "";
   private _router = inject(Router);
+  private _toast = inject(Toast);
   protected form = new FormGroup({
     name: new FormControl(null, [Validators.required]),
     phone: new FormControl("", [Validators.required]),
@@ -42,5 +45,36 @@ export class RegisterPageComponent {
 
   navigateConfirmRegister() {
     this._router.navigate(["login/confirmar-registro"]);
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+
+    if (file && this.isValidImage(file)) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.imageSrc = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      this._toast.error(
+        "Erro",
+        "Por favor, envie apenas imagens no formato JPG, JPEG ou PNG.",
+      );
+    }
+  }
+
+  isValidImage(file: File): boolean {
+    const validTypes = ["image/jpeg", "image/png", "image/jpg"];
+    return validTypes.includes(file.type);
+  }
+
+  triggerFileInput(): void {
+    const fileInput = document.getElementById("file-input") as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
   }
 }
