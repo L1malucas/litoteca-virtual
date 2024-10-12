@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { RouterModule } from "@angular/router";
@@ -26,6 +26,8 @@ import {
 import { HomeComponent } from "./modules/main/home/home.component";
 import { ConsultaRegiaoComponent } from "./modules/main/consulta-regiao/consulta-regiao.component";
 import { ConsultarRegiaoFiltroComponent } from "./modules/main/consultar-regiao-filtro/consultar-regiao-filtro.component";
+import { HttpsRequestInterceptor } from "@services/_interceptor";
+import { LoadingInterceptor } from "@components/loading/loading.interceptor";
 
 @NgModule({
   declarations: [
@@ -55,6 +57,16 @@ import { ConsultarRegiaoFiltroComponent } from "./modules/main/consultar-regiao-
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpsRequestInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
     // { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
     AuthService,
     {

@@ -10,6 +10,7 @@ import { LoadingComponent } from "./loading/loading.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { PaginationComponent } from "./pagination/pagination.component";
 import { PrimaryInputComponent } from "./primary-input/primary-input.component";
+import { TableCustomComponent } from "./table-custom/table-custom.component";
 import { TextRowComponent } from "./text-row/text-row.component";
 import { ToastComponent } from "./toast/toast.component";
 
@@ -25,6 +26,7 @@ export const COMPONENTS = [
   PrimaryInputComponent,
   TextRowComponent,
   ToastComponent,
+  TableCustomComponent,
   ButtonComponent,
   DropdownComponent,
   HeaderHomeComponent,

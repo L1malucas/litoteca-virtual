@@ -1,7 +1,10 @@
 import { Component, Input } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+} from "@angular/forms";
 
-type InputTypes = "text" | "number" | "password" | "email";
+type InputTypes = "text" | "number" | "password" | "email" | "select";
 
 @Component({
   selector: "app-primary-input",
@@ -12,15 +15,30 @@ type InputTypes = "text" | "number" | "password" | "email";
       multi: true,
     },
   ],
-  templateUrl: "./primary-input.component.html",
-  styleUrl: "./primary-input.component.scss",
+  template: `
+    <div class="input-wrapper">
+      <label>{{ label }}</label>
+      <div class="input-content">
+        <input
+          [type]="type"
+          [placeholder]="placeholder"
+          [mask]="mask"
+          [value]="value"
+          (input)="onInput($event)"
+          (focus)="onTouched && onTouched()"
+          [disabled]="isDisabled"
+        />
+      </div>
+    </div>
+  `,
+  styleUrls: ["./primary-input.component.scss"],
 })
 export class PrimaryInputComponent implements ControlValueAccessor {
   @Input() type: InputTypes = "text";
   @Input() placeholder: string = "";
+  @Input() mask: any;
   @Input() label: string = "";
-  @Input() inputName: string = "";
-
+  protected isDisabled: boolean = false;
   value: string = "";
   onChange: any = () => {};
   onTouched: any = () => {};
@@ -42,5 +60,7 @@ export class PrimaryInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState(_isDisabled: boolean): void {}
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
+  }
 }

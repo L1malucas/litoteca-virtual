@@ -1,88 +1,153 @@
+<app-header></app-header>
+
 <main class="registration-page">
   <app-header></app-header>
 
   <section class="registration-form-container">
     <h1 class="form-title">Cadastre-se</h1>
 
-    <form class="registration-form">
+    <form class="registration-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-content">
+        <div class="image-content">
+          <div class="avatar">
+            <label for="file-input">
+              <img
+                id="avatar-img"
+                [src]="imageSrc"
+                alt="Perfil"
+                *ngIf="imageSrc"
+              />
+              <i class="material-icons" *ngIf="!imageSrc">perm_identity</i>
+            </label>
+            <input
+              type="file"
+              id="file-input"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              style="display: none"
+            />
+          </div>
+          <button
+            class="btn-input-file"
+            (click)="triggerFileInput()"
+            matTooltip="Adicionar foto"
+          >
+            <i class="material-icons">edit</i>
+          </button>
+        </div>
+
+        <!-- Nome Completo -->
         <div class="form-row">
           <div class="form-group full-width">
-            <label for="fullName" class="form-label">Nome Completo</label>
-            <input type="text" id="fullName" class="form-input" />
+            <app-primary-input
+              label="Nome Completo"
+              type="text"
+              formControlName="name"
+            ></app-primary-input>
           </div>
         </div>
 
+        <!-- Telefone e Profissão -->
         <div class="form-row">
           <div class="form-group">
-            <label for="phone" class="form-label">Telefone</label>
-            <input type="tel" id="phone" class="form-input" />
+            <app-primary-input
+              label="Telefone"
+              type="text"
+              formControlName="phone"
+              placeholder="(00) 00000-0000"
+              mask="(00) 00000-0000"
+            ></app-primary-input>
           </div>
 
           <div class="form-group">
-            <label for="occupation" class="form-label"
-              >Profissão/Ocupação</label
-            >
-            <input type="text" id="occupation" class="form-input" />
+            <app-primary-input
+              label="Profissão/Ocupação"
+              type="text"
+              formControlName="occupation"
+            ></app-primary-input>
           </div>
         </div>
 
+        <!-- País, Estado e Cidade -->
         <div class="form-row">
+          <!-- País -->
           <div class="form-group">
             <label for="country" class="form-label">País</label>
-            <select id="country" class="form-select">
+            <select id="country" class="form-select" formControlName="country">
+              <option value="">Selecione o país</option>
               <option value="Brasil">Brasil</option>
+              <option value="Estados Unidos">Estados Unidos</option>
+              <option value="Canadá">Canadá</option>
             </select>
           </div>
 
+          <!-- Estado -->
           <div class="form-group">
             <label for="state" class="form-label">Estado</label>
-            <select id="state" class="form-select">
-              <option value="BA">BA</option>
+            <select id="state" class="form-select" formControlName="state">
+              <option value="">Selecione o estado</option>
+              <option value="São Paulo">São Paulo</option>
+              <option value="Rio de Janeiro">Rio de Janeiro</option>
+              <option value="Minas Gerais">Minas Gerais</option>
             </select>
           </div>
 
+          <!-- Cidade -->
           <div class="form-group">
             <label for="city" class="form-label">Cidade</label>
-            <select id="city" class="form-select">
-              <option value="">Selecione uma cidade</option>
+            <select id="city" class="form-select" formControlName="city">
+              <option value="">Selecione a cidade</option>
+              <option value="São Paulo">São Paulo</option>
+              <option value="Rio de Janeiro">Rio de Janeiro</option>
+              <option value="Belo Horizonte">Belo Horizonte</option>
             </select>
           </div>
         </div>
 
+        <!-- Email e Confirmação de Email -->
         <div class="form-row">
           <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" class="form-input" />
+            <app-primary-input
+              label="Email"
+              type="email"
+              formControlName="email"
+            ></app-primary-input>
           </div>
 
           <div class="form-group">
-            <label for="confirmEmail" class="form-label"
-              >Confirme seu email*</label
-            >
-            <input type="email" id="confirmEmail" class="form-input" />
+            <app-primary-input
+              label="Confirme seu email"
+              type="email"
+              formControlName="confirmEmail"
+            ></app-primary-input>
           </div>
         </div>
 
+        <!-- Senha e Confirmação de Senha -->
         <div class="form-row">
           <div class="form-group">
-            <label for="password" class="form-label">Senha</label>
-            <input type="password" id="password" class="form-input" />
+            <app-primary-input
+              label="Senha"
+              type="password"
+              formControlName="password"
+            ></app-primary-input>
           </div>
 
           <div class="form-group">
-            <label for="confirmPassword" class="form-label"
-              >Confirme sua senha*</label
-            >
-            <input type="password" id="confirmPassword" class="form-input" />
+            <app-primary-input
+              label="Confirme sua senha"
+              type="password"
+              formControlName="confirmPassword"
+            ></app-primary-input>
           </div>
         </div>
 
+        <!-- Ações -->
         <div class="form-actions">
           <a (click)="goBack()" class="back-to-login">
             <img
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/d01365446799f5ae7ba400a67cd8def220013c025ac53b0476e2744b77b8f41e?placeholderIfAbsent=true&apiKey=a1c783c1fea844e8a9d4918a3ccfb90a"
-              alt=""
+              alt="Voltar para Login"
               class="back-icon"
             />
             Voltar para LOGIN

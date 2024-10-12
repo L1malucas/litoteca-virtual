@@ -8,7 +8,7 @@
       </p>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form" (submit)="submit()">
       <div class="input-group">
         <input
           type="email"
@@ -46,7 +46,10 @@
         }"
       ></app-button>
     </form>
+    <div><app-loading></app-loading></div>
   </div>
 
-  <div class="copy">© 2024, Renova Soluções em Tecnologia LTDA.</div>
+  <div class="copy">
+    © {{ currentYear }}, Renova Soluções em Tecnologia LTDA.
+  </div>
 </div>
