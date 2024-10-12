@@ -5,12 +5,26 @@
   justify-content: center;
   border: 1px solid var(--primary);
   border-radius: 1.7rem;
+  padding: 0 2rem;
+
+  .btn-close {
+    position: absolute;
+    top: 4px;
+    right: 12px;
+    cursor: pointer;
+    color: var(--white);
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 
   h3 {
     font-size: 1rem;
     background-color: var(--primary);
-    padding: 1rem;
+    padding: 1rem 2rem;
     text-align: center;
+    width: 100%;
     color: var(--white);
   }
 
