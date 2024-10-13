@@ -9,7 +9,7 @@
     </p>
     <app-button
       text="EXPLORAR AGORA"
-      (click)="goConsultaFiltro()"
+      (click)="goConsultaRegiao()"
       [buttonStyle]="{
         backgroundColor: 'var(--white)',
         color: 'var(--primary)',
@@ -46,11 +46,51 @@
         alt="Lupa Inteira"
         class="lupa"
       />
-      <img
-        src="../../../../assets/images/png/MapaBahia.png"
-        alt="Mapa da Bahia"
-        class="mapa"
-      />
+      <div class="map-container">
+        <img
+          src="../../../../assets/images/png/PurpleRegion.png"
+          alt="Extremo Oeste Baiano"
+          class="region"
+          id="region1"
+          (click)="goConsultaRegiao()"
+        />
+        <img
+          src="../../../../assets/images/png/BlueRegion.png"
+          alt="Vale São Francisco da Bahia"
+          class="region"
+          id="region2"
+        />
+        <img
+          src="../../../../assets/images/png/DarkBlueRegion.png"
+          alt="Nordeste Baiano"
+          class="region"
+          id="region3"
+        />
+        <img
+          src="../../../../assets/images/png/OrangeRegion.png"
+          alt="Centro Norte Baiano"
+          class="region"
+          id="region4"
+        />
+        <img
+          src="../../../../assets/images/png/YellowRegion.png"
+          alt="Centro Sul Baiano"
+          class="region"
+          id="region5"
+        />
+        <img
+          src="../../../../assets/images/png/GreenRegion.png"
+          alt="Metropolitana de Salvador"
+          class="region"
+          id="region6"
+        />
+        <img
+          src="../../../../assets/images/png/LimeRegion.png"
+          alt="Sul Baiano"
+          class="region"
+          id="region7"
+        />
+      </div>
     </div>
   </div>
 </div>

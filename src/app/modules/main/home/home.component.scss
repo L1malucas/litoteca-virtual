@@ -108,6 +108,63 @@
     }
   }
 
+  .map-container {
+    position: relative;
+    align-self: center;
+    bottom: 20rem;
+    left: 20rem;
+  }
+  .region {
+    transition: fill 0.3s;
+    position: absolute;
+    cursor: pointer;
+  }
+  .region:hover {
+    transform: scale(1.1);
+  }
+
+  #region1 {
+    width: 255px;
+    top: 50px;
+    left: 41px;
+  }
+
+  #region2 {
+    width: 200px;
+    top: 47px;
+    left: 197px;
+  }
+
+  #region3 {
+    width: 200px;
+    top: 37px;
+    left: 277px;
+  }
+
+  #region4 {
+    width: 200px;
+    top: 121px;
+    left: 192px;
+  }
+
+  #region5 {
+    width: 182px;
+    top: 59px;
+    left: 223px;
+  }
+
+  #region6 {
+    width: 200px;
+    top: 84px;
+    left: 277px;
+  }
+
+  #region7 {
+    width: 200px;
+    top: 184px;
+    left: 252px;
+  }
+
   @media (max-width: 1540px) {
     h1 {
       margin-bottom: 1.5rem;
