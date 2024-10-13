@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-image: url(../../../../assets/images/png/LupaInteira.png);
-  background-repeat: no-repeat;
-  background-size: contain;
+  // background-image: url(../../../../assets/images/png/LupaInteira.png);
+  // background-repeat: no-repeat;
+  // background-size: contain;
+  overflow-y: auto;
 
   .section-img {
     display: flex;
@@ -13,7 +14,7 @@
     background-image: url(../../../../assets/images/png/home-img.png);
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 2rem 0 2rem 0;
+    margin: 0 0 2rem 0;
     padding: 2rem 5rem;
 
     p {
@@ -43,6 +44,8 @@
   }
 
   .legend {
+    display: flex;
+    flex-direction: row;
     margin-left: 5rem;
   }
 
@@ -87,16 +90,35 @@
     background-color: #c4c32e;
   }
 
-  .img-map {
-    width: 550px;
-    height: 550px;
-    position: relative;
-    left: 60%;
-    bottom: 48%;
+  .content-lupa {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .section-images {
+    display: flex;
+    .lupa {
+      width: 400px;
+    }
+    .mapa {
+      width: 400px;
+      position: absolute;
+      right: 10rem;
+      top: 14rem;
+    }
+  }
 
-    &:hover {
-      transform: scale(1.05);
-      cursor: pointer;
+  @media (max-width: 1540px) {
+    h1 {
+      margin-bottom: 1.5rem;
+      margin-left: 3rem;
+    }
+    .section-info {
+      margin-bottom: 0.2rem;
+      margin-left: 3rem;
+    }
+    .legend {
+      margin-left: 3rem;
     }
   }
 }
