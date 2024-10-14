@@ -190,6 +190,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
 
   registerPage() {
-    this._router.navigate(["/login/cadastro"]);
+    this._router.navigate(["/cadastro"]);
   }
 }

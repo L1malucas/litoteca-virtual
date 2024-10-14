@@ -23,11 +23,11 @@ export class ConsultaRegiaoComponent {
   constructor(private _router: Router) {}
 
   backToHome() {
-    this._router.navigate(["login/home"]);
+    this._router.navigate(["/home"]);
   }
 
   goConsultaFiltro() {
-    this._router.navigate(["login/consultar-regiao-filtro"]);
+    this._router.navigate(["/consultar-regiao-filtro"]);
   }
   onItemSelected(region: string) {
     this.selectedRegion = region;

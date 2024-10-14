@@ -18,6 +18,6 @@ export class ConfirmRegisterComponent {
     this._dialog.open(ConfirmDialogComponent, {});
   }
   goHome() {
-    this._router.navigate(["login/home"]);
+    this._router.navigate(["/home"]);
   }
 }

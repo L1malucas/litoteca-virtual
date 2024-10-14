@@ -1,9 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { Toast } from "@services/system/toast.service";
@@ -75,7 +71,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   navigateConfirmRegister() {
-    this._router.navigate(["login/confirmar-registro"]);
+    this._router.navigate(["/confirmar-registro"]);
   }
 
   onFileSelected(event: any): void {

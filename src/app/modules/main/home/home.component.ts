@@ -10,6 +10,6 @@ export class HomeComponent {
   constructor(private _router: Router) {}
 
   goConsultaFiltro() {
-    this._router.navigate(["login/consultar-regiao"]);
+    this._router.navigate(["/consultar-regiao"]);
   }
 }
