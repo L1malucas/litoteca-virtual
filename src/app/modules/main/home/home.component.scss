@@ -100,12 +100,6 @@
     .lupa {
       width: 400px;
     }
-    .mapa {
-      width: 400px;
-      position: absolute;
-      right: 10rem;
-      top: 14rem;
-    }
   }
 
   .map-container {
@@ -186,6 +180,29 @@
     }
     .legend {
       margin-left: 3rem;
+    }
+  }
+  @media (max-width: 1045px) {
+    .section-images {
+      .lupa {
+        display: none;
+      }
+    }
+    .map-container {
+      right: 0%;
+      top: 30%;
+    }
+  }
+  @media (max-width: 768px) {
+    .section-images {
+      .lupa {
+        display: none;
+      }
+    }
+    .map-container {
+      position: relative;
+      right: 0%;
+      top: 0%;
     }
   }
 }
