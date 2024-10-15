@@ -5,6 +5,7 @@ import { DropdownComponent } from "./drop-down/drop-down.component";
 import { ErrorComponent } from "./error/error.component";
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderHomeComponent } from "./header-home/header-home.component";
+import { UserProfileComponent } from "./header-home/user-profile/user-profile.component";
 import { HeaderComponent } from "./header/header.component";
 import { LoadingComponent } from "./loading/loading.component";
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -30,4 +31,5 @@ export const COMPONENTS = [
   ButtonComponent,
   DropdownComponent,
   HeaderHomeComponent,
+  UserProfileComponent,
 ];

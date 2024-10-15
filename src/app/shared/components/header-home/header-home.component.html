@@ -1,5 +1,5 @@
 <header [ngStyle]="styleHeader">
-  <div class="section-perfil">
+  <div class="section-perfil" (click)="openProfile()">
     <div class="avatar">
       <img src="../../../../assets/images/png/img-perfil.png" alt="Perfil" />
     </div>
@@ -8,6 +8,7 @@
       <span>{{ user.info }}</span>
     </p>
   </div>
+  <app-user-profile [show]="show"></app-user-profile>
   <div class="logo">
     <a href="#" class="x" tabindex="0">
       <img src="assets/images/svg/VectorX.svg" alt="x" />
