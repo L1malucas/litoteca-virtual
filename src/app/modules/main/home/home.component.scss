@@ -94,6 +94,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 100%;
   }
   .section-images {
     display: flex;
@@ -203,6 +204,15 @@
       position: relative;
       right: 0%;
       top: 0%;
+    }
+  }
+  @media (max-width: 705px) {
+    .content-lupa {
+      flex-direction: column;
+    }
+    .map-container {
+      position: static;
+      margin: 0px 0 -5rem 0rem;
     }
   }
 }
