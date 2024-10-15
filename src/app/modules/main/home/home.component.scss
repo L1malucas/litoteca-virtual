@@ -110,59 +110,67 @@
 
   .map-container {
     position: relative;
-    align-self: center;
-    bottom: 20rem;
-    left: 20rem;
-  }
-  .region {
-    transition: fill 0.3s;
-    position: absolute;
-    cursor: pointer;
-  }
-  .region:hover {
-    transform: scale(1.1);
-  }
+    width: 500px; // Ajuste conforme necessário
+    height: 500px; // Ajuste conforme necessário
 
-  #region1 {
-    width: 255px;
-    top: 50px;
-    left: 41px;
-  }
+    .region {
+      transition: transform 0.3s;
+      position: absolute;
+      cursor: pointer;
 
-  #region2 {
-    width: 200px;
-    top: 47px;
-    left: 197px;
-  }
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
 
-  #region3 {
-    width: 200px;
-    top: 37px;
-    left: 277px;
-  }
+    #region1 {
+      width: 255px;
+      top: 50px;
+      left: 41px;
+      clip-path: inset(20% 28% 20% 22%);
+    }
 
-  #region4 {
-    width: 200px;
-    top: 121px;
-    left: 192px;
-  }
+    #region2 {
+      width: 200px;
+      top: 47px;
+      left: 197px;
+      clip-path: inset(21% 0% 16% 10%);
+    }
 
-  #region5 {
-    width: 182px;
-    top: 59px;
-    left: 223px;
-  }
+    #region3 {
+      width: 200px;
+      top: 37px;
+      left: 277px;
+      clip-path: inset(34% 27% 33% 22%);
+    }
 
-  #region6 {
-    width: 200px;
-    top: 84px;
-    left: 277px;
-  }
+    #region4 {
+      width: 200px;
+      top: 121px;
+      left: 192px;
+      clip-path: inset(25% 14% 25% 10%);
+    }
 
-  #region7 {
-    width: 200px;
-    top: 184px;
-    left: 252px;
+    #region5 {
+      width: 182px;
+      top: 59px;
+      left: 223px;
+      clip-path: inset(31% 11% 31% 13%);
+    }
+
+    #region6 {
+      width: 200px;
+      top: 84px;
+      left: 277px;
+      clip-path: inset(44% 36% 43% 36%);
+    }
+
+    #region7 {
+      width: 200px;
+      top: 184px;
+      left: 252px;
+      clip-path: inset(20% 34% 20% 35%);
+    }
   }
 
   @media (max-width: 1540px) {
