@@ -1,5 +1,13 @@
 <section class="section-confirm-dialog">
   <h3>Tem certeza que deseja alterar os dados?</h3>
+  <div class="btn-close">
+    <i
+      class="material-icons md-18 pointer"
+      (click)="closeDialog()"
+      title="Fechar"
+      >close</i
+    >
+  </div>
   <div class="section-buttons">
     <app-button
       text="EDITAR"
@@ -10,10 +18,12 @@
         border: '1px solid var(--primary)',
         borderRadius: '.8rem',
       }"
+      customClass="hover-primary"
     ></app-button>
     <app-button
       text="ALTERAR DADOS"
       [buttonStyle]="{ borderRadius: '.8rem', padding: '0.6rem 1rem' }"
+      customClass="hover-transparent"
     ></app-button>
   </div>
 </section>

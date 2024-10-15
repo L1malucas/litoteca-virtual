@@ -9,7 +9,13 @@ import { Router } from "@angular/router";
 export class HomeComponent {
   constructor(private _router: Router) {}
 
-  goConsultaFiltro() {
-    this._router.navigate(["/consultar-regiao"]);
+  goConsultaRegiao(region?: string) {
+    if (region) {
+      this._router.navigate(["/consultar-regiao"], {
+        queryParams: { region: region },
+      });
+    } else {
+      this._router.navigate(["/consultar-regiao"]);
+    }
   }
 }

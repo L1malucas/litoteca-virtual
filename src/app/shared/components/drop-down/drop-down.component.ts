@@ -17,9 +17,11 @@ export class DropdownComponent {
     this.isOpen = !this.isOpen;
   }
 
-  selectItem(option: string) {
+  selectItem(option: string, emitEvent: boolean = true) {
     this.selectedProject = option;
-    this.isOpen = true;
-    this.itemSelected.emit(option);
+    this.isOpen = false; // Sempre fechar o dropdown após a seleção
+    if (emitEvent) {
+      this.itemSelected.emit(option);
+    }
   }
 }

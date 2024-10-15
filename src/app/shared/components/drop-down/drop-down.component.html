@@ -1,9 +1,5 @@
-<div
-  (click)="toggleDropdown()"
-  class="dropdown-container"
-  [ngStyle]="styleDropDown"
->
-  <div class="dropdown-header">
+<div class="dropdown-container" [ngStyle]="styleDropDown">
+  <div class="dropdown-header" (click)="toggleDropdown()">
     {{ selectedProject ? selectedProject : textHeader }}
     <mat-icon>{{ isOpen ? "expand_less" : "expand_more" }}</mat-icon>
   </div>

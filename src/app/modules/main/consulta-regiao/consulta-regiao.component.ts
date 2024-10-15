@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DropdownComponent } from "@components/drop-down/drop-down.component";
 
 @Component({
   selector: "app-consulta-regiao",
@@ -7,6 +8,24 @@ import { Router } from "@angular/router";
   styleUrls: ["./consulta-regiao.component.scss"],
 })
 export class ConsultaRegiaoComponent {
+  @ViewChild(DropdownComponent) dropDown!: DropdownComponent;
+
+  constructor(
+    private _router: Router,
+    private route: ActivatedRoute,
+  ) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      if (params["region"]) {
+        this.onItemSelected(params["region"]);
+        setTimeout(() => {
+          this.updateDropDown(params["region"]);
+        });
+      }
+    });
+  }
+
   options = [
     "EXTREMO OESTE BAIANO",
     "VALE SÃO FRANCISCO DA BAHIA",
@@ -20,8 +39,6 @@ export class ConsultaRegiaoComponent {
   selectedRegion: string = "";
   backgroundUrl: string = "../../../../assets/images/png/MapaBahia.png";
 
-  constructor(private _router: Router) {}
-
   backToHome() {
     this._router.navigate(["/home"]);
   }
@@ -29,6 +46,13 @@ export class ConsultaRegiaoComponent {
   goConsultaFiltro() {
     this._router.navigate(["/consultar-regiao-filtro"]);
   }
+
+  updateDropDown(region: string) {
+    if (this.dropDown) {
+      this.dropDown.selectItem(region, false);
+    }
+  }
+
   onItemSelected(region: string) {
     this.selectedRegion = region;
 
