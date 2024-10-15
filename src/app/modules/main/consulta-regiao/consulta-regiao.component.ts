@@ -40,11 +40,11 @@ export class ConsultaRegiaoComponent {
   backgroundUrl: string = "../../../../assets/images/png/MapaBahia.png";
 
   backToHome() {
-    this._router.navigate(["login/home"]);
+    this._router.navigate(["/home"]);
   }
 
   goConsultaFiltro() {
-    this._router.navigate(["login/consultar-regiao-filtro"]);
+    this._router.navigate(["/consultar-regiao-filtro"]);
   }
 
   updateDropDown(region: string) {

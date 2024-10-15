@@ -10,6 +10,6 @@ export class ConsultarRegiaoFiltroComponent {
   constructor(private _router: Router) {}
 
   backToConsultarRegiao() {
-    this._router.navigate(["login/consultar-regiao"]);
+    this._router.navigate(["/consultar-regiao"]);
   }
 }

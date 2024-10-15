@@ -23,18 +23,18 @@ import {
   withNgxWebstorageConfig,
   withSessionStorage,
 } from "ngx-webstorage";
-import { HomeComponent } from "./modules/main/home/home.component";
-import { ConsultaRegiaoComponent } from "./modules/main/consulta-regiao/consulta-regiao.component";
-import { ConsultarRegiaoFiltroComponent } from "./modules/main/consultar-regiao-filtro/consultar-regiao-filtro.component";
 import { HttpsRequestInterceptor } from "@services/_interceptor";
 import { LoadingInterceptor } from "@components/loading/loading.interceptor";
+import { ConfirmRegisterComponent } from "@modules/login/confirm-register/confirm-register.component";
+import { LoginPageComponent } from "@modules/login/login-page/login-page.component";
+import { RegisterPageComponent } from "@modules/login/register-page/register-page.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    ConsultaRegiaoComponent,
-    ConsultarRegiaoFiltroComponent,
+    LoginPageComponent,
+    RegisterPageComponent,
+    ConfirmRegisterComponent,
   ],
   imports: [
     CoreModule,
