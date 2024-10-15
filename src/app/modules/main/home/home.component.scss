@@ -218,7 +218,7 @@
   @media (min-width: 1550px) {
     .map-container {
       left: 50%;
-      top: 30%;
+      top: 28%;
       #region1 {
         width: 385px;
         top: 21px;
@@ -230,41 +230,41 @@
         width: 400px;
         top: -61px;
         left: 246px;
-        clip-path: inset(21% 0% 16% 10%);
+        clip-path: polygon(10% 22%, 91% 19%, 100% 31%, -3% 89%);
       }
 
       #region3 {
-        width: 353px;
-        top: -58px;
+        width: 362px;
+        top: -63px;
         left: 420px;
         clip-path: inset(34% 27% 33% 22%);
       }
 
       #region4 {
-        width: 361px;
-        top: 103px;
-        left: 245px;
+        width: 362px;
+        top: 106px;
+        left: 246px;
         clip-path: inset(25% 14% 25% 10%);
       }
 
       #region5 {
-        width: 364px;
-        top: -39px;
-        left: 294px;
+        width: 369px;
+        top: -41px;
+        left: 293px;
         clip-path: inset(31% 11% 31% 13%);
       }
 
       #region6 {
-        width: 390px;
-        top: 16px;
-        left: 402px;
+        width: 443px;
+        top: -19px;
+        left: 370px;
         clip-path: inset(44% 36% 43% 36%);
       }
 
       #region7 {
-        width: 362px;
-        top: 214px;
-        left: 350px;
+        width: 367px;
+        top: 216px;
+        left: 348px;
         clip-path: inset(20% 34% 20% 35%);
       }
     }
