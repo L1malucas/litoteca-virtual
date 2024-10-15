@@ -25,9 +25,17 @@ import {
 } from "ngx-webstorage";
 import { HttpsRequestInterceptor } from "@services/_interceptor";
 import { LoadingInterceptor } from "@components/loading/loading.interceptor";
+import { ConfirmRegisterComponent } from "@modules/login/confirm-register/confirm-register.component";
+import { LoginPageComponent } from "@modules/login/login-page/login-page.component";
+import { RegisterPageComponent } from "@modules/login/register-page/register-page.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    LoginPageComponent,
+    RegisterPageComponent,
+    ConfirmRegisterComponent,
+  ],
   imports: [
     CoreModule,
     BrowserModule,
