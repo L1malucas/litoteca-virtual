@@ -7,12 +7,10 @@ import {
 } from "@angular/animations";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { ConfirmDialogComponent } from "@components/confirm-dialog/confirm-dialog.component";
 import { Variables } from "@constants/variables";
-import { ConfirmDialogInterface } from "@customTypes/system/ConfirmDialog.interface";
 import { AuthService } from "@services/system/auth.service";
+import { ToastrService } from "ngx-toastr";
 import { LocalStorageService } from "ngx-webstorage";
 import { Subscription } from "rxjs";
 
@@ -49,7 +47,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private _router: Router,
-    private _dialog: MatDialog,
+    private _toast: ToastrService,
     private _authService: AuthService,
     private _storage: LocalStorageService,
   ) {}
@@ -102,32 +100,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         invalidFieldsMessage += `O campo ${field} é inválido. \n`;
       }
     });
-
-    this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-      ConfirmDialogComponent,
-      {
-        data: {
-          title: "Formulário inválido!",
-          subtitle:
-            invalidFieldsMessage ||
-            "Por favor, preencha todos os campos corretamente.",
-          onlyOkButton: true,
-        },
-      },
-    );
+    this._toast.error(invalidFieldsMessage);
   }
 
   private onLoginSuccess() {
-    this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-      ConfirmDialogComponent,
-      {
-        data: {
-          title: "Login feito com sucesso!",
-          subtitle: "Você será redirecionado para a página inicial.",
-          onlyOkButton: true,
-        },
-      },
-    );
+    this._toast.success("Login efetuado com sucesso!");
 
     this.loading = false;
     this._router.navigate(["home"]);
@@ -137,27 +114,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.loading = false;
 
     if (err.status === 401) {
-      this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-        ConfirmDialogComponent,
-        {
-          data: {
-            title: "Usuário ou senha inválidos!",
-            subtitle: "Por favor, tente novamente.",
-            onlyOkButton: true,
-          },
-        },
-      );
+      this._toast.error("Usuário ou senha inválidos!");
     } else if (err.status === 400) {
-      this._dialog.open<ConfirmDialogComponent, ConfirmDialogInterface>(
-        ConfirmDialogComponent,
-        {
-          data: {
-            title: "Erro ao fazer login!",
-            subtitle: "Por favor, tente novamente.",
-            onlyOkButton: true,
-          },
-        },
-      );
+      this._toast.error("Erro ao efetuar login!");
     }
   }
 
