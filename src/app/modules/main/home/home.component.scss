@@ -109,9 +109,11 @@
   }
 
   .map-container {
-    position: relative;
-    width: 500px; // Ajuste conforme necessário
-    height: 500px; // Ajuste conforme necessário
+    position: fixed;
+    left: 60%;
+    top: 32%;
+    z-index: 999;
+    transform: translate(-50%, -50%);
 
     .region {
       transition: transform 0.3s;
@@ -119,7 +121,7 @@
       cursor: pointer;
 
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.1);
       }
     }
 
