@@ -11,11 +11,11 @@ export class HomeComponent {
 
   goConsultaRegiao(region?: string) {
     if (region) {
-      this._router.navigate(["login/consultar-regiao"], {
+      this._router.navigate(["/consultar-regiao"], {
         queryParams: { region: region },
       });
     } else {
-      this._router.navigate(["login/consultar-regiao"]);
+      this._router.navigate(["/consultar-regiao"]);
     }
   }
 }
