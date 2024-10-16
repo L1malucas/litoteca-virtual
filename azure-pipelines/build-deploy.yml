@@ -55,10 +55,10 @@ stages:
                     IISDeploymentType: 'IISWebsite'
                     ActionIISWebsite: 'CreateOrUpdateWebsite'
                     WebsiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
-                    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV\browser\'
+                    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV'
                     WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
 
                 - task: IISWebAppDeploymentOnMachineGroup@0
                   inputs:
                     WebSiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
-                    Package: '$(Pipeline.Workspace)/drop/litoteca-virtual'
+                    Package: '$(Pipeline.Workspace)/drop/litoteca-virtual/browser'
