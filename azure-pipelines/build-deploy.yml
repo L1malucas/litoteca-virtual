@@ -55,4 +55,4 @@ stages:
           - task: IISWebAppDeploymentOnMachineGroup@0
             inputs:
               WebSiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
-              Package: '$(System.DefaultWorkingDirectory)/$(Pipeline.Workspace)/drop/litoteca-virtual'
+              Package: '$(Pipeline.Workspace)/drop/litoteca-virtual'
