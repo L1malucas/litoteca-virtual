@@ -55,7 +55,7 @@ stages:
                     IISDeploymentType: 'IISWebsite'
                     ActionIISWebsite: 'CreateOrUpdateWebsite'
                     WebsiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
-                    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV\browser'
+                    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV\browser\'
                     WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
 
                 - task: IISWebAppDeploymentOnMachineGroup@0
