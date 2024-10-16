@@ -1,25 +1,54 @@
 pool:
   name: Azure Pipelines
-steps:
-  - task: NodeTool@0
-    displayName: "Use Node 22.x"
-    inputs:
-      versionSpec: 22.x
 
-  - task: Npm@0
-    displayName: "npm install"
-    inputs:
-      cwd: dist
-      arguments: "--force"
+stages:
+  - stage: Build
+    displayName: "Build Stage"
+    jobs:
+      - job: BuildJob
+        displayName: "Build Job"
+        steps:
+          - task: NodeTool@0
+            displayName: "Use Node 22.x"
+            inputs:
+              versionSpec: 22.x
 
-  - task: Npm@1
-    displayName: "npm run build_dev"
-    inputs:
-      command: custom
-      verbose: false
-      customCommand: "run build_dev"
+          - task: Npm@0
+            displayName: "npm install"
+            inputs:
+              cwd: dist
+              arguments: "--force"
 
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact: drop"
-    inputs:
-      PathtoPublish: dist
+          - task: Npm@1
+            displayName: "npm run build_dev"
+            inputs:
+              command: custom
+              verbose: false
+              customCommand: "run build_dev"
+
+          - task: PublishBuildArtifacts@1
+            displayName: "Publish Artifact: drop"
+            inputs:
+              PathtoPublish: dist
+
+  - stage: Deploy
+    displayName: "Deploy Stage"
+    dependsOn: Build
+    jobs:
+      - job: DeployJob
+        displayName: "Deploy Job"
+        steps:
+          - download: current
+            displayName: "Download Build Artifacts"
+            artifact: drop
+          - task: IISWebAppManagementOnMachineGroup@0
+            inputs:
+              IISDeploymentType: 'IISWebsite'
+              ActionIISWebsite: 'CreateOrUpdateWebsite'
+              WebsiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
+              WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV'
+              WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+          - task: IISWebAppDeploymentOnMachineGroup@0
+            inputs:
+              WebSiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
+              Package: '$(System.DefaultWorkingDirectory)/$(Pipeline.Workspace)/drop/litoteca-virtual'
