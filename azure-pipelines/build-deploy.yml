@@ -34,6 +34,8 @@ stages:
   - stage: Deploy
     displayName: "Deploy Stage"
     dependsOn: Build
+    pool:
+      vmImage: 'windows-latest'  # Ensure the deployment uses a Windows agent
     jobs:
       - job: DeployJob
         displayName: "Deploy Job"
@@ -41,6 +43,7 @@ stages:
           - download: current
             displayName: "Download Build Artifacts"
             artifact: drop
+
           - task: IISWebAppManagementOnMachineGroup@0
             inputs:
               IISDeploymentType: 'IISWebsite'
@@ -48,6 +51,7 @@ stages:
               WebsiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
               WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV'
               WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+
           - task: IISWebAppDeploymentOnMachineGroup@0
             inputs:
               WebSiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
