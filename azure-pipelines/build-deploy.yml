@@ -34,25 +34,31 @@ stages:
   - stage: Deploy
     displayName: "Deploy Stage"
     dependsOn: Build
-    pool:
-      vmImage: 'windows-latest'  # Ensure the deployment uses a Windows agent
     jobs:
-      - job: DeployJob
+      - deployment: DeployJob
         displayName: "Deploy Job"
-        steps:
-          - download: current
-            displayName: "Download Build Artifacts"
-            artifact: drop
+        pool:
+          vmImage: 'windows-latest' 
+        environment:
+          name: CBPM-IIS-VM-ONPREMISES-CBPM
+          resourceType: VirtualMachine  
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  displayName: "Download Build Artifacts"
+                  artifact: drop
 
-          - task: IISWebAppManagementOnMachineGroup@0
-            inputs:
-              IISDeploymentType: 'IISWebsite'
-              ActionIISWebsite: 'CreateOrUpdateWebsite'
-              WebsiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
-              WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV'
-              WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+                - task: IISWebAppManagementOnMachineGroup@0
+                  inputs:
+                    IISDeploymentType: 'IISWebsite'
+                    ActionIISWebsite: 'CreateOrUpdateWebsite'
+                    WebsiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
+                    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot\LITOTECAVIRTUAL-FRONT-DEV'
+                    WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
 
-          - task: IISWebAppDeploymentOnMachineGroup@0
-            inputs:
-              WebSiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
-              Package: '$(Pipeline.Workspace)/drop/litoteca-virtual'
+                - task: IISWebAppDeploymentOnMachineGroup@0
+                  inputs:
+                    WebSiteName: 'LITOTECAVIRTUAL-FRONT-DEV'
+                    Package: '$(Pipeline.Workspace)/drop/litoteca-virtual'
