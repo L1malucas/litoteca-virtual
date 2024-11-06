@@ -16,10 +16,10 @@ variables:
   - template: variables.yml
 
 stages:
-  - stage: Checagem de Nome da Branch
+  - stage: checagem_branch
     displayName: 'Checagem de Nome da Branch'
     jobs:
-    - job: 'Checagem de Nome da Branch'
+    - job: 'checagem_nome_branch'
       displayName: 'Checagem de Nome da Branch'
       steps:
         - script: |
@@ -38,10 +38,10 @@ stages:
             fi
           displayName: 'Executar script checagem-branch'
 
-  - stage: Checagem das Mensagens de Commits
+  - stage: checagem_commit
     displayName: 'Checagem das Mensagens de Commits'
     jobs:
-    - job: 'Checagem das Mensagens de Commits'
+    - job: 'checagem_mensagem_commit'
       displayName: 'Checagem das Mensagens de Commits'
       steps:
         - checkout: self
