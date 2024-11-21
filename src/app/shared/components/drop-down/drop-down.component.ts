@@ -9,7 +9,7 @@ export class DropdownComponent {
   isOpen = false;
   selectedProject: string | null = null;
   @Input() textHeader: string = "Selecione um Item";
-  @Input() options: string[] = [];
+  @Input() options: any[] = [];
   @Input() styleDropDown: { [klass: string]: any } = {};
   @Output() itemSelected = new EventEmitter<string>();
 
@@ -17,8 +17,8 @@ export class DropdownComponent {
     this.isOpen = !this.isOpen;
   }
 
-  selectItem(option: string, emitEvent: boolean = true) {
-    this.selectedProject = option;
+  selectItem(option: any, emitEvent: boolean = true) {
+    this.selectedProject = option.nome;
     this.isOpen = false; // Sempre fechar o dropdown após a seleção
     if (emitEvent) {
       this.itemSelected.emit(option);

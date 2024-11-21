@@ -1,12 +1,26 @@
 .project-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 80%;
+  margin: 0 30px;
   font-family: Arial, sans-serif;
-  width: 100%;
 }
 
 .region {
-  background-color: #800000;
+  display: flex;
+  width: 450px;
+  height: 15px;
+  background-color: #4e0101;
   color: white;
   padding: 10px;
+  border-radius: 20px 20px 0 0;
+
+  span {
+    font-family: "Poppins";
+    font-size: 18px;
+    margin-left: 8px;
+  }
 }
 
 .pavilhao {
@@ -34,7 +48,7 @@
 }
 
 .projects input {
-  width: 100%;
+  width: 70%;
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
