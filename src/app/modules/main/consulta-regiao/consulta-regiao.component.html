@@ -7,21 +7,24 @@
   <app-drop-down
     textHeader="REGIÃO DA BAHIA"
     [styleDropDown]="{ marginTop: '2rem', width: '40%', marginLeft: '2rem' }"
-    [options]="options"
+    [options]="regioes"
     (itemSelected)="onItemSelected($event)"
   ></app-drop-down>
   <div class="section-municipios">
     <p>Municípios:</p>
-    <app-button
-      text="BARREIRAS"
-      [buttonStyle]="{
-        backgroundColor: 'var(--white)',
-        color: 'var(--primary)',
-        boxShadow: ' 2px 8px 6px rgba(0, 0, 0, 0.5)',
-      }"
-      (click)="goConsultaFiltro()"
-      customClass="hover-primary"
-    ></app-button>
+    <div *ngFor="let municipio of municipiosFiltrados">
+      <span *ngIf="!municipios">Nenhum município encontrado</span>
+      <app-button
+        text="{{ municipio.nome | uppercase }}"
+        [buttonStyle]="{
+          backgroundColor: 'var(--white)',
+          color: 'var(--primary)',
+          boxShadow: ' 2px 8px 6px rgba(0, 0, 0, 0.5)',
+        }"
+        (click)="goConsultaFiltro()"
+        customClass="hover-primary"
+      ></app-button>
+    </div>
   </div>
   <div class="back-to-login" (click)="backToHome()">
     <i class="material-icons">arrow_back</i>

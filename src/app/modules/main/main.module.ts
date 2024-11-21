@@ -8,6 +8,7 @@ import { AuthGuard } from "src/app/core/guards/auth-guard";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ComponentsModule } from "../../shared/components/components.module";
 import { MainRoutingModule } from "./main.routing.module";
+import { Services } from "@services/_services";
 
 @NgModule({
   declarations: [],
@@ -22,7 +23,7 @@ import { MainRoutingModule } from "./main.routing.module";
     NgxMaskPipe,
     MainRoutingModule,
   ],
-  providers: [AuthGuard, provideNgxMask()],
+  providers: [AuthGuard, provideNgxMask(), Services],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class MainModule {}

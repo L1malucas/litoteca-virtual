@@ -28,6 +28,7 @@ import { LoadingInterceptor } from "@components/loading/loading.interceptor";
 import { ConfirmRegisterComponent } from "@modules/login/confirm-register/confirm-register.component";
 import { LoginPageComponent } from "@modules/login/login-page/login-page.component";
 import { RegisterPageComponent } from "@modules/login/register-page/register-page.component";
+import { IMAGE_CONFIG } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,13 @@ import { RegisterPageComponent } from "@modules/login/register-page/register-pag
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true,
+    },
+    {
+      provide: IMAGE_CONFIG,
+      useValue: {
+        disableImageSizeWarning: true,
+        disableImageLazyLoadWarning: true,
+      },
     },
     // { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
     AuthService,

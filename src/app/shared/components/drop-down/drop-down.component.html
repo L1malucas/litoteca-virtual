@@ -1,6 +1,6 @@
 <div class="dropdown-container" [ngStyle]="styleDropDown">
   <div class="dropdown-header" (click)="toggleDropdown()">
-    {{ selectedProject ? selectedProject : textHeader }}
+    {{ selectedProject ? selectedProject : (textHeader | uppercase) }}
     <mat-icon>{{ isOpen ? "expand_less" : "expand_more" }}</mat-icon>
   </div>
   <ul *ngIf="isOpen" class="dropdown-list">
@@ -9,7 +9,7 @@
       class="dropdown-item"
       (click)="selectItem(project)"
     >
-      {{ project }}
+      {{ project.nome | uppercase }}
     </li>
   </ul>
 </div>
