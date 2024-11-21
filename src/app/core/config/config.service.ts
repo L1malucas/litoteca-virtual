@@ -10,6 +10,7 @@ export class ConfigService {
 
   constructor(private injector: Injector) {}
 
+  // Metodo para carregar o arquivo de configuração env
   load(url: string) {
     const injectHttp = this.injector.get(HttpClient);
     return new Promise((resolve) => {
@@ -27,6 +28,7 @@ export class ConfigService {
     });
   }
 
+  // Metodo para pegar a url do arquivo de configuração
   getUrl(element: string, dataList?: string) {
     if (this.config) {
       if (!dataList) {
@@ -41,6 +43,7 @@ export class ConfigService {
     }
   }
 
+  // Metodo para verificar se a url tem uma barra no final
   verifyUrl(typeModel: any): string {
     if (typeModel) {
       if (typeModel.includes("/", typeModel.length - 1)) {
@@ -54,6 +57,7 @@ export class ConfigService {
     return "/";
   }
 
+  // Metodo para pegar o end point ex: api/element
   getEndPoint(elementUrl: string, elementPath: string) {
     if (this.config) {
       const url = this.verifyUrl(this.config["URL"][elementUrl]);
