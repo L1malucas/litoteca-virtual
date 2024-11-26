@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef, OnInit } from "@angular/core";
+import { Component, ViewChild, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DropdownComponent } from "@components/drop-down/drop-down.component";
 import { MunicipioModel } from "@models/municipio.model";
@@ -18,7 +18,7 @@ import { REGIAO_ENUM } from "src/app/core/enums/regiao.enum";
 export class ConsultaRegiaoComponent implements OnInit {
   @ViewChild(DropdownComponent) dropDown!: DropdownComponent;
   regioes: RegiaoModel[] = [];
-  selectedRegion: RegiaoModel | null = null;
+  selectedRegion: RegiaoModel = new RegiaoModel();
   municipios: MunicipioModel[] = [];
   municipiosFiltrados: MunicipioModel[] = [];
   projetos: ProjetoModel[] = [];
@@ -30,19 +30,16 @@ export class ConsultaRegiaoComponent implements OnInit {
     private _regiaoService: RegiaoService,
     private _municipioService: MunicipioService,
     private _projetoService: ProjetoService,
-    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
     this.carregarRegioes();
-    this.route.queryParams.subscribe((params) => {
-      if (params["region"]) {
-        this.onItemSelected(params["region"]);
-        setTimeout(() => {
-          this.updateDropDown(params["region"]);
-        });
-      }
-    });
+  }
+
+  //carregar região selecionada via query param
+  ngAfterViewInit() {
+    const data = this.route.snapshot.data["municipios"];
+    this.municipiosFiltrados = this.filtrarMunicipios(data);
   }
 
   // Carregar regiões
@@ -93,20 +90,23 @@ export class ConsultaRegiaoComponent implements OnInit {
     if (this.municipiosFiltrados.length === 0) {
       console.warn("Nenhum município com projeto encontrado para esta região.");
     }
+
+    return this.municipiosFiltrados;
   }
 
   backToHome() {
     this._router.navigate(["/home"]);
   }
 
-  goConsultaFiltro() {
-    this._router.navigate(["/consultar-regiao-filtro"]);
+  goConsultaFiltro(municipioId: string) {
+    this._router.navigate(["/consultar-regiao-filtro/"], {
+      queryParams: { municipioId: municipioId },
+    });
   }
 
+  // Atualizar dropdown
   updateDropDown(region: string) {
-    if (this.dropDown) {
-      this.dropDown.selectItem(region, false);
-    }
+    this.dropDown.selectItem(region, false);
   }
 
   onItemSelected(event: any) {

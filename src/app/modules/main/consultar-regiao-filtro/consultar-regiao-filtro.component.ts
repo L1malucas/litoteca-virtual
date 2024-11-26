@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { RegiaoService } from "@services/regiao.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ProjetoModel } from "@models/projeto.model";
+import { ProjetoService } from "@services/projeto.service";
 
 @Component({
   selector: "app-consultar-regiao-filtro",
@@ -8,19 +9,28 @@ import { RegiaoService } from "@services/regiao.service";
   styleUrl: "./consultar-regiao-filtro.component.scss",
 })
 export class ConsultarRegiaoFiltroComponent implements OnInit {
+  projetos: ProjetoModel[] = [];
+
   constructor(
     private _router: Router,
-    private _regiaoService: RegiaoService,
-  ) {
-    this._regiaoService.getAll().subscribe((regioes) => {
-      console.log(regioes);
-    });
+    private _activeRoute: ActivatedRoute,
+    private _projetosService: ProjetoService,
+  ) {}
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.buscarProjetsPorMunicipio();
   }
 
-  ngOnInit() {
-    this._regiaoService.getAll().subscribe((regioes) => {
-      console.log(regioes);
-    });
+  buscarProjetsPorMunicipio() {
+    const projetos = this._activeRoute.snapshot.queryParams["projetos"];
+    console.log(projetos);
+    if (projetos) {
+      this._projetosService.getByMunicipioId(projetos).subscribe((projetos) => {
+        this.projetos = projetos;
+      });
+    }
   }
 
   backToConsultarRegiao() {

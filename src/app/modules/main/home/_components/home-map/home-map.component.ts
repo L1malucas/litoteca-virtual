@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { NgOptimizedImage } from "@angular/common";
 import { Router } from "@angular/router";
 
+import { REGIAO_CONSTANTS } from "@constants/regiao.constants";
+
 @Component({
   standalone: true,
   selector: "home-map",
@@ -10,15 +12,14 @@ import { Router } from "@angular/router";
   imports: [NgOptimizedImage],
 })
 export class HomeMapComponent {
+  regioes = REGIAO_CONSTANTS;
   constructor(private _router: Router) {}
 
   goConsultaRegiao(region?: string) {
     if (region) {
-      this._router.navigate(["/consultar-regiao"], {
-        queryParams: { region: region },
+      this._router.navigate(["/consultar-regiao/"], {
+        queryParams: { regiao: region },
       });
-    } else {
-      this._router.navigate(["/consultar-regiao"]);
     }
   }
 }
