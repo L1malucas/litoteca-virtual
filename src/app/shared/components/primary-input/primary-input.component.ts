@@ -1,8 +1,5 @@
 import { Component, Input } from "@angular/core";
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 type InputTypes = "text" | "number" | "password" | "email" | "select";
 
@@ -29,6 +26,7 @@ type InputTypes = "text" | "number" | "password" | "email" | "select";
           [disabled]="isDisabled"
         />
       </div>
+      <span class="error-message"> {{ ErrorMessage }} * </span>
     </div>
   `,
   styleUrls: ["./primary-input.component.scss"],
@@ -38,6 +36,7 @@ export class PrimaryInputComponent implements ControlValueAccessor {
   @Input() placeholder: string = "";
   @Input() mask: any;
   @Input() label: string = "";
+  @Input() ErrorMessage: string = "";
   protected isDisabled: boolean = false;
   value: string = "";
   onChange: any = () => {};
