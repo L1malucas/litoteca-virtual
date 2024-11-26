@@ -3,50 +3,81 @@
   <div class="login-form">
     <div class="title">
       <span>BEM VINDO A <b>LITOTECA VIRTUAL</b></span>
-      <p>
-        Acesse sua conta ou <b (click)="registerPage()">Cadastre-se aqui!</b>
-      </p>
+      @if (!isForgotPassword) {
+        <p>
+          Acesse sua conta ou <b (click)="registerPage()">Cadastre-se aqui!</b>
+        </p>
+      } @else {
+        <p class="forgot-password" (click)="forgotPassword()">
+          Voltar para o Login ou
+          <b (click)="registerPage()">Cadastre-se aqui!</b>
+        </p>
+      }
     </div>
 
-    <form [formGroup]="form" (submit)="submit()">
-      <div class="input-group">
-        <input
-          type="email"
-          placeholder="Digite seu email..."
-          formControlName="email"
-        />
-      </div>
-      <div class="input-group">
-        <input
-          type="password"
-          placeholder="*************"
-          id="password"
-          formControlName="senha"
-        />
-        <img
-          src="../../../assets/images/svg/eye-slash-fill.svg"
-          id="btn-password"
-          class="password-icon"
-          (click)="viewPassword()"
-        />
-      </div>
-      <div class="options">
-        <label>
-          <input type="checkbox" />
-          Lembrar de mim
-        </label>
-        <a href="#" class="forgot-password">Esqueceu sua senha?</a>
-      </div>
-      <app-button
-        text="ENTRAR"
-        type="submit"
-        [buttonStyle]="{
-          padding: '1rem 2.4rem',
-          marginTop: '2rem',
-        }"
-        customClass="hover-transparent"
-      ></app-button>
-    </form>
+    @if (!isForgotPassword) {
+      <form [formGroup]="form">
+        <div class="input-group">
+          <input
+            type="email"
+            placeholder="Digite seu email..."
+            formControlName="email"
+          />
+        </div>
+        <div class="input-group">
+          <input
+            type="password"
+            placeholder="*************"
+            id="password"
+            formControlName="senha"
+          />
+          <img
+            src="../../../assets/images/svg/eye-slash-fill.svg"
+            id="btn-password"
+            class="password-icon"
+            (click)="viewPassword()"
+          />
+        </div>
+        <div class="options">
+          <label>
+            <input type="checkbox" />
+            Lembrar de mim
+          </label>
+          <p class="forgot-password" (click)="forgotPassword()">
+            Esqueceu sua senha?
+          </p>
+        </div>
+        <app-button
+          text="ENTRAR"
+          (click)="submit()"
+          [buttonStyle]="{
+            padding: '1rem 2.4rem',
+            marginTop: '2rem',
+          }"
+          customClass="hover-transparent"
+        ></app-button>
+      </form>
+    } @else {
+      <form [formGroup]="formForgotPassword">
+        <div class="input-group">
+          <input
+            type="email"
+            placeholder="Digite seu email..."
+            formControlName="email"
+          />
+        </div>
+        <app-button
+          text="RECUPERAR SENHA"
+          (click)="submitForgotPassword()"
+          [buttonStyle]="{
+            padding: '1rem 2.4rem',
+            marginTop: '2rem',
+          }"
+          customClass="hover-transparent"
+        ></app-button>
+      </form>
+    }
+
     <div><app-loading></app-loading></div>
   </div>
 
