@@ -25,6 +25,9 @@
         customClass="hover-primary"
       ></app-button>
     </div>
+    <div *ngIf="municipiosFiltrados.length === 0">
+      <span>Selecione uma região acima</span>
+    </div>
   </div>
   <div class="back-to-login" (click)="backToHome()">
     <i class="material-icons">arrow_back</i>

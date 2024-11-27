@@ -20,17 +20,19 @@ export class ConsultarRegiaoFiltroComponent implements OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.buscarProjetsPorMunicipio();
+    this._activeRoute.queryParams.subscribe((params) => {
+      if (params["municipio"]) {
+        this.buscarProjetsPorMunicipio(params["municipio"]);
+      }
+    });
   }
 
-  buscarProjetsPorMunicipio() {
-    const projetos = this._activeRoute.snapshot.queryParams["projetos"];
-    console.log(projetos);
-    if (projetos) {
-      this._projetosService.getByMunicipioId(projetos).subscribe((projetos) => {
+  buscarProjetsPorMunicipio(municipioId: string) {
+    this._projetosService
+      .getByMunicipioId(municipioId)
+      .subscribe((projetos) => {
         this.projetos = projetos;
       });
-    }
   }
 
   backToConsultarRegiao() {
