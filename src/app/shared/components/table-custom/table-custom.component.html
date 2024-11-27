@@ -1,54 +1,51 @@
 <div class="project-table">
-  <div class="region">
-    <span
-      >REGIÃO: <strong>{{ region }}EXTREMO OESTE BAIANO</strong></span
+  <div class="municipio-dropdown">
+    <span>MUNICÍPIO: </span>
+    <select
+      [(ngModel)]="selectedMunicipio.id"
+      (change)="filterProjects()"
+      class="custom-select"
     >
+      <option>TODOS</option>
+      <option *ngFor="let municipio of municipios" [value]="municipio.id">
+        {{ municipio.nome | uppercase }}
+      </option>
+    </select>
   </div>
-  <div class="pavilhao">
-    <h3>PAVILHÃO</h3>
-    <div class="pavilhao-numbers">
-      <span [class.active]="selectedPavilhao === 1" (click)="selectPavilhao(1)"
-        >1</span
-      >
-      <span [class.active]="selectedPavilhao === 2" (click)="selectPavilhao(2)"
-        >2</span
-      >
-      <span [class.active]="selectedPavilhao === 3" (click)="selectPavilhao(3)"
-        >3</span
-      >
+  <div class="table-container">
+    <div class="table-header">
+      <div class="protect-filter">
+        <label><mat-icon class="project-icon">adjust</mat-icon>PROJETOS</label>
+        <input
+          type="text"
+          placeholder="Riacho Seco"
+          [(ngModel)]="searchTerm"
+          (input)="filterProjects()"
+        />
+      </div>
+      <div>ALVO</div>
+      <div>FURO</div>
+      <div>AÇÕES</div>
+    </div>
+    <div class="table-body" *ngFor="let project of projects">
+      <div>{{ project.nome }}</div>
+      <div>{{ project.alvo }} ALVO 1</div>
+      <div>{{ project.furo }} FURO 1</div>
+      <div class="actions">
+        <button mat-icon-button class="action-btn document">
+          <mat-icon>description</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          class="action-btn image"
+          (click)="goToGalery(project)"
+        >
+          <mat-icon>image</mat-icon>
+        </button>
+        <button mat-icon-button class="action-btn location">
+          <mat-icon>location_on</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
-  <div class="projects">
-    <h3>PROJETOS</h3>
-    <input
-      type="text"
-      placeholder="Riacho Seco"
-      [(ngModel)]="searchTerm"
-      (input)="filterProjects()"
-    />
-  </div>
-  <table>
-    <thead>
-      <tr>
-        <th>PAVILHÃO</th>
-        <th>ALVO</th>
-        <th>FURO</th>
-        <th>AÇÕES</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let project of filteredProjects">
-        <td>{{ project.id }}</td>
-        <td>{{ project.name }}</td>
-        <td>{{ project.alvo }}</td>
-        <td>{{ project.furo }}</td>
-        <td class="actions">
-          <button class="action-btn document"></button>
-          <button class="action-btn image"></button>
-          <button class="action-btn location"></button>
-          <button class="action-btn edit"></button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
 </div>
