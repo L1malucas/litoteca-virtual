@@ -1,0 +1,54 @@
+<div class="header">
+  <p>Projeto RIACHO SECO > RIACHO SECO | LP22</p>
+</div>
+
+<div class="btn-imprimir">
+  <app-button
+    text="IMPRIMIR"
+    [buttonStyle]="{
+      padding: '1rem 2.4rem',
+    }"
+    customClass="hover-transparent"
+  ></app-button>
+</div>
+
+<div class="informacoes-caixa">
+  <h3>Informações da Caixa</h3>
+  <form>
+    <div>
+      <label>Projeto:</label>
+      <input type="text" placeholder="Exemplo de preenchimento" />
+    </div>
+    <div>
+      <label>Município:</label>
+      <input type="text" placeholder="Exemplo de preenchimento" />
+    </div>
+    <div>
+      <label>Nº do Furo:</label>
+      <input type="text" placeholder="Exemplo de preenchimento" />
+    </div>
+    <div>
+      <label>Profundidade (m):</label>
+      <input type="text" value="0m" />
+      <input type="text" value="3,14m" />
+    </div>
+  </form>
+</div>
+
+<div class="caixa">
+  <h3>Caixa Seca</h3>
+  <div *ngFor="let secao of secoes" class="secao">
+    <h4>SEÇÃO {{ secao.numero }}</h4>
+    <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+  </div>
+
+  <h3>Caixa Molhada</h3>
+  <div *ngFor="let secao of secoesMolhadas" class="secao">
+    <h4>SEÇÃO {{ secao.numero }}</h4>
+    <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+  </div>
+</div>
+
+<div class="galeria">
+  <img *ngFor="let imagem of imagens" [src]="imagem" alt="Galeria de imagens" />
+</div>
