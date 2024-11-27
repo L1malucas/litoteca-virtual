@@ -3,7 +3,10 @@ import { Routes, RouterModule } from "@angular/router";
 import { ConsultarRegiaoFiltroComponent } from "./consultar-regiao-filtro.component";
 
 const consultarRegiaoFiltroRoutes: Routes = [
-  { path: "", component: ConsultarRegiaoFiltroComponent },
+  {
+    path: "",
+    component: ConsultarRegiaoFiltroComponent,
+  },
 ];
 
 @NgModule({

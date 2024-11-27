@@ -25,15 +25,16 @@
       "@components/*": ["src/app/shared/components/*"],
       "@directives/*": ["src/app/shared/directives/*"],
       "@pipes/*": ["src/app/shared/pipes/*"],
-      "@enums/*": ["src/app/common/enums/*"],
-      "@constants/*": ["src/app/common/constants/*"],
+      "@enums/*": ["src/app/core/enums/*"],
+      "@constants/*": ["src/app/core/constants/*"],
       "@modules/*": ["src/app/modules/*"],
       "@config/*": ["src/app/core/config/*"],
       "@models/*": ["src/app/core/models/*"],
       "@services/*": ["src/app/core/services/*"],
       "@customTypes/*": ["src/app/core/types/*"],
       "@utils/*": ["src/app/core/utils/*"],
-      "@guards/*": ["src/app/core/directives/guards/*"]
+      "@guards/*": ["src/app/core/directives/guards/*"],
+      "@variables/*": ["src/assets/styles/variables/*"]
     }
   },
   "angularCompilerOptions": {

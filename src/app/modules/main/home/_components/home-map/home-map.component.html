@@ -8,13 +8,13 @@
   />
   <div class="map-container">
     <img
-      ngSrc="../../../../../../assets/images/png/PurpleRegion.png"
-      alt="Extremo Oeste Baiano"
+      ngSrc="{{ regioes.extremo_oeste_baiano.img }}"
+      alt="{{ regioes.extremo_oeste_baiano.nome }}"
       class="region"
       id="region1"
-      (click)="goConsultaRegiao('EXTREMO OESTE BAIANO')"
-      width="255"
-      height="360"
+      (click)="goConsultaRegiao(regioes.extremo_oeste_baiano.id)"
+      width="{{ regioes.extremo_oeste_baiano.with }}"
+      height="{{ regioes.extremo_oeste_baiano.height }}"
     />
     <img
       ngSrc="../../../../../../assets/images/png/BlueRegion.png"

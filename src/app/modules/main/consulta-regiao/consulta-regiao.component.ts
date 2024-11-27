@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef, OnInit } from "@angular/core";
+import { Component, ViewChild, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DropdownComponent } from "@components/drop-down/drop-down.component";
 import { MunicipioModel } from "@models/municipio.model";
@@ -8,7 +8,7 @@ import { MunicipioService } from "@services/municipio.service";
 import { ProjetoService } from "@services/projeto.service";
 import { RegiaoService } from "@services/regiao.service";
 import { forkJoin } from "rxjs";
-import { REGIAO_ENUM } from "src/app/core/enums/regiao.enum";
+import { StorageService } from "@services/system/storage.service";
 
 @Component({
   selector: "app-consulta-regiao",
@@ -18,7 +18,7 @@ import { REGIAO_ENUM } from "src/app/core/enums/regiao.enum";
 export class ConsultaRegiaoComponent implements OnInit {
   @ViewChild(DropdownComponent) dropDown!: DropdownComponent;
   regioes: RegiaoModel[] = [];
-  selectedRegion: RegiaoModel | null = null;
+  selectedRegion: RegiaoModel = new RegiaoModel();
   municipios: MunicipioModel[] = [];
   municipiosFiltrados: MunicipioModel[] = [];
   projetos: ProjetoModel[] = [];
@@ -30,17 +30,19 @@ export class ConsultaRegiaoComponent implements OnInit {
     private _regiaoService: RegiaoService,
     private _municipioService: MunicipioService,
     private _projetoService: ProjetoService,
-    private cdr: ChangeDetectorRef,
+    private storageService: StorageService,
   ) {}
 
   ngOnInit() {
     this.carregarRegioes();
+  }
+
+  //carregar região selecionada via query param
+  ngAfterViewInit() {
     this.route.queryParams.subscribe((params) => {
-      if (params["region"]) {
-        this.onItemSelected(params["region"]);
-        setTimeout(() => {
-          this.updateDropDown(params["region"]);
-        });
+      if (params["regiao"]) {
+        this.selectedRegion = params["regiao"];
+        this.buscarMunicipiosPorRegiao(params["regiao"]);
       }
     });
   }
@@ -70,14 +72,6 @@ export class ConsultaRegiaoComponent implements OnInit {
     });
   }
 
-  regiaoSelecionada() {
-    if (this.selectedRegion) {
-      this._router.navigate(["/consulta-regiao"], {
-        queryParams: { region: this.selectedRegion.nome },
-      });
-    }
-  }
-
   // Filtrar municípios que possuem projetos
   filtrarMunicipios(municipios: MunicipioModel[]) {
     const municipioIdsComProjetos = new Set(
@@ -93,49 +87,28 @@ export class ConsultaRegiaoComponent implements OnInit {
     if (this.municipiosFiltrados.length === 0) {
       console.warn("Nenhum município com projeto encontrado para esta região.");
     }
+
+    return this.municipiosFiltrados;
   }
 
   backToHome() {
     this._router.navigate(["/home"]);
   }
 
-  goConsultaFiltro() {
-    this._router.navigate(["/consultar-regiao-filtro"]);
+  goConsultaFiltro(municipioId: string) {
+    this.storageService.setItem("SELECTED_REGION", this.selectedRegion);
+    this._router.navigate(["/consultar-regiao-filtro/"], {
+      queryParams: { municipio: municipioId },
+    });
   }
 
+  // Atualizar dropdown
   updateDropDown(region: string) {
-    if (this.dropDown) {
-      this.dropDown.selectItem(region, false);
-    }
+    this.dropDown.selectItem(region, false);
   }
 
   onItemSelected(event: any) {
     this.selectedRegion = event;
     this.buscarMunicipiosPorRegiao(event.id);
-    switch (event.nome) {
-      case REGIAO_ENUM.EXTREMO_OESTE_BAIANO:
-        this.backgroundUrl = "../../../../assets/images/png/PurpleRegion.png";
-        break;
-      case REGIAO_ENUM.VALE_SAO_FRANCISCO_DA_BAHIA:
-        this.backgroundUrl = "../../../../assets/images/png/BlueRegion.png";
-        break;
-      case REGIAO_ENUM.NORDESTE_BAIANO:
-        this.backgroundUrl = "../../../../assets/images/png/DarkBlueRegion.png";
-        break;
-      case REGIAO_ENUM.CENTRO_NORTE_BAIANO:
-        this.backgroundUrl = "../../../../assets/images/png/YellowRegion.png";
-        break;
-      case REGIAO_ENUM.CENTRO_SUL_BAIANO:
-        this.backgroundUrl = "../../../../assets/images/png/OrangeRegion.png";
-        break;
-      case REGIAO_ENUM.METROPOLITANA_DE_SALVADOR:
-        this.backgroundUrl = "../../../../assets/images/png/GreenRegion.png";
-        break;
-      case REGIAO_ENUM.SUL_BAIANO:
-        this.backgroundUrl = "../../../../assets/images/png/LimeRegion.png";
-        break;
-      default:
-        this.backgroundUrl = "../../../../assets/images/png/MapaBahia.png";
-    }
   }
 }

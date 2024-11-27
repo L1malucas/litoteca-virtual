@@ -3,7 +3,10 @@ import { Routes, RouterModule } from "@angular/router";
 import { ConsultaRegiaoComponent } from "./consulta-regiao.component";
 
 const ConsultaRegiaoRoutes: Routes = [
-  { path: "", component: ConsultaRegiaoComponent },
+  {
+    path: "",
+    component: ConsultaRegiaoComponent,
+  },
 ];
 
 @NgModule({
