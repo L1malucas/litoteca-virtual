@@ -1,6 +1,8 @@
-<div class="header">
-  <p>Projeto RIACHO SECO > RIACHO SECO | LP22</p>
-</div>
+<app-drop-down
+  textHeader="Nome do Projeto"
+  [styleDropDown]="{ marginTop: '1rem', width: '40%', marginLeft: '2rem' }"
+  [options]="projetos"
+></app-drop-down>
 
 <div class="btn-imprimir">
   <app-button
@@ -12,43 +14,112 @@
   ></app-button>
 </div>
 
-<div class="informacoes-caixa">
-  <h3>Informações da Caixa</h3>
-  <form>
-    <div>
-      <label>Projeto:</label>
-      <input type="text" placeholder="Exemplo de preenchimento" />
+<div class="main-container">
+  <section class="box-ionfo-section">
+    <div class="box-info">
+      <div class="info-title">
+        <h3>Informações da Caixa</h3>
+      </div>
+      <form>
+        <div class="form-row">
+          <label for="projeto">PROJETO:</label>
+          <input
+            type="text"
+            id="projeto"
+            placeholder="Exemplo de preenchimento"
+          />
+        </div>
+        <div class="form-row">
+          <label for="municipio">MUNICÍPIO:</label>
+          <input
+            type="text"
+            id="municipio"
+            placeholder="Exemplo de preenchimento"
+          />
+        </div>
+        <div class="form-row">
+          <label for="localidade">LOCALIDADE:</label>
+          <input
+            type="text"
+            id="localidade"
+            placeholder="Exemplo de preenchimento"
+          />
+        </div>
+        <div class="form-row">
+          <label for="furo">Nº DO FURO:</label>
+          <input type="text" id="furo" placeholder="Exemplo de preenchimento" />
+        </div>
+        <div class="form-row">
+          <label for="profundidade">PAVILHÃO: </label>
+          <input
+            type="text"
+            id="projeto"
+            placeholder="Exemplo de preenchimento"
+          />
+        </div>
+        <div class="form-row">
+          <div class="number-input">
+            <button class="decrease">-</button>
+            <input type="text" id="caixa" value="Caixa 01" readonly />
+            <button class="increase">+</button>
+          </div>
+        </div>
+        <div class="form-row"></div>
+        <div class="form-row">
+          <label for="profundidade">PROFUNDIDADE (m):</label>
+          <div class="depth">
+            <span>0m</span>
+            <span>3,14m</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="alvo">ALVO:</label>
+          <input type="text" id="alvo" placeholder="Exemplo de preenchimento" />
+        </div>
+        <div class="form-row">
+          <label for="estante">ESTANTE:</label>
+          <input type="text" id="estante" placeholder="0-1" />
+        </div>
+        <div class="form-row">
+          <label for="prateleira">PRATELEIRA:</label>
+          <input type="text" id="prateleira" placeholder="1-15" />
+        </div>
+      </form>
     </div>
-    <div>
-      <label>Município:</label>
-      <input type="text" placeholder="Exemplo de preenchimento" />
-    </div>
-    <div>
-      <label>Nº do Furo:</label>
-      <input type="text" placeholder="Exemplo de preenchimento" />
-    </div>
-    <div>
-      <label>Profundidade (m):</label>
-      <input type="text" value="0m" />
-      <input type="text" value="3,14m" />
-    </div>
-  </form>
-</div>
 
-<div class="caixa">
-  <h3>Caixa Seca</h3>
-  <div *ngFor="let secao of secoes" class="secao">
-    <h4>SEÇÃO {{ secao.numero }}</h4>
-    <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+    <div class="gallery">
+      <div class="info-title">
+        <h3>Galeria</h3>
+      </div>
+      <div class="gallery-images">
+        <img
+          *ngFor="let imagem of imagens"
+          [src]="imagem"
+          alt="Galeria de imagens"
+        />
+      </div>
+    </div>
+  </section>
+
+  <div class="section-two">
+    <div class="box">
+      <div class="info-title">
+        <h3>Caixa Seca</h3>
+      </div>
+      <div *ngFor="let secao of secoes" class="section">
+        <h4>SEÇÃO {{ secao.numero }}</h4>
+        <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="info-title">
+        <h3>Caixa Molhada</h3>
+      </div>
+      <div *ngFor="let secao of secoesMolhadas" class="section">
+        <h4>SEÇÃO {{ secao.numero }}</h4>
+        <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+      </div>
+    </div>
   </div>
-
-  <h3>Caixa Molhada</h3>
-  <div *ngFor="let secao of secoesMolhadas" class="secao">
-    <h4>SEÇÃO {{ secao.numero }}</h4>
-    <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
-  </div>
-</div>
-
-<div class="galeria">
-  <img *ngFor="let imagem of imagens" [src]="imagem" alt="Galeria de imagens" />
 </div>

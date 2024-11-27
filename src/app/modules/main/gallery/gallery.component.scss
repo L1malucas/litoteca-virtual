@@ -5,65 +5,190 @@
   padding: 10px;
   height: 25px;
   width: 400px;
-
   margin-top: 20px;
 }
 
 .btn-imprimir {
+  position: absolute;
   top: 20px;
   right: 20px;
-  position: absolute;
 }
 
-/* informacoes-caixa.component.css */
-.informacoes-caixa {
-  margin-top: 20px;
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+
+  .box-ionfo-section,
+  .section-two {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.box-ionfo-section {
+      flex-direction: column;
+      border-right: 2px solid var(--gray-light);
+    }
+
+    &.section-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+  }
+
+  overflow-y: auto;
+  max-height: 85vh;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.info-title {
+  background-color: var(--white);
+  border-radius: 11px;
   padding: 10px;
-  border: 1px solid var(--gray-dark);
-}
-
-.informacoes-caixa form {
+  margin-bottom: 10px;
+  position: relative;
+  top: -30px;
+  width: 40%;
+  height: 20px;
+  left: 30%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.informacoes-caixa label {
-  font-weight: bold;
-}
-
-.caixa {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.secao {
-  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
+
+  h3 {
+    font-weight: bold;
+    margin: 0;
+  }
 }
 
-.secao img {
-  width: 100px;
-  height: auto;
+.box-info {
+  padding: 20px;
+  border: 1px solid var(--gray-dark);
+  border-radius: 27px;
+  width: 521px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      label {
+        font-weight: bold;
+        margin-right: 10px;
+        flex: 1;
+        background-color: var(--gray-light);
+        height: 40px;
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      input,
+      select {
+        flex: 2;
+        padding: 8px;
+        border: none;
+        border-radius: 13px;
+        height: 20px;
+        background-color: var(--gray-light);
+      }
+    }
+
+    .number-input {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      input {
+        text-align: center;
+        flex: 1;
+        border-radius: 13px;
+        background-color: var(--gray-light);
+      }
+
+      button {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #e0e0e0;
+        }
+      }
+    }
+
+    .depth {
+      display: flex;
+      justify-content: space-around;
+      flex: 2;
+
+      span {
+        background-color: #f0f0f0;
+        padding: 8px;
+        border-radius: 13px;
+        width: 89px;
+        text-align: center;
+      }
+    }
+  }
 }
 
-.galeria {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 10px;
+.box {
+  border: 1px solid var(--gray-dark);
+  border-radius: 27px;
+  padding: 20px;
+
+  .section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    h4 {
+      background-color: var(--white);
+      border-radius: 11px;
+      padding: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      color: #6b6b6b;
+    }
+
+    img {
+      width: 100px;
+      height: auto;
+    }
+  }
 }
 
-.galeria {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-left: 40px;
+.gallery {
+  margin-top: 40px;
+  border: 1px solid var(--gray-dark);
+  border-radius: 27px;
+  width: 521px;
+  padding: 20px;
 
-  img {
-    width: 100px;
-    height: auto;
-    border-radius: 5px;
+  .gallery-images {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    img {
+      width: 60px;
+      height: 60px;
+    }
   }
 }
