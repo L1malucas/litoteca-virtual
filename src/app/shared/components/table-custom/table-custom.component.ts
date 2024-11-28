@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MunicipioModel } from "@models/municipio.model";
 import { ProjetoModel } from "@models/projeto.model";
 import { MunicipioService } from "@services/municipio.service";
+import { ProjetoService } from "@services/projeto.service";
 
 @Component({
   selector: "app-table-custom",
@@ -22,18 +23,21 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     private route: Router,
     private _router: ActivatedRoute,
     private _municipioService: MunicipioService,
+    private _projetoService: ProjetoService,
   ) {}
 
   ngOnInit() {
-    this.filterProjects();
     this.carregarMunicipios();
   }
 
   ngAfterViewInit() {
     this._router.queryParams.subscribe((params) => {
-      console.log(params);
       this.selectedMunicipio.id = params["municipio"];
     });
+  }
+
+  ngOnChanges() {
+    this.filteredProjects = this.projects;
   }
 
   carregarMunicipios() {
@@ -42,15 +46,31 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     });
   }
 
-  filterProjects() {
-    this.filteredProjects = this.projects.filter((project) => {
+  filtrarProjetos(event: any) {
+    if (event) {
+      this.searchTerm = event.target.value;
+    }
+
+    this.projects = this.projects.filter((project) => {
       return project.nome.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
+
+    if (this.searchTerm === "") {
+      this.projects = this.filteredProjects;
+    }
   }
 
   goToGalery(project: ProjetoModel) {
     this.route.navigate(["/galeria"], {
       queryParams: { projeto: project.id },
     });
+  }
+
+  filtrarProjetosPorMunicipio(event: any) {
+    this._projetoService
+      .getByMunicipioId(event.target.value)
+      .subscribe((projects) => {
+        this.projects = projects;
+      });
   }
 }
