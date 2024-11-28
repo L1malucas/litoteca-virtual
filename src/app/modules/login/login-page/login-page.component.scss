@@ -133,14 +133,15 @@ $font-size-large: 40px;
           font-size: 10px;
         }
       }
+    }
 
-      .forgot-password {
-        font-size: $font-size-small;
-        color: var(--primary);
+    .forgot-password {
+      font-size: $font-size-small;
+      color: var(--primary);
+      cursor: pointer;
 
-        @media (max-width: 768px) {
-          font-size: 10px;
-        }
+      @media (max-width: 768px) {
+        font-size: 10px;
       }
     }
   }

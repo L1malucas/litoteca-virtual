@@ -15,7 +15,9 @@ export class ProjetosPorMunicipioIdResolver
   resolve(route: ActivatedRouteSnapshot): Observable<ProjetoModel[]> {
     const municipioId: string = route.queryParamMap.get("municipio") || "";
     return this.projetoService.getByMunicipioId(municipioId).pipe(
-      map((projetos) => {return projetos}),
+      map((projetos) => {
+        return projetos;
+      }),
       catchError((error) => {
         console.error(error);
         return of([]);

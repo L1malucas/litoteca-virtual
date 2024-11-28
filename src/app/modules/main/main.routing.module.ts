@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "src/app/core/guards/auth-guard";
 
 const MainRoutes: Routes = [
   {
@@ -14,7 +15,7 @@ const MainRoutes: Routes = [
         return m.HomeModule;
       });
     },
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: "consultar-regiao",
@@ -23,7 +24,7 @@ const MainRoutes: Routes = [
         return m.ConsultaRegiaoModule;
       });
     },
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: "consultar-regiao-filtro",
@@ -34,7 +35,16 @@ const MainRoutes: Routes = [
         return m.ConsultarRegiaoFiltroModule;
       });
     },
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "galeria",
+    loadChildren: () => {
+      return import("./gallery/gallery.module").then((m) => {
+        return m.GalleryModule;
+      });
+    },
+    canActivate: [AuthGuard],
   },
 ];
 

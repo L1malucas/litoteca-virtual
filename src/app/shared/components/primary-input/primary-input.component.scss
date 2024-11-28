@@ -9,6 +9,13 @@
         border-color: red;
       }
     }
+
+    span.error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 2px;
+      display: block;
+    }
   }
 }
 
@@ -36,5 +43,15 @@
       background-color: transparent;
       padding-left: 0.6rem;
     }
+  }
+
+  span.error-message {
+    display: none;
+  }
+}
+
+:host.ng-invalid.ng-touched {
+  .input-wrapper span.error-message {
+    display: block;
   }
 }

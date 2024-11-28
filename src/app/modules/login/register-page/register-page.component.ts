@@ -10,7 +10,7 @@ import { Toast } from "@services/system/toast.service";
   styleUrls: ["./register-page.component.scss"],
 })
 export class RegisterPageComponent implements OnInit {
-  imageSrc: string = "";
+  image: string = "";
   protected form: FormGroup;
 
   private _router = inject(Router);
@@ -21,57 +21,32 @@ export class RegisterPageComponent implements OnInit {
     this.form = this.formBuilder.group(
       {
         name: ["", Validators.required],
-        phone: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
+        surname: ["", Validators.required],
+        username: ["", Validators.required],
+        imageUser: ["", Validators.required],
+        phone: ["", Validators.required],
         occupation: ["", Validators.required],
         country: ["", Validators.required],
         state: ["", Validators.required],
         city: ["", Validators.required],
         email: ["", [Validators.required, Validators.email]],
         confirmEmail: ["", [Validators.required, Validators.email]],
-        password: [
-          "",
-          [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.pattern(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            ),
-          ],
-        ],
-        confirmPassword: [
-          "",
-          [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.pattern(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-            ),
-          ],
-        ],
       },
-      { validator: this.matchPasswords },
+      { validator: this.matchEmails },
     );
   }
 
   ngOnInit(): void {}
 
-  matchPasswords(group: FormGroup) {
-    const password = group.get("password")?.value;
-    const confirmPassword = group.get("confirmPassword")?.value;
-    return password === confirmPassword ? null : { notMatching: true };
-  }
-
   onSubmit() {
-    if (this.form.valid) {
+    if (!this.form.valid) {
       console.log(this.form.value);
-      this.navigateConfirmRegister();
+      this._toast.error("Erro", "Por favor, preencha os campos corretamente.");
     } else {
-      this._toast.error("Erro", "Preencha todos os campos corretamente.");
+      console.log(this.form.value);
+      this._toast.success("Suceeso", "Usuário cadastrado.");
+      // this._router.navigate(["/confirmar-registro"]);
     }
-  }
-
-  navigateConfirmRegister() {
-    this._router.navigate(["/confirmar-registro"]);
   }
 
   onFileSelected(event: any): void {
@@ -81,7 +56,9 @@ export class RegisterPageComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        this.imageSrc = e.target.result;
+        this.form.patchValue({
+          imageUser: e.target.result,
+        });
       };
 
       reader.readAsDataURL(file);
@@ -91,6 +68,12 @@ export class RegisterPageComponent implements OnInit {
         "Por favor, envie apenas imagens no formato JPG, JPEG ou PNG.",
       );
     }
+  }
+
+  matchEmails(group: FormGroup) {
+    const email = group.get("email")?.value;
+    const confirmEmail = group.get("confirmEmail")?.value;
+    return email === confirmEmail ? null : { notMatching: true };
   }
 
   isValidImage(file: File): boolean {
