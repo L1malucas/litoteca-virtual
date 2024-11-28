@@ -6,7 +6,7 @@
   <section class="registration-form-container">
     <h1 class="form-title">Cadastre-se</h1>
 
-    <form class="registration-form" [formGroup]="form">
+    <form class="registration-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-content">
         <div class="image-content">
           <div class="avatar">
@@ -23,6 +23,7 @@
             />
           </div>
           <button
+            type="button"
             class="btn-input-file"
             (click)="triggerFileInput()"
             matTooltip="Adicionar foto"
@@ -173,7 +174,7 @@
           </a>
           <app-button
             text="CRIAR CONTA"
-            (click)="onSubmit()"
+            [type]="'submit'"
             [buttonStyle]="{
               padding: '.6rem 2.9rem',
             }"
