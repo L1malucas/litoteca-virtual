@@ -66,4 +66,8 @@ export class HelpConfig {
   public get REGIAO_ENDPOINT(): string {
     return this.configService.getEndPoint("LITOTECA", "REGIAO");
   }
+
+  public get USUARIO_ENDPOINT(): string {
+    return this.configService.getEndPoint("LITOTECA", "USUARIO");
+  }
 }

@@ -16,6 +16,7 @@
     "PONTOATENDIMENTO": "api/PontoAtendimento",
     "POSTO": "api/Posto",
     "PROJETO": "api/Projeto",
-    "REGIAO": "api/Regiao"
+    "REGIAO": "api/Regiao",
+    "USUARIO": "api/Usuario"
   }
 }
