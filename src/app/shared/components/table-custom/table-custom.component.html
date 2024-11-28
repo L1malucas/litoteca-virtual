@@ -3,7 +3,7 @@
     <span>MUNICÍPIO: </span>
     <select
       [(ngModel)]="selectedMunicipio.id"
-      (change)="filterProjects()"
+      (change)="filtrarProjetosPorMunicipio($event)"
       class="custom-select"
     >
       <option>TODOS</option>
@@ -20,7 +20,7 @@
           type="text"
           placeholder="Riacho Seco"
           [(ngModel)]="searchTerm"
-          (input)="filterProjects()"
+          (input)="filtrarProjetos($event)"
         />
       </div>
       <div>ALVO</div>
