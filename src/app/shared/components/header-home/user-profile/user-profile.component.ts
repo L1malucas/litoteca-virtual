@@ -27,10 +27,11 @@ import { AuthService } from "@services/system/auth.service";
 })
 export class UserProfileComponent {
   @Input() show: boolean = false;
-  user: any = {
-    name: "Valbério Sá",
-    email: "valberiosa@cbpm.gov.ba.br",
-  };
+  @Input() user: any = {};
+  // user: any = {
+  //   name: "Valbério Sá",
+  //   email: "valberiosa@cbpm.gov.ba.br",
+  // };
 
   constructor(
     private _router: Router,

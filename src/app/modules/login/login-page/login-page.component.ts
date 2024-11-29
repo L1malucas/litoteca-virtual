@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Variables } from "@constants/variables";
 import { AuthService } from "@services/system/auth.service";
+import { UserService } from "@services/system/user.service";
 import { ToastrService } from "ngx-toastr";
 import { LocalStorageService } from "ngx-webstorage";
 import { Subscription } from "rxjs";
@@ -52,6 +53,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private _toast: ToastrService,
     private _authService: AuthService,
     private _storage: LocalStorageService,
+    private _userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -104,13 +106,26 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     const { email } = this.formForgotPassword.getRawValue();
     this.loading = true;
 
-    console.log(email);
+    this.subscription.add(
+      this._userService.forgotPassword(email).subscribe({
+        next: () => {
+          return this.onForgotPasswordSuccess();
+        },
+        error: (err) => {
+          return this.onForgotPasswordError(err);
+        },
+      }),
+    );
   }
 
   private showInvalidFormDialog(form: FormGroup) {
     const invalidFields = Object.keys(form.controls)
-      .filter((field) => {return form.get(field)?.invalid})
-      .map((field) => {return `O campo ${field} é inválido.`})
+      .filter((field) => {
+        return form.get(field)?.invalid;
+      })
+      .map((field) => {
+        return `O campo ${field} é inválido.`;
+      })
       .join("\n");
 
     if (invalidFields) {
@@ -131,6 +146,22 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this._toast.error("Usuário ou senha inválidos!");
     } else if (err.status === 400) {
       this._toast.error("Erro ao efetuar login!");
+    }
+  }
+
+  private onForgotPasswordSuccess() {
+    this._toast.success(
+      "Link de recuperação de senha encaminhado para o email informado.",
+    );
+    this.loading = false;
+    this._router.navigate(["home"]);
+  }
+
+  private onForgotPasswordError(err: any) {
+    this.loading = false;
+
+    if (err.status === 400) {
+      this._toast.error("Erro ao recuperar senha.");
     }
   }
 

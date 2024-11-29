@@ -1,14 +1,14 @@
 <header [ngStyle]="styleHeader">
   <div class="section-perfil" (click)="openProfile()">
     <div class="avatar">
-      <img src="../../../../assets/images/png/img-perfil.png" alt="Perfil" />
+      <img [src]="user.image" alt="Perfil" />
     </div>
     <p>
       Olá, <strong>{{ user.name }}</strong> <br />
       <span>{{ user.info }}</span>
     </p>
   </div>
-  <app-user-profile [show]="show"></app-user-profile>
+  <app-user-profile [show]="show" [user]="user"></app-user-profile>
   <div class="logo">
     <a href="#" class="x" tabindex="0">
       <img src="assets/images/svg/VectorX.svg" alt="x" />

@@ -6,7 +6,7 @@
   <section class="registration-form-container">
     <h1 class="form-title">Cadastre-se</h1>
 
-    <form class="registration-form" [formGroup]="form">
+    <form class="registration-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-content">
         <div class="image-content">
           <div class="avatar">
@@ -17,13 +17,13 @@
             <input
               type="file"
               id="file-input"
-              formControlName="imageUser"
               (change)="onFileSelected($event)"
               accept="image/*"
               style="display: none"
             />
           </div>
           <button
+            type="button"
             class="btn-input-file"
             (click)="triggerFileInput()"
             matTooltip="Adicionar foto"
@@ -37,7 +37,7 @@
             <app-primary-input
               label="Nome"
               type="text"
-              formControlName="name"
+              formControlName="nome"
               ErrorMessage="Nome é obrigatório"
             >
             </app-primary-input>
@@ -47,7 +47,7 @@
             <app-primary-input
               label="Sobrenome"
               type="text"
-              formControlName="surname"
+              formControlName="sobrenome"
               ErrorMessage="Sobrenome é obrigatório"
             >
             </app-primary-input>
@@ -55,10 +55,10 @@
 
           <div class="form-group">
             <app-primary-input
-              label="Username"
+              label="Usuário"
               type="text"
               formControlName="username"
-              ErrorMessage="Username é obrigatório"
+              ErrorMessage="Usuário é obrigatório"
             >
             </app-primary-input>
           </div>
@@ -69,7 +69,7 @@
             <app-primary-input
               label="Telefone"
               type="text"
-              formControlName="phone"
+              formControlName="telefone"
               placeholder="(00) 00000-0000"
               mask="(00) 00000-0000"
               ErrorMessage="Telefone é obrigatório"
@@ -81,7 +81,7 @@
             <app-primary-input
               label="Profissão/Ocupação"
               type="text"
-              formControlName="occupation"
+              formControlName="profissao"
               ErrorMessage="Profissão/Ocupação é obrigatório"
             >
             </app-primary-input>
@@ -90,33 +90,54 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="country" class="form-label">País</label>
-            <select id="country" class="form-select" formControlName="country">
+            <!-- <label for="country" class="form-label">País</label>
+            <select id="country" class="form-select" formControlName="pais">
               <option value="">Selecione o país</option>
               <option value="Brasil">Brasil</option>
               <option value="Estados Unidos">Estados Unidos</option>
               <option value="Canadá">Canadá</option>
-            </select>
+            </select> -->
+            <app-primary-input
+              label="País"
+              type="text"
+              formControlName="pais"
+              ErrorMessage="País é obrigatório"
+            >
+            </app-primary-input>
           </div>
 
           <div class="form-group">
-            <label for="state" class="form-label">Estado</label>
-            <select id="state" class="form-select" formControlName="state">
+            <!-- <label for="state" class="form-label">Estado</label>
+            <select id="state" class="form-select" formControlName="estado">
               <option value="">Selecione o estado</option>
               <option value="São Paulo">São Paulo</option>
               <option value="Rio de Janeiro">Rio de Janeiro</option>
               <option value="Minas Gerais">Minas Gerais</option>
-            </select>
+            </select> -->
+            <app-primary-input
+              label="Estado"
+              type="text"
+              formControlName="estado"
+              ErrorMessage="Estado é obrigatório"
+            >
+            </app-primary-input>
           </div>
 
           <div class="form-group">
-            <label for="city" class="form-label">Cidade</label>
-            <select id="city" class="form-select" formControlName="city">
+            <!-- <label for="city" class="form-label">Cidade</label>
+            <select id="city" class="form-select" formControlName="cidade">
               <option value="">Selecione a cidade</option>
               <option value="São Paulo">São Paulo</option>
               <option value="Rio de Janeiro">Rio de Janeiro</option>
               <option value="Belo Horizonte">Belo Horizonte</option>
-            </select>
+            </select> -->
+            <app-primary-input
+              label="Cidade"
+              type="text"
+              formControlName="cidade"
+              ErrorMessage="Cidade é obrigatório"
+            >
+            </app-primary-input>
           </div>
         </div>
 
@@ -153,7 +174,7 @@
           </a>
           <app-button
             text="CRIAR CONTA"
-            (click)="onSubmit()"
+            [type]="'submit'"
             [buttonStyle]="{
               padding: '.6rem 2.9rem',
             }"

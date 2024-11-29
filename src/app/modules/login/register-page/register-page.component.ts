@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { Toast } from "@services/system/toast.service";
+import { UserService } from "@services/system/user.service";
+import { Subscription } from "rxjs";
+import { UserRequest } from "@models/user.model";
 
 @Component({
   selector: "app-register",
@@ -16,19 +19,22 @@ export class RegisterPageComponent implements OnInit {
   private _router = inject(Router);
   private _toast = inject(Toast);
   private _location = inject(Location);
+  private subscription: Subscription = new Subscription();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private _userService: UserService,
+  ) {
     this.form = this.formBuilder.group(
       {
-        name: ["", Validators.required],
-        surname: ["", Validators.required],
+        nome: ["", Validators.required],
+        sobrenome: ["", Validators.required],
         username: ["", Validators.required],
-        imageUser: ["", Validators.required],
-        phone: ["", Validators.required],
-        occupation: ["", Validators.required],
-        country: ["", Validators.required],
-        state: ["", Validators.required],
-        city: ["", Validators.required],
+        telefone: ["", Validators.required],
+        profissao: ["", Validators.required],
+        pais: ["", Validators.required],
+        estado: ["", Validators.required],
+        cidade: ["", Validators.required],
         email: ["", [Validators.required, Validators.email]],
         confirmEmail: ["", [Validators.required, Validators.email]],
       },
@@ -43,9 +49,34 @@ export class RegisterPageComponent implements OnInit {
       console.log(this.form.value);
       this._toast.error("Erro", "Por favor, preencha os campos corretamente.");
     } else {
-      console.log(this.form.value);
-      this._toast.success("Suceeso", "Usuário cadastrado.");
-      // this._router.navigate(["/confirmar-registro"]);
+      const payload: UserRequest = new UserRequest();
+
+      payload.nome = this.form.value.nome;
+      payload.sobrenome = this.form.value.sobrenome;
+      payload.username = this.form.value.username;
+      payload.fotoReferenceFtp = this.image;
+      payload.telefone = this.form.value.telefone;
+      payload.profissao = this.form.value.profissao;
+      payload.pais = this.form.value.pais;
+      payload.estado = this.form.value.estado;
+      payload.cidade = this.form.value.cidade;
+      payload.email = this.form.value.email;
+
+      this.subscription.add(
+        this._userService.create(payload).subscribe(
+          () => {
+            this._toast.success("Sucesso", "Usuário cadastrado.");
+            this._router.navigate(["/confirmar-registro"]);
+          },
+          (error: any) => {
+            console.error("Erro ao criar usuário:", error);
+            this._toast.error(
+              "Erro",
+              "Ocorreu um problema ao cadastrar o usuário.",
+            );
+          },
+        ),
+      );
     }
   }
 
@@ -56,9 +87,7 @@ export class RegisterPageComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        this.form.patchValue({
-          imageUser: e.target.result,
-        });
+        this.image = e.target.result; // Exibe a imagem no preview
       };
 
       reader.readAsDataURL(file);
