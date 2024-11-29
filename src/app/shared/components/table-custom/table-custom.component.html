@@ -1,15 +1,8 @@
 <div class="project-table">
   <div class="municipio-dropdown">
     <span>MUNICÍPIO: </span>
-    <select
-      [(ngModel)]="selectedMunicipio.id"
-      (change)="filtrarProjetosPorMunicipio($event)"
-      class="custom-select"
-    >
-      <option>TODOS</option>
-      <option *ngFor="let municipio of municipios" [value]="municipio.id">
-        {{ municipio.nome | uppercase }}
-      </option>
+    <select class="custom-select">
+      <option>SALVADOR</option>
     </select>
   </div>
   <div class="table-container">
@@ -27,24 +20,30 @@
       <div>FURO</div>
       <div>AÇÕES</div>
     </div>
-    <div class="table-body" *ngFor="let project of projects">
-      <div>{{ project.nome }}</div>
-      <div>{{ project.alvo }} ALVO 1</div>
-      <div>{{ project.furo }} FURO 1</div>
-      <div class="actions">
-        <button mat-icon-button class="action-btn document">
-          <mat-icon>description</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          class="action-btn image"
-          (click)="goToGalery(project)"
-        >
-          <mat-icon>image</mat-icon>
-        </button>
-        <button mat-icon-button class="action-btn location">
-          <mat-icon>location_on</mat-icon>
-        </button>
+    <div class="table-content">
+      <div class="table-body" *ngFor="let project of projects">
+        <div>{{ project.nome }}</div>
+        <div>{{ project.alvo }} ALVO 1</div>
+        <div>{{ project.furo }} FURO 1</div>
+        <div class="actions">
+          <button mat-icon-button class="action-btn document">
+            <mat-icon>description</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="action-btn image"
+            (click)="goToGalery(project)"
+          >
+            <mat-icon>image</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="action-btn location"
+            (click)="searchMap(project.municipio)"
+          >
+            <mat-icon>location_on</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>

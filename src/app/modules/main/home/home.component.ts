@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { RegiaoModel } from "@models/regiao.model";
 
 @Component({
   selector: "app-home",
@@ -7,15 +8,21 @@ import { Router } from "@angular/router";
   styleUrl: "./home.component.scss",
 })
 export class HomeComponent {
-  constructor(private _router: Router) {}
+  regioes: RegiaoModel[] = [];
+  constructor(
+    private _router: Router,
+    private _route: ActivatedRoute,
+  ) {}
 
-  goConsultaRegiao(region?: string) {
-    if (region) {
-      this._router.navigate(["/consultar-regiao"], {
-        queryParams: { region: region },
-      });
-    } else {
-      this._router.navigate(["/consultar-regiao"]);
-    }
+  ngOnInit() {
+    this.regioes = this._route.snapshot.data["regioes"];
+  }
+
+  goConsultaRegiao() {
+    this._router.navigate(["/consultar-regiao"]);
+  }
+
+  goConsultaProjeto() {
+    this._router.navigate(["/consultar-regiao-filtro/"]);
   }
 }
