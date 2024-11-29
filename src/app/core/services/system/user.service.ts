@@ -27,4 +27,10 @@ export class UserService extends BaseResourceService<UserModel> {
       {},
     );
   }
+
+  getUserByEmail(email: any): Observable<UserModel> {
+    return this._httpClient.get<UserModel>(
+      `${this.helpConfig.USUARIO_ENDPOINT}Buscar?Email=${email}`,
+    );
+  }
 }

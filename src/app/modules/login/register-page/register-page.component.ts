@@ -54,7 +54,7 @@ export class RegisterPageComponent implements OnInit {
       payload.nome = this.form.value.nome;
       payload.sobrenome = this.form.value.sobrenome;
       payload.username = this.form.value.username;
-      payload.foto = this.image;
+      payload.fotoReferenceFtp = this.image;
       payload.telefone = this.form.value.telefone;
       payload.profissao = this.form.value.profissao;
       payload.pais = this.form.value.pais;
