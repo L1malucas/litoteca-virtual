@@ -1,4 +1,11 @@
 import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { BoxModel } from "@models/box.model";
+import { ProjetoModel } from "@models/projeto.model";
+import { TargetService } from "@services/alvo.service";
+import { BoxService } from "@services/box.service";
+import { HoleService } from "@services/furo.service";
+import { ProjetoService } from "@services/projeto.service";
 
 @Component({
   selector: "app-gallery",
@@ -6,44 +13,52 @@ import { Component } from "@angular/core";
   styleUrl: "./gallery.component.scss",
 })
 export class GalleryComponent {
-  secoes = [
-    { numero: 1, imagem: "assets/seca01.png" },
-    { numero: 2, imagem: "assets/seca02.png" },
-    { numero: 3, imagem: "assets/seca02.png" },
-    { numero: 4, imagem: "assets/seca02.png" },
-    { numero: 5, imagem: "assets/seca02.png" },
-    { numero: 6, imagem: "assets/seca02.png" },
-    { numero: 7, imagem: "assets/seca02.png" },
-  ];
+  secoes = [];
+  secoesMolhadas = [];
+  imagens = [];
+  projects!: ProjetoModel[];
+  holeId!: string;
+  boxId!: string;
+  box!: BoxModel[];
 
-  secoesMolhadas = [
-    { numero: 1, imagem: "assets/molhada01.png" },
-    { numero: 2, imagem: "assets/molhada02.png" },
-    { numero: 3, imagem: "assets/seca02.png" },
-    { numero: 4, imagem: "assets/seca02.png" },
-    { numero: 5, imagem: "assets/seca02.png" },
-    { numero: 6, imagem: "assets/seca02.png" },
-    { numero: 7, imagem: "assets/seca02.png" },
-  ];
+  constructor(
+    private _projectService: ProjetoService,
+    private _boxService: BoxService,
+    private _targetService: TargetService,
+    private _holeService: HoleService,
+    private _activeRoute: ActivatedRoute,
+  ) {}
 
-  imagens = [
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-    "http://cbpmged.renova.net.br/SistemaDiamondMiniaturas/thumbnail_t638645168049699313-SECA-Placa.jpg",
-  ];
+  ngOnInit(): void {
+    this.getProjects();
+  }
 
-  projetos = [];
+  ngAfterViewInit() {
+    this._activeRoute.queryParams.subscribe((params) => {
+      if (params["projeto"]) {
+        this.getTargetInfo(params["projeto"]);
+      }
+    });
+  }
+
+  getProjects() {
+    this._projectService.getAll().subscribe((projetos) => {
+      this.projects = projetos;
+    });
+  }
+
+  getTargetInfo(projectId: string) {
+    this._targetService
+      .getTargetForProjectId(projectId)
+      .subscribe((target: any) => {
+        console.log(target);
+        this.holeId = target[0].furos[0].id;
+        console.log(this.holeId);
+        this.getBoxByHoleId(this.holeId);
+      });
+  }
+
+  getBoxByHoleId(holeId: string) {
+    this._boxService.getBoxByHoleId(holeId).subscribe(console.log);
+  }
 }

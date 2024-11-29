@@ -1,7 +1,7 @@
 <app-drop-down
   textHeader="Nome do Projeto"
   [styleDropDown]="{ marginTop: '1rem', width: '40%', marginLeft: '2rem' }"
-  [options]="projetos"
+  [options]="projects"
 ></app-drop-down>
 
 <div class="btn-imprimir">
@@ -23,39 +23,23 @@
       <form>
         <div class="form-row">
           <label for="projeto">PROJETO:</label>
-          <input
-            type="text"
-            id="projeto"
-            placeholder="Exemplo de preenchimento"
-          />
+          <input type="text" id="projeto" />
         </div>
         <div class="form-row">
           <label for="municipio">MUNICÍPIO:</label>
-          <input
-            type="text"
-            id="municipio"
-            placeholder="Exemplo de preenchimento"
-          />
+          <input type="text" id="municipio" />
         </div>
         <div class="form-row">
           <label for="localidade">LOCALIDADE:</label>
-          <input
-            type="text"
-            id="localidade"
-            placeholder="Exemplo de preenchimento"
-          />
+          <input type="text" id="localidade" />
         </div>
         <div class="form-row">
           <label for="furo">Nº DO FURO:</label>
-          <input type="text" id="furo" placeholder="Exemplo de preenchimento" />
+          <input type="text" id="furo" />
         </div>
         <div class="form-row">
-          <label for="profundidade">PAVILHÃO: </label>
-          <input
-            type="text"
-            id="projeto"
-            placeholder="Exemplo de preenchimento"
-          />
+          <label for="pavilhao">PAVILHÃO: </label>
+          <input type="text" id="projeto" />
         </div>
         <div class="form-row">
           <div class="number-input">
@@ -69,20 +53,20 @@
           <label for="profundidade">PROFUNDIDADE (m):</label>
           <div class="depth">
             <span>0m</span>
-            <span>3,14m</span>
+            <span>0m</span>
           </div>
         </div>
         <div class="form-row">
           <label for="alvo">ALVO:</label>
-          <input type="text" id="alvo" placeholder="Exemplo de preenchimento" />
+          <input type="text" id="alvo" />
         </div>
         <div class="form-row">
           <label for="estante">ESTANTE:</label>
-          <input type="text" id="estante" placeholder="0-1" />
+          <input type="text" id="estante" />
         </div>
         <div class="form-row">
           <label for="prateleira">PRATELEIRA:</label>
-          <input type="text" id="prateleira" placeholder="1-15" />
+          <input type="text" id="prateleira" />
         </div>
       </form>
     </div>
@@ -107,8 +91,8 @@
         <h3>Caixa Seca</h3>
       </div>
       <div *ngFor="let secao of secoes" class="section">
-        <h4>SEÇÃO {{ secao.numero }}</h4>
-        <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+        <h4>SEÇÃO</h4>
+        <img [src]="" />
       </div>
     </div>
 
@@ -117,8 +101,8 @@
         <h3>Caixa Molhada</h3>
       </div>
       <div *ngFor="let secao of secoesMolhadas" class="section">
-        <h4>SEÇÃO {{ secao.numero }}</h4>
-        <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+        <h4>SEÇÃO</h4>
+        <img [src]="" />
       </div>
     </div>
   </div>

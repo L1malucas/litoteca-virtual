@@ -27,6 +27,13 @@ export class BoxService extends BaseResourceService<BoxModel> {
     );
   }
 
+  getBoxByHoleId(holeId: string) {
+    // Alterado para retornar BoxModel
+    return this.httpClient.get<BoxModel>(
+      `${this._url}BuscarCaixaPorFuroId/${holeId}`,
+    );
+  }
+
   // getData(): Observable<BoxModel> {
   //   // Alterado para retornar BoxModel
   //   return this.httpClient.get<BoxModel>(this.jsonUrl); // Ajuste de URL se necessário
