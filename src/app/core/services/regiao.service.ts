@@ -32,4 +32,10 @@ export class RegiaoService extends BaseResourceService<RegiaoModel> {
       .get<RegiaoModel>(`${this.helpConfig.REGIAO_ENDPOINT}BuscarRegiao/${id}`)
       .pipe(catchError(this.handleError));
   }
+
+  buscarPorId(id: string): Observable<RegiaoModel> {
+    return this._httpClient
+      .get<RegiaoModel>(`${this.helpConfig.REGIAO_ENDPOINT}BuscarPorId/${id}`)
+      .pipe(catchError(this.handleError));
+  }
 }

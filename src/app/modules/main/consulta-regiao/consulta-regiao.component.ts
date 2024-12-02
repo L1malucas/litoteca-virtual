@@ -41,8 +41,12 @@ export class ConsultaRegiaoComponent implements OnInit {
   ngAfterViewInit() {
     this.route.queryParams.subscribe((params) => {
       if (params["regiao"]) {
-        this.selectedRegion = params["regiao"];
-        this.buscarMunicipiosPorRegiao(params["regiao"]);
+        const regiaoId = params["regiao"]; // O ID da região recebido
+        this._regiaoService.buscarPorId(regiaoId).subscribe((regiao) => {
+          this.selectedRegion = regiao; // Armazena a região selecionada
+          this.dropDown.selectItem(regiao, false); // Atualiza o dropdown sem emitir o evento
+          this.buscarMunicipiosPorRegiao(regiaoId); // Realiza outras ações necessárias
+        });
       }
     });
   }

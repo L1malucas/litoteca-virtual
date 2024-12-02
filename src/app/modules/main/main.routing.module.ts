@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { RegiaoResolver } from "@services/resolvers/regiao.resolver";
 import { AuthGuard } from "src/app/core/guards/auth-guard";
 
 const MainRoutes: Routes = [
@@ -7,6 +8,9 @@ const MainRoutes: Routes = [
     path: "",
     redirectTo: "home",
     pathMatch: "full",
+    resolve: {
+      regioes: RegiaoResolver,
+    },
   },
   {
     path: "home",
@@ -14,6 +18,9 @@ const MainRoutes: Routes = [
       return import("./home/home.module").then((m) => {
         return m.HomeModule;
       });
+    },
+    resolve: {
+      regioes: RegiaoResolver,
     },
     canActivate: [AuthGuard],
   },
@@ -42,6 +49,15 @@ const MainRoutes: Routes = [
     loadChildren: () => {
       return import("./gallery/gallery.module").then((m) => {
         return m.GalleryModule;
+      });
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "secao",
+    loadChildren: () => {
+      return import("./secao/secao.module").then((m) => {
+        return m.SecaoModule;
       });
     },
     canActivate: [AuthGuard],

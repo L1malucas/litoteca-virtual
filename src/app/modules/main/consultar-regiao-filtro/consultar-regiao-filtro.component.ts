@@ -36,6 +36,6 @@ export class ConsultarRegiaoFiltroComponent implements OnInit {
   }
 
   backToConsultarRegiao() {
-    this._router.navigate(["/consultar-regiao"]);
+    this._router.navigate(["/home"]);
   }
 }

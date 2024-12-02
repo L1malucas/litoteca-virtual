@@ -27,7 +27,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.carregarMunicipios();
+    this.carregarProjetos();
   }
 
   ngAfterViewInit() {
@@ -66,11 +66,24 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     });
   }
 
+  carregarProjetos() {
+    this._projetoService.getAll().subscribe((projetos) => {
+      this.projects = projetos;
+    });
+  }
+
   filtrarProjetosPorMunicipio(event: any) {
     this._projetoService
       .getByMunicipioId(event.target.value)
       .subscribe((projects) => {
         this.projects = projects;
       });
+  }
+
+  searchMap(municipio: MunicipioModel) {
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${municipio.nome}+${municipio.uf}`,
+      "_blank",
+    );
   }
 }
