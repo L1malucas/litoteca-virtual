@@ -53,6 +53,15 @@ const MainRoutes: Routes = [
     },
     canActivate: [AuthGuard],
   },
+  {
+    path: "secao",
+    loadChildren: () => {
+      return import("./secao/secao.module").then((m) => {
+        return m.SecaoModule;
+      });
+    },
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
