@@ -2,15 +2,65 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 800px;
+  overflow-y: auto;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    margin-bottom: 20px;
+
+    .back-to-gallery {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--primary);
+
+      a {
+        display: flex;
+        text-decoration: none;
+        font-size: 1rem;
+      }
+    }
+
+    &-imprimir {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+      margin-right: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      background-color: var(--primary);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 20px;
+  }
 
   .secao {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
     width: 100%;
-    margin-top: 20px;
     font-family: "Poppins", sans-serif;
+    overflow-y: auto;
+    padding-top: 30px;
 
     &-left {
       display: flex;
@@ -35,6 +85,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        color: var(--primary);
       }
 
       .titulo-projeto {
@@ -340,17 +391,6 @@
         background-color: var(--primary);
         color: var(--white);
         border-radius: 11px 0 0 11px;
-
-        &-imprimir {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 30px;
-          font-size: 0.8rem;
-          font-weight: 700;
-          cursor: pointer;
-        }
       }
 
       &-content {
@@ -363,42 +403,45 @@
         &-separadores {
           display: flex;
           flex-direction: row;
-          justify-content: space-between;
+          color: var(--primary);
+
+          div {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 500;
+          }
+
+          &-txt {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            width: 50%;
+            font-size: 0.8rem !important;
+          }
         }
 
         &-imagem {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
   }
 }
 
-.back-to-gallery {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  cursor: pointer;
-  color: var(--primary);
-  transition: 0.2s;
-
-  a {
-    display: flex;
-    text-decoration: none;
-    font-size: 1rem;
-  }
-
-  &:hover {
-    transform: scale(1.05);
-  }
-
-  @media (max-height: 712px) {
-    bottom: 1.5rem;
-    left: 2rem;
-  }
-}
-
 .vertical-img {
-  -webkit-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
