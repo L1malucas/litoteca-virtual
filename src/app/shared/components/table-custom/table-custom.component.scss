@@ -79,6 +79,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 450px;
   border-collapse: collapse;
   background-color: #f2f2f2;
   text-align: center;
@@ -135,6 +136,11 @@
   padding: 8px;
   background-color: white;
   border-bottom: 5px solid #f2f2f2;
+}
+
+.table-content {
+  height: 450px;
+  overflow-y: auto;
 }
 
 .table-body div {

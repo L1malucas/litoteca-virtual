@@ -9,7 +9,7 @@
     </p>
     <app-button
       text="EXPLORAR AGORA"
-      (click)="goConsultaRegiao()"
+      (click)="goConsultaProjeto()"
       [buttonStyle]="{
         backgroundColor: 'var(--white)',
         color: 'var(--primary)',
@@ -40,6 +40,6 @@
         <li><span class="legend-color darkgreen"></span> Sul Baiano</li>
       </ul>
     </div>
-    <home-map></home-map>
+    <home-map [region]="regioes"></home-map>
   </div>
 </div>
