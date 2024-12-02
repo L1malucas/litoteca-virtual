@@ -1,10 +1,10 @@
-<app-drop-down
+<!-- <app-drop-down
   textHeader="Nome do Projeto"
   [styleDropDown]="{ marginTop: '1rem', width: '40%', marginLeft: '2rem' }"
   [options]="projects"
-></app-drop-down>
+></app-drop-down> -->
 
-<div class="btn-imprimir">
+<!-- <div class="btn-imprimir">
   <app-button
     text="IMPRIMIR"
     [buttonStyle]="{
@@ -12,7 +12,7 @@
     }"
     customClass="hover-transparent"
   ></app-button>
-</div>
+</div> -->
 
 <div class="main-container">
   <section class="box-ionfo-section">
@@ -23,50 +23,115 @@
       <form>
         <div class="form-row">
           <label for="projeto">PROJETO:</label>
-          <input type="text" id="projeto" />
+          <input
+            readonly
+            type="text"
+            id="projeto"
+            [(ngModel)]="formData.nome"
+            name="nome"
+          />
         </div>
         <div class="form-row">
           <label for="municipio">MUNICÍPIO:</label>
-          <input type="text" id="municipio" />
+          <input
+            readonly
+            type="text"
+            id="municipio"
+            [(ngModel)]="formData.municipio"
+            name="municipio"
+          />
         </div>
         <div class="form-row">
           <label for="localidade">LOCALIDADE:</label>
-          <input type="text" id="localidade" />
+          <input
+            readonly
+            type="text"
+            id="localidade"
+            [(ngModel)]="formData.localidade"
+            name="localidade"
+          />
         </div>
         <div class="form-row">
           <label for="furo">Nº DO FURO:</label>
-          <input type="text" id="furo" />
+          <input
+            readonly
+            type="text"
+            id="furo"
+            [(ngModel)]="formData.furo"
+            name="furo"
+          />
         </div>
         <div class="form-row">
-          <label for="pavilhao">PAVILHÃO: </label>
-          <input type="text" id="projeto" />
+          <label for="pavilhao">PAVILHÃO:</label>
+          <input
+            readonly
+            type="text"
+            id="pavilhao"
+            [(ngModel)]="formData.pavilhao"
+            name="pavilhao"
+          />
         </div>
         <div class="form-row">
+          <label for="caixa">Caixa Atual:</label>
           <div class="number-input">
-            <button class="decrease">-</button>
-            <input type="text" id="caixa" value="Caixa 01" readonly />
-            <button class="increase">+</button>
+            <button class="decrease" (click)="navigateBox(-1)">-</button>
+            <input
+              type="text"
+              id="caixa"
+              [value]="caixasMapeadas[boxNames[currentBoxIndex]]?.name"
+              readonly
+            />
+            <button class="increase" (click)="navigateBox(1)">+</button>
           </div>
         </div>
-        <div class="form-row"></div>
         <div class="form-row">
           <label for="profundidade">PROFUNDIDADE (m):</label>
           <div class="depth">
-            <span>0m</span>
-            <span>0m</span>
+            <input
+              readonly
+              type="text"
+              id="profundidadeInicial"
+              [(ngModel)]="formData.profundidadeInicial"
+              name="profundidadeInicial"
+            />
+            <input
+              readonly
+              type="text"
+              id="profundidadeFinal"
+              [(ngModel)]="formData.profundidadeFinal"
+              name="profundidadeFinal"
+            />
           </div>
         </div>
         <div class="form-row">
           <label for="alvo">ALVO:</label>
-          <input type="text" id="alvo" />
+          <input
+            readonly
+            type="text"
+            id="alvo"
+            [(ngModel)]="formData.alvo"
+            name="alvo"
+          />
         </div>
         <div class="form-row">
           <label for="estante">ESTANTE:</label>
-          <input type="text" id="estante" />
+          <input
+            readonly
+            type="text"
+            id="estante"
+            [(ngModel)]="formData.estante"
+            name="estante"
+          />
         </div>
         <div class="form-row">
           <label for="prateleira">PRATELEIRA:</label>
-          <input type="text" id="prateleira" />
+          <input
+            readonly
+            type="text"
+            id="prateleira"
+            [(ngModel)]="formData.prateleira"
+            name="prateleira"
+          />
         </div>
       </form>
     </div>
@@ -77,8 +142,8 @@
       </div>
       <div class="gallery-images">
         <img
-          *ngFor="let imagem of imagens"
-          [src]="imagem"
+          *ngFor="let imagem of combineImagens"
+          [src]="imagem.url"
           alt="Galeria de imagens"
         />
       </div>
@@ -90,9 +155,9 @@
       <div class="info-title">
         <h3>Caixa Seca</h3>
       </div>
-      <div *ngFor="let secao of secoes" class="section">
-        <h4>SEÇÃO</h4>
-        <img [src]="" />
+      <div *ngFor="let imagem of caixasSecasImages" class="section">
+        <h4>SEÇÃO {{ imagem.secao }}</h4>
+        <img [src]="imagem.url" />
       </div>
     </div>
 
@@ -100,10 +165,15 @@
       <div class="info-title">
         <h3>Caixa Molhada</h3>
       </div>
-      <div *ngFor="let secao of secoesMolhadas" class="section">
-        <h4>SEÇÃO</h4>
-        <img [src]="" />
+      <div *ngFor="let imagem of caixasMolhadasImages" class="section">
+        <h4>SEÇÃO {{ imagem.secao }}</h4>
+        <img [src]="imagem.url" />
       </div>
     </div>
+  </div>
+
+  <div class="back-to-login" (click)="back()">
+    <i class="material-icons">arrow_back</i>
+    <a> Voltar para Consulta de Projetos </a>
   </div>
 </div>
