@@ -80,12 +80,9 @@
             [displayWith]="mostrarNomeFuro"
             (optionSelected)="onFuroSelected()"
           >
-            <mat-option
-              *ngFor="let furo of filtroFuros | async; track: $index"
-              [value]="furo.id"
-            >
-              {{ furo.nome }}
-            </mat-option>
+            @for (furo of filtroFuros | async; track $index) {
+              <mat-option [value]="furo">{{ furo.nome }}</mat-option>
+            }
           </mat-autocomplete>
         </div>
         <div class="filter-option">

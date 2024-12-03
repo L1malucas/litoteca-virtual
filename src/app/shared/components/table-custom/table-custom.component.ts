@@ -171,7 +171,10 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     if (this.projetoControl?.value?.id) {
       this.project = this.projetoControl.value;
       this.inputProject = this.projetoControl.value.id;
+      this.alvoControl.setValue(null);
+      this.furoControl.setValue(null);
       this.alvoControl.enable();
+      this.furoControl.disable();
       this.filtrarAlvosPorProjeto();
     }
   }
@@ -180,17 +183,12 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     if (this.alvoControl?.value?.id) {
       const alvoId: string = this.alvoControl.value.id;
       if (alvoId) {
+        this.furoControl.setValue(null);
         this.furoControl.enable();
         this.alvo = this.alvoControl.value;
         this.carregarFurosSelect(alvoId);
       }
     }
-  }
-
-  goToMaps(selectedLink: string) {
-    const link = document.createElement("a");
-    link.href = selectedLink;
-    link.click();
   }
 
   onFuroSelected() {
@@ -199,10 +197,16 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
       if (furoId) {
         this.filteredAlvos = [];
         this.filteredProjects = [];
-        this.filteredFuros = [];
+        this.furos = [];
         this.carregarFurosId(furoId);
       }
     }
+  }
+
+  goToMaps(selectedLink: string) {
+    const link = document.createElement("a");
+    link.href = selectedLink;
+    link.click();
   }
 
   carregarFurosSelect(id: string) {
