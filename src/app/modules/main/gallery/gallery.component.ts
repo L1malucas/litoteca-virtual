@@ -62,7 +62,7 @@ export class GalleryComponent {
     this._projectService.getById(id).subscribe((res) => {
       this.project = res;
       this.formData.nome = this.project.nome;
-      this.formData.municipio = "Não informado";
+      this.formData.municipio = "NÃO INFORMADO";
       this.formData.localidade = this.project.localidade;
       this.formData.pavilhao = "1";
       this.formData.alvo = this.project.alvos[0]?.nome || "Sem alvo";
@@ -93,9 +93,9 @@ export class GalleryComponent {
         return acc;
       }, {});
 
-      const sortedKeys = Object.keys(groupedBoxes).sort((a, b) =>
-        {return a.localeCompare(b)},
-      );
+      const sortedKeys = Object.keys(groupedBoxes).sort((a, b) => {
+        return a.localeCompare(b);
+      });
 
       const sortedGroupedBoxes = sortedKeys.reduce(
         (acc, key) => {
@@ -111,17 +111,21 @@ export class GalleryComponent {
       this.currentBoxIndex = 0;
       const currentBoxName = this.boxNames[this.currentBoxIndex];
       const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-        (x: any) => {return x.id},
+        (x: any) => {
+          return x.id;
+        },
       );
 
       if (boxIds && boxIds.length > 0) {
         const categoriaIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-          (x: any) => {return x.categoriaId},
+          (x: any) => {
+            return x.categoriaId;
+          },
         );
         boxIds.forEach((boxId: string) => {
-          categoriaIds.forEach((categoriaId: number) =>
-            {return this.getBoxById(boxId, categoriaId)},
-          );
+          categoriaIds.forEach((categoriaId: number) => {
+            return this.getBoxById(boxId, categoriaId);
+          });
         });
       }
     });
@@ -133,17 +137,21 @@ export class GalleryComponent {
       this.currentBoxIndex = newIndex;
       const currentBoxName = this.boxNames[this.currentBoxIndex];
       const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-        (x: any) => {return x.id},
+        (x: any) => {
+          return x.id;
+        },
       );
 
       if (boxIds && boxIds.length > 0) {
         const categoriaIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-          (x: any) => {return x.categoriaId},
+          (x: any) => {
+            return x.categoriaId;
+          },
         );
         boxIds.forEach((boxId: string) => {
-          categoriaIds.forEach((categoriaId: number) =>
-            {return this.getBoxById(boxId, categoriaId)},
-          );
+          categoriaIds.forEach((categoriaId: number) => {
+            return this.getBoxById(boxId, categoriaId);
+          });
         });
       } else {
         console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
@@ -171,8 +179,12 @@ export class GalleryComponent {
                   }
                   return null;
                 })
-                .filter((item) => {return item !== null})
-                .sort((a, b) => {return (a.secao ?? 0) - (b.secao ?? 0)})
+                .filter((item) => {
+                  return item !== null;
+                })
+                .sort((a, b) => {
+                  return (b.secao ?? 0) - (a.secao ?? 0);
+                })
             : [];
         } else if (categoriaId === 2) {
           this.caixasMolhadasImages = Array.isArray(res.capturas)
@@ -186,8 +198,12 @@ export class GalleryComponent {
                   }
                   return null;
                 })
-                .filter((item) => {return item !== null})
-                .sort((a, b) => {return (a.secao ?? 0) - (b.secao ?? 0)})
+                .filter((item) => {
+                  return item !== null;
+                })
+                .sort((a, b) => {
+                  return (b.secao ?? 0) - (a.secao ?? 0);
+                })
             : [];
         } else {
           console.warn(
