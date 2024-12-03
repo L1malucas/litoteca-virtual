@@ -28,11 +28,10 @@ export class GalleryComponent {
   secoes = [];
   secoesMolhadas = [];
   imagens?: any[] = [];
-  caixasSecasImages!: any[];
-  caixasMolhadasImages!: any[];
+  caixasSecasImages: any[] = [];
+  caixasMolhadasImages: any[] = [];
   combineImagens?: any[];
   project!: ProjetoModel;
-  projects!: ProjetoModel[];
   holeId!: string;
   boxId!: string;
   boxes!: any[];
@@ -215,7 +214,6 @@ export class GalleryComponent {
           ...this.caixasSecasImages,
           ...this.caixasMolhadasImages,
         ];
-        console.log("combineImagens", this.combineImagens);
       },
       (err) => {
         console.error(`Erro ao buscar detalhes da caixa com ID ${id}:`, err);

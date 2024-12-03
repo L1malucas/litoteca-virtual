@@ -1,13 +1,7 @@
-<!-- <app-drop-down
-  textHeader="Nome do Projeto"
-  [styleDropDown]="{ marginTop: '1rem', width: '40%', marginLeft: '2rem' }"
-  [options]="projects"
-></app-drop-down> -->
-
 <div class="header">
   <div class="header-title">
     <h3>
-      {{ project.nome }} <b> > {{ formData.alvo }} | furo </b>
+      {{ project?.nome }} <b> > {{ formData?.alvo }} | furo </b>
     </h3>
   </div>
 
@@ -96,7 +90,10 @@
             <input
               type="text"
               id="caixa"
-              [value]="caixasMapeadas[boxNames[currentBoxIndex]]?.name"
+              [value]="
+                boxNames?.length > 0 &&
+                caixasMapeadas[boxNames[currentBoxIndex]]?.name
+              "
               readonly
             />
             <button class="increase" (click)="navigateBox(1)">+</button>
@@ -142,11 +139,9 @@
         <h3>Galeria</h3>
       </div>
       <div class="gallery-images">
-        <img
-          *ngFor="let imagem of combineImagens"
-          [src]="imagem.url"
-          alt="Galeria de imagens"
-        />
+        @for (imagem of combineImagens; track $index) {
+          <img [src]="imagem.url" alt="Galeria de imagens" />
+        }
       </div>
     </div>
   </section>
@@ -156,20 +151,28 @@
       <div class="info-title">
         <h3>Caixa Seca</h3>
       </div>
-      <div *ngFor="let imagem of caixasSecasImages" class="section">
-        <h4 *ngIf="imagem.secao !== 0">SEÇÃO {{ imagem.secao }}</h4>
-        <img *ngIf="imagem.secao !== 0" [src]="imagem.url" />
-      </div>
+      @for (imagem of caixasSecasImages; track $index) {
+        <div class="section">
+          @if (imagem.secao !== 0) {
+            <h4>SEÇÃO {{ imagem.secao }}</h4>
+            <img [src]="imagem.url" />
+          }
+        </div>
+      }
     </div>
 
     <div class="box">
       <div class="info-title">
         <h3>Caixa Molhada</h3>
       </div>
-      <div *ngFor="let imagem of caixasMolhadasImages" class="section">
-        <h4 *ngIf="imagem.secao !== 0">SEÇÃO {{ imagem.secao }}</h4>
-        <img *ngIf="imagem.secao !== 0" [src]="imagem.url" />
-      </div>
+      @for (imagem of caixasSecasImages; track $index) {
+        <div class="section">
+          @if (imagem.secao !== 0) {
+            <h4>SEÇÃO {{ imagem.secao }}</h4>
+            <img [src]="imagem.url" />
+          }
+        </div>
+      }
     </div>
   </div>
 </div>
