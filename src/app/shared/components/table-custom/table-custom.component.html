@@ -1,49 +1,91 @@
 <div class="project-table">
   <div class="municipio-dropdown">
-    <span>MUNICÍPIO: </span>
-    <select class="custom-select">
-      <option>SALVADOR</option>
-    </select>
+    <span>PROJETOS ATIVOS</span>
   </div>
   <div class="table-container">
     <div class="table-header">
-      <div class="protect-filter">
-        <label><mat-icon class="project-icon">adjust</mat-icon>PROJETOS</label>
-        <input
-          type="text"
-          placeholder="Riacho Seco"
-          [(ngModel)]="searchTerm"
-          (input)="filtrarProjetos($event)"
-        />
-      </div>
-      <div>ALVO</div>
-      <div>FURO</div>
-      <div>AÇÕES</div>
-    </div>
-    <div class="table-content">
-      <div class="table-body" *ngFor="let project of projects">
-        <div>{{ project.nome }}</div>
-        <div>{{ project.alvos }} ALVO 1</div>
-        <div>{{ project.furo }} FURO 1</div>
-        <div class="actions">
-          <button mat-icon-button class="action-btn document">
-            <mat-icon>description</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            class="action-btn image"
-            (click)="goToGalery(project)"
-          >
-            <mat-icon>image</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            class="action-btn location"
-            (click)="searchMap(project.municipio)"
-          >
-            <mat-icon>location_on</mat-icon>
-          </button>
+      <div class="search-filter">
+        <div class="filter-option">
+          <label for="" class="label">Pavilhao</label>
+          <div class="btn-options">
+            @for (pavilhao of pavilhoes; track $index) {
+              <!-- <button (click)="selectPavilhao($event)">{{ pavilhao }}</button> -->
+            }
+          </div>
         </div>
+        <div class="filter-option">
+          <label for="" class="label">Projetos</label>
+          <div class="input-field">
+            <input
+              type="text"
+              placeholder="Selecione ou digite o nome do PROJETO"
+              aria-label="Number"
+              matInput
+              [formControl]="projetoControl"
+              [matAutocomplete]="auto"
+              (ngModelChange)="onInputProjectChange($event)"
+            />
+          </div>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            [displayWith]="mostrarNomeProjeto"
+            (optionSelected)="onProjectSelected()"
+          >
+            @for (project of filtroProjetos | async; track $index) {
+              <mat-option [value]="project">{{ project.nome }}</mat-option>
+            }
+          </mat-autocomplete>
+        </div>
+        <div class="filter-option">
+          <label for="" class="label"> Alvo </label>
+          <div class="input-field">
+            <select
+              name=""
+              id=""
+              [disabled]="alvos.length === 0"
+              [formControl]="alvoControl"
+              (change)="onAlvoSelected()"
+            >
+              <option selected>Selecione o ALVO</option>
+              @for (alvo of alvos; track $index) {
+                <option [value]="alvo.id">{{ alvo.nome }}</option>
+              }
+            </select>
+            <mat-icon>expand_more</mat-icon>
+          </div>
+        </div>
+        <div class="filter-option">
+          <label for="" class="label"> Furo </label>
+          <div class="input-field">
+            <select name="" id="" [disabled]="furos.length === 0">
+              <option selected>Selecione o Furo</option>
+              @for (furo of furos; track $index) {
+                <option [value]="furo.id">{{ furo.nome }}</option>
+              }
+            </select>
+            <mat-icon>expand_more</mat-icon>
+          </div>
+        </div>
+        <div class="filter-option">
+          <label for="" class="label"> Ação </label>
+        </div>
+      </div>
+    </div>
+    <div class="table-body" *ngFor="let project of projects">
+      <div>1</div>
+      <div>{{ project.nome }}</div>
+      <div>{{ project.alvos }} ALVO 1</div>
+      <div>{{ project.furo }} FURO 1</div>
+      <div class="actions">
+        <button mat-icon-button class="action-btn document">
+          <mat-icon>description</mat-icon>
+        </button>
+        <!-- <button mat-icon-button class="action-btn image" (click)="goToGalery(project, project.alvo, project.furo)">
+          <mat-icon>image</mat-icon>
+        </button> -->
+        <button mat-icon-button class="action-btn location">
+          <mat-icon>location_on</mat-icon>
+        </button>
       </div>
     </div>
   </div>
