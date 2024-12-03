@@ -228,3 +228,7 @@ a {
   font-weight: 900;
   color: white;
 }
+
+::ng-deep .mdc-text-field--disabled {
+  background-color: #cccccc !important;
+}

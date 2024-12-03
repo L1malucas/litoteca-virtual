@@ -74,6 +74,8 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.carregarProjetos();
     this.carregarMunicipios();
+    this.alvoControl.disable();
+    this.furoControl.disable();
     this.filtroProjetos = this.projetoControl.valueChanges.pipe(
       startWith(""),
       map((value) => {
@@ -164,6 +166,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   onProjectSelected() {
     if (this.projetoControl?.value?.id) {
       this.inputProject = this.projetoControl.value.id;
+      this.alvoControl.enable();
       this.filtrarAlvosPorProjeto();
     }
   }
@@ -171,8 +174,8 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   onAlvoSelected() {
     if (this.alvoControl?.value?.id) {
       const alvoId: string = this.alvoControl.value.id;
-      console.log(alvoId);
       if (alvoId) {
+        this.furoControl.enable();
         this.carregarFurosSelect(alvoId);
         this.filteredAlvos = this.alvos.filter((alvo) => {
           return alvo.id === alvoId;
