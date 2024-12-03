@@ -4,15 +4,27 @@
   [options]="projects"
 ></app-drop-down> -->
 
-<!-- <div class="btn-imprimir">
+<div class="header">
+  <h3>
+    {{ project.nome }} <b> > {{ formData.alvo }} | furo </b>
+  </h3>
+</div>
+
+<div class="btn-imprimir">
   <app-button
-    text="IMPRIMIR"
+    (click)="back()"
+    text="voltar"
+    icon="arrow_back"
     [buttonStyle]="{
       padding: '1rem 2.4rem',
+      alignItems: 'center',
+      justifyContent: 'center',
+      display: 'flex',
+      gap: '10px',
     }"
     customClass="hover-transparent"
   ></app-button>
-</div> -->
+</div>
 
 <div class="main-container">
   <section class="box-ionfo-section">
@@ -87,20 +99,12 @@
         <div class="form-row">
           <label for="profundidade">PROFUNDIDADE (m):</label>
           <div class="depth">
-            <input
-              readonly
-              type="text"
-              id="profundidadeInicial"
-              [(ngModel)]="formData.profundidadeInicial"
-              name="profundidadeInicial"
-            />
-            <input
-              readonly
-              type="text"
-              id="profundidadeFinal"
-              [(ngModel)]="formData.profundidadeFinal"
-              name="profundidadeFinal"
-            />
+            <span>
+              {{ formData.profundidadeInicial }}
+            </span>
+            <span>
+              {{ formData.profundidadeFinal }}
+            </span>
           </div>
         </div>
         <div class="form-row">
@@ -172,8 +176,8 @@
     </div>
   </div>
 
-  <div class="back-to-login" (click)="back()">
+  <!-- <div class="back-to-login" (click)="back()">
     <i class="material-icons">arrow_back</i>
     <a> Voltar para Consulta de Projetos </a>
-  </div>
+  </div> -->
 </div>
