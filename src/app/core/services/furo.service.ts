@@ -1,18 +1,20 @@
 import { Injectable, Injector } from "@angular/core";
-import { catchError, Observable, throwError } from "rxjs";
+import { HelpConfig } from "../config/help-config";
+import { HttpClient } from "@angular/common/http";
 import { BaseResourceService } from "./system/base-resource.service";
-import { HelpConfig } from "@config/help-config";
+import { catchError, Observable, throwError } from "rxjs";
+import { HoleModel } from "@models/furo.model";
 
-import { AlvoModel } from "@models/alvo.model";
-import { FuroModel } from "@models/furo.model";
-
-@Injectable({ providedIn: "root" })
-export class AlvoService extends BaseResourceService<AlvoModel> {
+@Injectable({
+  providedIn: "root",
+})
+export class HoleService extends BaseResourceService<HoleModel> {
   constructor(
     protected override injector: Injector,
-    protected helpConfig: HelpConfig,
+    private helpConfig: HelpConfig,
+    private httpClient: HttpClient,
   ) {
-    super(`${helpConfig.ALVO_ENDPOINT}`, injector);
+    super(`${helpConfig.FURO_ENDPOINT}`, injector);
   }
 
   private handleError(error: any): Observable<never> {
@@ -22,17 +24,9 @@ export class AlvoService extends BaseResourceService<AlvoModel> {
     });
   }
 
-  override getAll(): Observable<AlvoModel[]> {
+  override getById(id: string): Observable<HoleModel> {
     return this._httpClient
-      .get<AlvoModel[]>(`${this.helpConfig.ALVO_ENDPOINT}BuscarAlvos`)
-      .pipe(catchError(this.handleError));
-  }
-
-  getByAlvoId(id: string): Observable<FuroModel[]> {
-    return this._httpClient
-      .get<
-        FuroModel[]
-      >(`${this.helpConfig.ALVO_ENDPOINT}BuscarAlvosPorProjetoId/${id}`)
+      .get<HoleModel>(`${this._url}BuscarPorId/${id}`)
       .pipe(catchError(this.handleError));
   }
 }

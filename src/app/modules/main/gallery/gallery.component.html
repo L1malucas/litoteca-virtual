@@ -1,14 +1,26 @@
-<app-drop-down
+<!-- <app-drop-down
   textHeader="Nome do Projeto"
   [styleDropDown]="{ marginTop: '1rem', width: '40%', marginLeft: '2rem' }"
-  [options]="projetos"
-></app-drop-down>
+  [options]="projects"
+></app-drop-down> -->
+
+<div class="header">
+  <h3>
+    {{ project.nome }} <b> > {{ formData.alvo }} | furo </b>
+  </h3>
+</div>
 
 <div class="btn-imprimir">
   <app-button
-    text="IMPRIMIR"
+    (click)="back()"
+    text="voltar"
+    icon="arrow_back"
     [buttonStyle]="{
       padding: '1rem 2.4rem',
+      alignItems: 'center',
+      justifyContent: 'center',
+      display: 'flex',
+      gap: '10px',
     }"
     customClass="hover-transparent"
   ></app-button>
@@ -24,65 +36,106 @@
         <div class="form-row">
           <label for="projeto">PROJETO:</label>
           <input
+            readonly
             type="text"
             id="projeto"
-            placeholder="Exemplo de preenchimento"
+            [(ngModel)]="formData.nome"
+            name="nome"
           />
         </div>
         <div class="form-row">
           <label for="municipio">MUNICÍPIO:</label>
           <input
+            readonly
             type="text"
             id="municipio"
-            placeholder="Exemplo de preenchimento"
+            [(ngModel)]="formData.municipio"
+            name="municipio"
           />
         </div>
         <div class="form-row">
           <label for="localidade">LOCALIDADE:</label>
           <input
+            readonly
             type="text"
             id="localidade"
-            placeholder="Exemplo de preenchimento"
+            [(ngModel)]="formData.localidade"
+            name="localidade"
           />
         </div>
         <div class="form-row">
           <label for="furo">Nº DO FURO:</label>
-          <input type="text" id="furo" placeholder="Exemplo de preenchimento" />
-        </div>
-        <div class="form-row">
-          <label for="profundidade">PAVILHÃO: </label>
           <input
+            readonly
             type="text"
-            id="projeto"
-            placeholder="Exemplo de preenchimento"
+            id="furo"
+            [(ngModel)]="formData.furo"
+            name="furo"
           />
         </div>
         <div class="form-row">
+          <label for="pavilhao">PAVILHÃO:</label>
+          <input
+            readonly
+            type="text"
+            id="pavilhao"
+            [(ngModel)]="formData.pavilhao"
+            name="pavilhao"
+          />
+        </div>
+        <div class="form-row">
+          <label for="caixa">Caixa Atual:</label>
           <div class="number-input">
-            <button class="decrease">-</button>
-            <input type="text" id="caixa" value="Caixa 01" readonly />
-            <button class="increase">+</button>
+            <button class="decrease" (click)="navigateBox(-1)">-</button>
+            <input
+              type="text"
+              id="caixa"
+              [value]="caixasMapeadas[boxNames[currentBoxIndex]]?.name"
+              readonly
+            />
+            <button class="increase" (click)="navigateBox(1)">+</button>
           </div>
         </div>
-        <div class="form-row"></div>
         <div class="form-row">
           <label for="profundidade">PROFUNDIDADE (m):</label>
           <div class="depth">
-            <span>0m</span>
-            <span>3,14m</span>
+            <span>
+              {{ formData.profundidadeInicial }}
+            </span>
+            <span>
+              {{ formData.profundidadeFinal }}
+            </span>
           </div>
         </div>
         <div class="form-row">
           <label for="alvo">ALVO:</label>
-          <input type="text" id="alvo" placeholder="Exemplo de preenchimento" />
+          <input
+            readonly
+            type="text"
+            id="alvo"
+            [(ngModel)]="formData.alvo"
+            name="alvo"
+          />
         </div>
         <div class="form-row">
           <label for="estante">ESTANTE:</label>
-          <input type="text" id="estante" placeholder="0-1" />
+          <input
+            readonly
+            type="text"
+            id="estante"
+            [(ngModel)]="formData.estante"
+            name="estante"
+          />
         </div>
         <div class="form-row">
           <label for="prateleira">PRATELEIRA:</label>
-          <input type="text" id="prateleira" placeholder="1-15" />
+          <input
+            readonly
+            type="text"
+            id="prateleira"
+            [(ngModel)]="formData.prateleira"
+            name="prateleira"
+          />
         </div>
       </form>
     </div>
@@ -93,8 +146,8 @@
       </div>
       <div class="gallery-images">
         <img
-          *ngFor="let imagem of imagens"
-          [src]="imagem"
+          *ngFor="let imagem of combineImagens"
+          [src]="imagem.url"
           alt="Galeria de imagens"
         />
       </div>
@@ -106,9 +159,9 @@
       <div class="info-title">
         <h3>Caixa Seca</h3>
       </div>
-      <div *ngFor="let secao of secoes" class="section">
-        <h4>SEÇÃO {{ secao.numero }}</h4>
-        <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+      <div *ngFor="let imagem of caixasSecasImages" class="section">
+        <h4>SEÇÃO {{ imagem.secao }}</h4>
+        <img [src]="imagem.url" />
       </div>
     </div>
 
@@ -116,10 +169,15 @@
       <div class="info-title">
         <h3>Caixa Molhada</h3>
       </div>
-      <div *ngFor="let secao of secoesMolhadas" class="section">
-        <h4>SEÇÃO {{ secao.numero }}</h4>
-        <img [src]="secao.imagem" alt="Seção {{ secao.numero }}" />
+      <div *ngFor="let imagem of caixasMolhadasImages" class="section">
+        <h4>SEÇÃO {{ imagem.secao }}</h4>
+        <img [src]="imagem.url" />
       </div>
     </div>
   </div>
+
+  <!-- <div class="back-to-login" (click)="back()">
+    <i class="material-icons">arrow_back</i>
+    <a> Voltar para Consulta de Projetos </a>
+  </div> -->
 </div>

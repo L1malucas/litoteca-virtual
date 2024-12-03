@@ -4,35 +4,71 @@ export interface Records {
   status?: number;
   part?: number;
   numberDocuments?: number;
-  numberRecord?: number; // Alterado para numberRecord
+  numberRecord?: number;
   priority?: boolean;
-  dateScan?: string; // Alterado para string
-  documents?: any[]; // Adicionado para refletir a estrutura dos dados JSON
+  dateScan?: string;
+  documents?: any[];
 }
 
 export class BoxModel {
   id?: string;
+  ids?: string[];
+  nome!: string;
   rncx?: string;
   demand?: number;
   frameRoll?: string;
-  startRange?: number; // Alterado para number
-  endRange?: number; // Alterado para number
+  startRange?: number;
+  endRange?: number;
   records?: Records[];
-  documentCount?: number; // Alterado para number
-  dateScan?: string; // Alterado para string
-  createdDate?: string; // Adicionado para refletir a estrutura dos dados JSON
-  isDeleted?: boolean; // Adicionado para refletir a estrutura dos dados JSON
+  documentCount?: number;
+  dateScan?: string;
+  createdDate?: string;
+  isDeleted?: boolean;
+  profundidadeInicial?: string;
+  profundidadeFinal?: string;
+  estante?: string;
+  prateleira?: string;
+  capturas?: Capturas[];
 
   constructor(options: Partial<BoxModel> = {}) {
     this.id = options.id || "";
     this.rncx = options.rncx || "";
     this.demand = options.demand || 0;
     this.frameRoll = options.frameRoll || "";
-    this.startRange = options.startRange || 0; // Alterado para 0
-    this.endRange = options.endRange || 0; // Alterado para 0
+    this.startRange = options.startRange || 0;
+    this.endRange = options.endRange || 0;
     this.records = options.records || [];
     this.dateScan = options.dateScan || "";
-    this.createdDate = options.createdDate || ""; // Inicializa como string
-    this.isDeleted = options.isDeleted || false; // Inicializa como false
+    this.createdDate = options.createdDate || "";
+    this.isDeleted = options.isDeleted || false;
+    this.profundidadeInicial = options.profundidadeInicial || "";
+    this.profundidadeFinal = options.profundidadeFinal || "";
+    this.estante = options.estante || "";
+    this.prateleira = options.prateleira || "";
+    this.capturas = options.capturas || [];
+  }
+}
+
+class Capturas {
+  id?: string;
+  caixaId?: string;
+  dataCriacao?: string;
+  imageReference?: string;
+  miniatureReference?: string;
+  operador?: string;
+  operadorId?: string;
+  ordem?: number;
+  secao?: number;
+
+  constructor(options: Partial<Capturas> = {}) {
+    this.id = options.id || "";
+    this.caixaId = options.caixaId || "";
+    this.dataCriacao = options.dataCriacao || "";
+    this.imageReference = options.imageReference || "";
+    this.miniatureReference = options.miniatureReference || "";
+    this.operador = options.operador || "";
+    this.operadorId = options.operadorId || "";
+    this.ordem = options.ordem || 0;
+    this.secao = options.secao || 0;
   }
 }
