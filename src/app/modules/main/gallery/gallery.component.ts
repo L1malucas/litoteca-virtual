@@ -62,7 +62,7 @@ export class GalleryComponent {
     this._projectService.getById(id).subscribe((res) => {
       this.project = res;
       this.formData.nome = this.project.nome;
-      this.formData.municipio = "Não informado";
+      this.formData.municipio = "NÃO INFORMADO";
       this.formData.localidade = this.project.localidade;
       this.formData.pavilhao = "1";
       this.formData.alvo = this.project.alvos[0]?.nome || "Sem alvo";
@@ -183,7 +183,7 @@ export class GalleryComponent {
                   return item !== null;
                 })
                 .sort((a, b) => {
-                  return (a.secao ?? 0) - (b.secao ?? 0);
+                  return (b.secao ?? 0) - (a.secao ?? 0);
                 })
             : [];
         } else if (categoriaId === 2) {
@@ -202,7 +202,7 @@ export class GalleryComponent {
                   return item !== null;
                 })
                 .sort((a, b) => {
-                  return (a.secao ?? 0) - (b.secao ?? 0);
+                  return (b.secao ?? 0) - (a.secao ?? 0);
                 })
             : [];
         } else {
