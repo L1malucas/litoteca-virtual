@@ -79,6 +79,7 @@ export class GalleryComponent {
 
   getBoxesByHoleId(holeId: string) {
     this._boxService.getBoxByHoleId(holeId).subscribe((res) => {
+      console.log(res);
       this.boxes = Array.isArray(res) ? res : [res];
 
       const groupedBoxes: {
@@ -105,6 +106,7 @@ export class GalleryComponent {
       );
 
       this.caixasMapeadas = sortedGroupedBoxes;
+      console.log(this.caixasMapeadas);
       this.boxNames = sortedKeys;
 
       this.currentBoxIndex = 0;
@@ -121,10 +123,9 @@ export class GalleryComponent {
             return x.categoriaId;
           },
         );
-        boxIds.forEach((boxId: string) => {
-          categoriaIds.forEach((categoriaId: number) => {
-            return this.getBoxById(boxId, categoriaId);
-          });
+        boxIds.forEach((boxId: string, index: number) => {
+          const categoriaId = categoriaIds[index];
+          this.getBoxById(boxId, categoriaId);
         });
       }
     });
@@ -147,10 +148,9 @@ export class GalleryComponent {
             return x.categoriaId;
           },
         );
-        boxIds.forEach((boxId: string) => {
-          categoriaIds.forEach((categoriaId: number) => {
-            return this.getBoxById(boxId, categoriaId);
-          });
+        boxIds.forEach((boxId: string, index: number) => {
+          const categoriaId = categoriaIds[index];
+          this.getBoxById(boxId, categoriaId);
         });
       } else {
         console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
@@ -167,11 +167,12 @@ export class GalleryComponent {
         this.formData.prateleira = res.prateleira;
 
         if (categoriaId === 1) {
+          console.log(categoriaId);
           this.caixasSecasImages = Array.isArray(res.capturas)
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `http://cbpmged.renova.net.br/${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };
@@ -182,7 +183,7 @@ export class GalleryComponent {
                   return item !== null;
                 })
                 .sort((a, b) => {
-                  return (b.secao ?? 0) - (a.secao ?? 0);
+                  return (a.secao ?? 0) - (b.secao ?? 0);
                 })
             : [];
         } else if (categoriaId === 2) {
@@ -190,7 +191,7 @@ export class GalleryComponent {
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `http://cbpmged.renova.net.br/${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };
@@ -201,7 +202,7 @@ export class GalleryComponent {
                   return item !== null;
                 })
                 .sort((a, b) => {
-                  return (b.secao ?? 0) - (a.secao ?? 0);
+                  return (a.secao ?? 0) - (b.secao ?? 0);
                 })
             : [];
         } else {
