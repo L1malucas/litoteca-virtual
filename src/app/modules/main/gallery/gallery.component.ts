@@ -31,7 +31,7 @@ export class GalleryComponent {
   caixasSecasImages: any[] = [];
   caixasMolhadasImages: any[] = [];
   combineImagens?: any[];
-  project!: ProjetoModel;
+  project?: ProjetoModel;
   holeId!: string;
   boxId!: string;
   boxes!: any[];
