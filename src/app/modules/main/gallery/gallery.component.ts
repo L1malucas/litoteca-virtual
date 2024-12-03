@@ -183,7 +183,7 @@ export class GalleryComponent {
                   return item !== null;
                 })
                 .sort((a, b) => {
-                  return (a.secao ?? 0) - (b.secao ?? 0);
+                  return (b.secao ?? 0) - (a.secao ?? 0);
                 })
             : [];
         } else if (categoriaId === 2) {
@@ -202,7 +202,7 @@ export class GalleryComponent {
                   return item !== null;
                 })
                 .sort((a, b) => {
-                  return (a.secao ?? 0) - (b.secao ?? 0);
+                  return (b.secao ?? 0) - (a.secao ?? 0);
                 })
             : [];
         } else {
