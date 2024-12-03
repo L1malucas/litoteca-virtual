@@ -22,4 +22,8 @@ export class TargetService extends BaseResourceService<AlvoModel> {
       `${this._url}BuscarAlvosPorProjetoId/${projectId}`,
     );
   }
+
+  override getById(id: string): Observable<AlvoModel> {
+    return this._httpClient.get<AlvoModel>(`${this._url}BuscarPorId/${id}`);
+  }
 }

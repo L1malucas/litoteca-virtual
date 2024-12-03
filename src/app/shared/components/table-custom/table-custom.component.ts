@@ -26,6 +26,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   searchTerm: string = "";
   filteredProjects: ProjetoModel[] = [];
   filteredAlvos: AlvoModel[] = [];
+  filteredFuros: HoleModel[] = [];
 
   alvos: AlvoModel[] = [];
   furos: HoleModel[] = [];
@@ -38,6 +39,9 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   projetoControl = new FormControl<ProjetoModel>(new ProjetoModel());
   alvoControl = new FormControl<AlvoModel>(new AlvoModel());
   furoControl = new FormControl<HoleModel>(new HoleModel());
+
+  project: ProjetoModel = new ProjetoModel();
+  alvo: AlvoModel = new AlvoModel();
 
   constructor(
     private route: Router,
@@ -165,6 +169,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   onProjectSelected() {
     if (this.projetoControl?.value?.id) {
+      this.project = this.projetoControl.value;
       this.inputProject = this.projetoControl.value.id;
       this.alvoControl.enable();
       this.filtrarAlvosPorProjeto();
@@ -176,13 +181,8 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
       const alvoId: string = this.alvoControl.value.id;
       if (alvoId) {
         this.furoControl.enable();
+        this.alvo = this.alvoControl.value;
         this.carregarFurosSelect(alvoId);
-        this.filteredAlvos = this.alvos.filter((alvo) => {
-          return alvo.id === alvoId;
-        });
-        this.filteredAlvos.forEach((alvo) => {
-          this.carregarProjetoPorId(alvo.projetoId);
-        });
       }
     }
   }
@@ -194,15 +194,38 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   }
 
   onFuroSelected() {
-    if (this.projetoControl?.value?.id) {
-      this.inputProject = this.projetoControl.value.id;
-      this.filtrarAlvosPorProjeto();
+    if (this.furoControl?.value?.id) {
+      const furoId: string = this.furoControl.value.id;
+      if (furoId) {
+        this.filteredAlvos = [];
+        this.filteredProjects = [];
+        this.filteredFuros = [];
+        this.carregarFurosId(furoId);
+      }
     }
   }
 
   carregarFurosSelect(id: string) {
     this._holeService.getFurosByAlvoId(id).subscribe((furos) => {
       this.furos = furos;
+    });
+  }
+
+  carregarFurosPorAlvoId(id: string) {
+    this._holeService.getFurosByAlvoId(id).subscribe((furos) => {
+      this.furos = furos;
+    });
+  }
+
+  carregarFurosId(id: string) {
+    this._holeService.getById(id).subscribe((furo) => {
+      this.furos = [furo];
+    });
+  }
+
+  carregarAlvosId(id: string) {
+    this._targetService.getById(id).subscribe((alvo) => {
+      this.filteredAlvos.push(alvo);
     });
   }
 
