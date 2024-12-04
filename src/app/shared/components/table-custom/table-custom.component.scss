@@ -210,6 +210,17 @@
   color: #4e0101;
   font-weight: 700;
   font-size: 20px;
+  &.full {
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h3 {
+      width: 100%;
+      font-size: 26px;
+      font-weight: 700;
+    }
+  }
   .pavilhao {
     width: 50%;
   }
@@ -219,7 +230,7 @@
 }
 
 .table-content {
-  height: 450px;
+  height: 500px;
   overflow-y: auto;
 }
 
