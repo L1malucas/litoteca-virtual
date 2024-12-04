@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlvoModel } from "@models/alvo.model";
 import { BoxModel } from "@models/box.model";
+import { HoleModel } from "@models/furo.model";
 import { ProjetoModel } from "@models/projeto.model";
 import { TargetService } from "@services/alvo.service";
 import { BoxService } from "@services/box.service";
@@ -38,6 +40,8 @@ export class GalleryComponent {
   caixasMapeadas!: any;
   currentBoxIndex: number = 0;
   boxNames: any;
+  target!: AlvoModel;
+  hole?: HoleModel;
 
   constructor(
     private _router: Router,
@@ -51,7 +55,9 @@ export class GalleryComponent {
   ngOnInit(): void {
     this._activeRoute.queryParams.subscribe((params) => {
       if (params["projeto"]) {
-        this.getTargetInfo(params["projeto"]);
+        this.getTargetInfo(params["alvo"]);
+        this.getHoleIfo(params["hole"]);
+        this.getBoxesByHoleId(params["hole"]);
         this.getProjectById(params["projeto"]);
       }
     });
@@ -68,18 +74,21 @@ export class GalleryComponent {
     });
   }
 
-  getTargetInfo(projectId: string) {
-    this._targetService
-      .getTargetForProjectId(projectId)
-      .subscribe((target: any) => {
-        this.holeId = target[0]?.furos[0]?.id;
-        this.getBoxesByHoleId(this.holeId);
-      });
+  getHoleIfo(holeId: string) {
+    this._holeService.getById(holeId).subscribe((res) => {
+      this.hole = res;
+      this.formData.furo = this.hole.nome;
+    });
+  }
+
+  getTargetInfo(alvoId: string) {
+    this._targetService.getById(alvoId).subscribe((target: any) => {
+      this.target = target;
+    });
   }
 
   getBoxesByHoleId(holeId: string) {
     this._boxService.getBoxByHoleId(holeId).subscribe((res) => {
-      console.log(res);
       this.boxes = Array.isArray(res) ? res : [res];
 
       const groupedBoxes: {
@@ -106,7 +115,6 @@ export class GalleryComponent {
       );
 
       this.caixasMapeadas = sortedGroupedBoxes;
-      console.log(this.caixasMapeadas);
       this.boxNames = sortedKeys;
 
       this.currentBoxIndex = 0;
@@ -167,7 +175,6 @@ export class GalleryComponent {
         this.formData.prateleira = res.prateleira;
 
         if (categoriaId === 1) {
-          console.log(categoriaId);
           this.caixasSecasImages = Array.isArray(res.capturas)
             ? res.capturas
                 .map((x) => {
