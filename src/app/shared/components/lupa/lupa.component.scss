@@ -1,0 +1,105 @@
+// Variáveis de cores e tipografia
+$primary-color: #4e0101; // Cor primária para bordas e detalhes
+$white: #ffffff; // Cor branca para fundo e texto
+$background-color: $white; // Cor de fundo padrão
+$border-color: $primary-color; // Cor da borda para manter consistência com a cor primária
+$font-family: "Open Sans", sans-serif; // Fonte padrão
+
+// Mixins
+
+/**
+ * Centraliza o conteúdo horizontal e verticalmente.
+ * Usado para elementos flexíveis que precisam ser alinhados no centro.
+ */
+@mixin center-content {
+  text-align: center;
+  align-items: center;
+  align-self: center;
+}
+
+/**
+ * Define a largura de um elemento com base em uma porcentagem
+ * e centraliza horizontalmente.
+ *
+ * @param $percentage A largura do elemento em porcentagem.
+ */
+@mixin full-width($percentage) {
+  width: $percentage;
+  margin-left: (100% - $percentage) / 2;
+}
+
+// Estilos globais do componente principal
+
+/**
+ * Define o comportamento do componente host.
+ * Preenche o espaço disponível e oculta overflow.
+ */
+:host {
+  display: block;
+  margin: 0;
+  background-color: $background-color;
+  overflow: hidden;
+}
+
+// Estilos específicos
+
+/**
+ * Container que contém a imagem e o efeito de lupa.
+ * Define posição relativa para posicionamento absoluto da lupa.
+ */
+.lupa-container {
+  position: relative;
+  overflow: hidden; // Garante que qualquer elemento filho fora dos limites seja ocultado.
+}
+
+/**
+ * Estilo da imagem que será ampliada.
+ * Ajusta o tamanho da imagem e adiciona borda.
+ */
+.magnified-img {
+  display: block;
+  width: 100%; // Define a largura como 55% do container
+  height: 100%; // Define a altura como 55% do container
+  margin: auto; // Centraliza a imagem no container
+  border: 3px solid $primary-color; // Usa a cor primária como borda
+  border-radius: 0; // Sem bordas arredondadas
+}
+
+/**
+ * Estilo do elemento que representa a lupa (zoom).
+ * Define sua aparência, posição e comportamento ao mover o mouse sobre a imagem.
+ */
+.magnify {
+  position: absolute;
+  width: 250px; // Tamanho da lupa (diâmetro), deve corresponder ao valor em lupaSize no componente TypeScript
+  height: 250px; // Altura da lupa
+  border-radius: 50%; // Define formato circular
+  border: 3px solid $border-color; // Usa a cor de borda definida
+  background: {
+    repeat: no-repeat; // A imagem de fundo não se repete
+    color: $background-color; // A cor de fundo
+    size: 300% 300%; // Ampliação do fundo, correspondendo a (100 * lupaDesfoque)%
+  }
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); // Efeito de sombra interna
+  display: none; // Inicialmente oculto até que o mouse interaja
+  pointer-events: none; // A lupa não interfere nos eventos de mouse
+  cursor: none; // O cursor do mouse não é visível dentro da lupa
+}
+
+/**
+ * Classe para centralizar o conteúdo com cor branca.
+ * Utiliza o mixin de centralização.
+ */
+.pi {
+  position: relative;
+  color: $white; // Define o texto como branco
+  @include center-content; // Aplica centralização com o mixin
+}
+
+.loader {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
