@@ -36,6 +36,13 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   inputTarget: string = "";
   selectedPavilhao: number = -1;
 
+  pageSize: number = 5;
+  page: number = 1;
+  totalPages: number = 0;
+
+  furoId: string = "";
+  alvoId: string = "";
+
   projetoControl = new FormControl<ProjetoModel>(new ProjetoModel());
   alvoControl = new FormControl<AlvoModel>(new AlvoModel());
   furoControl = new FormControl<HoleModel>(new HoleModel());
@@ -77,7 +84,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.carregarProjetos();
-    this.carregarMunicipios();
+    // this.carregarMunicipios();
     this.alvoControl.disable();
     this.furoControl.disable();
     this.filtroProjetos = this.projetoControl.valueChanges.pipe(
@@ -181,24 +188,24 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   onAlvoSelected() {
     if (this.alvoControl?.value?.id) {
-      const alvoId: string = this.alvoControl.value.id;
-      if (alvoId) {
+      this.alvoId = this.alvoControl.value.id;
+      if (this.alvoId) {
         this.furoControl.setValue(null);
         this.furoControl.enable();
         this.alvo = this.alvoControl.value;
-        this.carregarFurosSelect(alvoId);
+        this.carregarFurosPorAlvoId();
       }
     }
   }
 
   onFuroSelected() {
     if (this.furoControl?.value?.id) {
-      const furoId: string = this.furoControl.value.id;
-      if (furoId) {
+      this.furoId = this.furoControl.value.id;
+      if (this.furoId) {
         this.filteredAlvos = [];
         this.filteredProjects = [];
         this.furos = [];
-        this.carregarFurosId(furoId);
+        this.carregarFurosPorFuroId();
       }
     }
   }
@@ -215,10 +222,25 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     });
   }
 
-  carregarFurosPorAlvoId(id: string) {
-    this._holeService.getFurosByAlvoId(id).subscribe((furos) => {
-      this.furos = furos;
-    });
+  carregarFurosPorAlvoId() {
+    this._holeService
+      .getFurosPaginationByAlvoId(this.page, this.pageSize, this.alvoId)
+      .subscribe((result) => {
+        this.pageSize = result.pageSize;
+        this.totalPages = result.totalDatas;
+        this.page = result.pageNumber;
+        this.furos = result.data;
+      });
+  }
+
+  carregarFurosPorFuroId() {
+    this._holeService
+      .getFurosPaginationByFuroId(this.page, this.pageSize, this.furoId)
+      .subscribe((result) => {
+        this.pageSize = result.pageSize;
+        this.totalPages = result.totalPages;
+        this.furos = result.data;
+      });
   }
 
   carregarFurosId(id: string) {
@@ -248,9 +270,18 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
         });
     }
   }
-  // filtrarProjetosPorAlvo(alvoId:string){
-  //   this.projects = this.projects.filter(project => {project.alvos[0].id === alvoId})
-  // }
+
+  onPageChange(event: any) {
+    this.page = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    console.log(event);
+    if (this.furoId != "") {
+      this.carregarFurosPorFuroId();
+    }
+    if (this.alvoId != "") {
+      this.carregarFurosPorAlvoId();
+    }
+  }
 
   searchMap(municipio: MunicipioModel) {
     window.open(

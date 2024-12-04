@@ -23,7 +23,13 @@ export class TargetService extends BaseResourceService<AlvoModel> {
     );
   }
 
-  override getById(id: string): Observable<AlvoModel> {
-    return this._httpClient.get<AlvoModel>(`${this._url}BuscarPorId/${id}`);
+  getTargetPaginationByProjectId(
+    pageNumber: string,
+    pageSize: string,
+    projectId: string,
+  ): Observable<AlvoModel[]> {
+    return this.httpClient.get<AlvoModel[]>(
+      `${this._url}BuscarComPaginacao?ProjetoId=${projectId}&PageNumber=${pageNumber}&PageSize=${pageSize}`,
+    );
   }
 }
