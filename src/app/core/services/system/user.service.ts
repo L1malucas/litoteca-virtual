@@ -33,4 +33,17 @@ export class UserService extends BaseResourceService<UserModel> {
       `${this.helpConfig.USUARIO_ENDPOINT}Buscar?Email=${email}`,
     );
   }
+
+  override getById(id: string): Observable<any> {
+    return this._httpClient.get<UserModel>(
+      `${this.helpConfig.USUARIO_ENDPOINT}Buscar?Id=${id}`,
+    );
+  }
+
+  updateUser(id: string, resource: UserModel): Observable<UserModel> {
+    return this._httpClient.put<UserModel>(
+      `${this.helpConfig.USUARIO_ENDPOINT}Atualizar/${id}`,
+      resource,
+    );
+  }
 }
