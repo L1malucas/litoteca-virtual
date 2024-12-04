@@ -36,6 +36,8 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   inputTarget: string = "";
   selectedPavilhao: number = -1;
 
+  selectedProject: string = "";
+
   pageSize: number = 5;
   page: number = 1;
   totalPages: number = 0;
@@ -63,20 +65,20 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   filtroAlvos!: Observable<AlvoModel[]>;
   filtroFuros!: Observable<HoleModel[]>;
 
-  private _filterProject(name: string): ProjetoModel[] {
-    const filterValue = name.toLowerCase();
+  private _filterProject(value: string): ProjetoModel[] {
+    const filterValue = value.toLowerCase();
     return this.projects.filter((option) => {
       return option.nome.toLowerCase().includes(filterValue);
     });
   }
-  private _filterAlvos(name: string): AlvoModel[] {
-    const filterValue = name.toLowerCase();
+  private _filterAlvos(value: string): AlvoModel[] {
+    const filterValue = value.toLowerCase();
     return this.alvos.filter((option) => {
       return option.nome.toLowerCase().includes(filterValue);
     });
   }
-  private _filterFuros(name: string): HoleModel[] {
-    const filterValue = name.toLowerCase();
+  private _filterFuros(value: string): HoleModel[] {
+    const filterValue = value.toLowerCase();
     return this.furos.filter((option) => {
       return option.nome?.toLowerCase().includes(filterValue);
     });
@@ -87,31 +89,6 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     // this.carregarMunicipios();
     this.alvoControl.disable();
     this.furoControl.disable();
-    this.filtroProjetos = this.projetoControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.nome;
-        return name
-          ? this._filterProject(name as string)
-          : this.projects.slice();
-      }),
-    );
-
-    this.filtroAlvos = this.alvoControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.nome;
-        return name ? this._filterAlvos(name as string) : this.alvos.slice();
-      }),
-    );
-
-    this.filtroFuros = this.furoControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.nome;
-        return name ? this._filterFuros(name as string) : this.furos.slice();
-      }),
-    );
   }
 
   ngAfterViewInit() {
@@ -153,6 +130,19 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   carregarProjetos() {
     this._projetoService.getAll().subscribe((projetos) => {
       this.projects = projetos;
+
+      this.filtroProjetos = this.projetoControl.valueChanges.pipe(
+        startWith(""),
+        map((value) => {
+          const filterValue =
+            typeof value === "string"
+              ? value.toLowerCase()
+              : value?.nome?.toLowerCase();
+          return this.projects.filter((projeto) =>
+            {return projeto.nome.toLowerCase().includes(filterValue || "")},
+          );
+        }),
+      );
     });
   }
 
@@ -230,6 +220,16 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
         this.totalPages = result.totalDatas;
         this.page = result.pageNumber;
         this.furos = result.data;
+
+        this.filtroFuros = this.furoControl.valueChanges.pipe(
+          startWith(""),
+          map((value) => {
+            const name = typeof value === "string" ? value : value?.nome;
+            return name
+              ? this._filterFuros(name as string)
+              : this.furos.slice();
+          }),
+        );
       });
   }
 
@@ -267,6 +267,16 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
         .getTargetForProjectId(this.inputProject)
         .subscribe((alvos) => {
           this.alvos = alvos;
+
+          this.filtroAlvos = this.alvoControl.valueChanges.pipe(
+            startWith(""),
+            map((value) => {
+              const name = typeof value === "string" ? value : value?.nome;
+              return name
+                ? this._filterAlvos(name as string)
+                : this.alvos.slice();
+            }),
+          );
         });
     }
   }

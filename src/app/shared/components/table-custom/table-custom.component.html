@@ -19,7 +19,7 @@
             }
           </div>
         </div>
-        <div class="filter-option">
+        <div class="filter-option filter-input">
           <label for="" class="label">Projetos</label>
           <div class="input-field">
             <input
@@ -30,6 +30,7 @@
               [formControl]="projetoControl"
               [matAutocomplete]="autoProject"
             />
+            <mat-icon>expand_more</mat-icon>
           </div>
           <mat-autocomplete
             #autoProject="matAutocomplete"
@@ -41,7 +42,7 @@
             }
           </mat-autocomplete>
         </div>
-        <div class="filter-option">
+        <div class="filter-option filter-input">
           <label for="" class="label">Alvos</label>
           <div class="input-field">
             <input
@@ -52,6 +53,7 @@
               [formControl]="alvoControl"
               [matAutocomplete]="autoAlvos"
             />
+            <mat-icon>expand_more</mat-icon>
           </div>
           <mat-autocomplete
             #autoAlvos="matAutocomplete"
@@ -63,7 +65,7 @@
             }
           </mat-autocomplete>
         </div>
-        <div class="filter-option">
+        <div class="filter-option filter-input">
           <label for="projeto" class="label">Furo</label>
           <div class="input-field">
             <input
@@ -74,6 +76,7 @@
               [formControl]="furoControl"
               [matAutocomplete]="autoFuro"
             />
+            <mat-icon>expand_more</mat-icon>
           </div>
           <mat-autocomplete
             #autoFuro="matAutocomplete"
@@ -85,7 +88,7 @@
             }
           </mat-autocomplete>
         </div>
-        <div class="filter-option">
+        <div class="filter-option actions">
           <label for="projeto" class="label">ações</label>
         </div>
       </div>
@@ -93,7 +96,7 @@
     <div class="table-content">
       @for (furo of furos; track $index) {
         <div class="table-body">
-          <div>1</div>
+          <div class="pavilhao">1</div>
           <div>{{ project.nome }}</div>
           <div>{{ alvo.nome }}</div>
           <div>{{ furo.nome }}</div>

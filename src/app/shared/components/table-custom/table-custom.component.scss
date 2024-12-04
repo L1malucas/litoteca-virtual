@@ -100,14 +100,21 @@
   .search-filter {
     display: flex;
     align-items: start;
-    gap: 78px;
+    gap: 20px;
     .filter-option {
-      &:last-child {
+      display: flex;
+      flex-direction: column;
+      &:first-child {
+        width: 14%;
+      }
+      &.actions {
+        width: 80px !important;
         text-align: center;
         align-self: flex-end;
       }
       .label {
-        font-size: 36px;
+        width: 100%;
+        font-size: 24px;
         text-align: left;
         text-transform: uppercase;
       }
@@ -115,6 +122,8 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 0;
+        gap: 5px;
         button {
           width: 40px;
           height: 40px;
@@ -134,9 +143,14 @@
         position: relative;
         display: flex;
         align-items: center;
+        margin-top: 10px;
+        padding: 0;
+        input {
+          padding: 0 24px;
+        }
         mat-icon {
           position: absolute;
-          right: 5%;
+          right: 3px;
         }
       }
       select,
@@ -192,6 +206,9 @@
   padding: 8px;
   background-color: white;
   border-bottom: 5px solid #f2f2f2;
+  .pavilhao {
+    width: 14%;
+  }
 }
 
 .table-content {
