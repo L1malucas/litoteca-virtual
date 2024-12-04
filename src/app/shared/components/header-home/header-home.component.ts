@@ -20,6 +20,7 @@ export class HeaderHomeComponent {
     info: "",
     email: "",
     image: "assets/images/jpeg/image_placeholder.jpg",
+    id: "",
   };
 
   constructor(private _userService: UserService) {}
@@ -50,6 +51,8 @@ export class HeaderHomeComponent {
 
   getUserInfo(email: string) {
     this._userService.getUserByEmail(email).subscribe((user: any) => {
+      console.log(user);
+      this.user.id = user.id;
       this.user.name = user[0].nome + " " + user[0].sobrenome;
       this.user.info = user[0].profissao;
       this.user.email = user[0].email;
