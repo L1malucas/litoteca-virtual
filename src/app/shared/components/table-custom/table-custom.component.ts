@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { TooltipPosition } from "@angular/material/tooltip";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlvoModel } from "@models/alvo.model";
 import { HoleModel } from "@models/furo.model";
@@ -18,11 +19,11 @@ import { map, Observable, startWith } from "rxjs";
 })
 export class TableCustomComponent implements OnInit, AfterViewInit {
   @Input() region: string = "";
-  @Input() pavilhoes: any[] = [1, 2, 3];
+  @Input() pavilhoes: any[] = [1];
 
   municipios: MunicipioModel[] = [];
   selectedMunicipio: MunicipioModel = new MunicipioModel();
-
+  toolPosition: TooltipPosition = "above";
   searchTerm: string = "";
   filteredProjects: ProjetoModel[] = [];
   filteredAlvos: AlvoModel[] = [];
@@ -34,7 +35,14 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   inputProject: string = "";
   inputTarget: string = "";
-  selectedPavilhao: number = -1;
+  selectedPavilhao: number = 1;
+
+  pageSize: number = 5;
+  page: number = 1;
+  totalPages: number = 0;
+
+  furoId: string = "";
+  alvoId: string = "";
 
   projetoControl = new FormControl<ProjetoModel>(new ProjetoModel());
   alvoControl = new FormControl<AlvoModel>(new AlvoModel());
@@ -56,20 +64,14 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   filtroAlvos!: Observable<AlvoModel[]>;
   filtroFuros!: Observable<HoleModel[]>;
 
-  private _filterProject(name: string): ProjetoModel[] {
-    const filterValue = name.toLowerCase();
-    return this.projects.filter((option) => {
-      return option.nome.toLowerCase().includes(filterValue);
-    });
-  }
-  private _filterAlvos(name: string): AlvoModel[] {
-    const filterValue = name.toLowerCase();
+  private _filterAlvos(value: string): AlvoModel[] {
+    const filterValue = value.toLowerCase();
     return this.alvos.filter((option) => {
       return option.nome.toLowerCase().includes(filterValue);
     });
   }
-  private _filterFuros(name: string): HoleModel[] {
-    const filterValue = name.toLowerCase();
+  private _filterFuros(value: string): HoleModel[] {
+    const filterValue = value.toLowerCase();
     return this.furos.filter((option) => {
       return option.nome?.toLowerCase().includes(filterValue);
     });
@@ -77,34 +79,9 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.carregarProjetos();
-    this.carregarMunicipios();
+    // this.carregarMunicipios();
     this.alvoControl.disable();
     this.furoControl.disable();
-    this.filtroProjetos = this.projetoControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.nome;
-        return name
-          ? this._filterProject(name as string)
-          : this.projects.slice();
-      }),
-    );
-
-    this.filtroAlvos = this.alvoControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.nome;
-        return name ? this._filterAlvos(name as string) : this.alvos.slice();
-      }),
-    );
-
-    this.filtroFuros = this.furoControl.valueChanges.pipe(
-      startWith(""),
-      map((value) => {
-        const name = typeof value === "string" ? value : value?.nome;
-        return name ? this._filterFuros(name as string) : this.furos.slice();
-      }),
-    );
   }
 
   ngAfterViewInit() {
@@ -146,6 +123,19 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   carregarProjetos() {
     this._projetoService.getAll().subscribe((projetos) => {
       this.projects = projetos;
+
+      this.filtroProjetos = this.projetoControl.valueChanges.pipe(
+        startWith(""),
+        map((value) => {
+          const filterValue =
+            typeof value === "string"
+              ? value.toLowerCase()
+              : value?.nome?.toLowerCase();
+          return this.projects.filter((projeto) => {
+            return projeto.nome.toLowerCase().includes(filterValue || "");
+          });
+        }),
+      );
     });
   }
 
@@ -171,18 +161,34 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     if (this.projetoControl?.value?.id) {
       this.project = this.projetoControl.value;
       this.inputProject = this.projetoControl.value.id;
+      this.alvoControl.setValue(null);
+      this.furoControl.setValue(null);
       this.alvoControl.enable();
+      this.furoControl.disable();
       this.filtrarAlvosPorProjeto();
     }
   }
 
   onAlvoSelected() {
     if (this.alvoControl?.value?.id) {
-      const alvoId: string = this.alvoControl.value.id;
-      if (alvoId) {
+      this.alvoId = this.alvoControl.value.id;
+      if (this.alvoId) {
+        this.furoControl.setValue(null);
         this.furoControl.enable();
         this.alvo = this.alvoControl.value;
-        this.carregarFurosSelect(alvoId);
+        this.carregarFurosPorAlvoId();
+      }
+    }
+  }
+
+  onFuroSelected() {
+    if (this.furoControl?.value?.id) {
+      this.furoId = this.furoControl.value.id;
+      if (this.furoId) {
+        this.filteredAlvos = [];
+        this.filteredProjects = [];
+        this.furos = [];
+        this.carregarFurosPorFuroId();
       }
     }
   }
@@ -193,46 +199,35 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     link.click();
   }
 
-  onFuroSelected() {
-    if (this.furoControl?.value?.id) {
-      const furoId: string = this.furoControl.value.id;
-      if (furoId) {
-        this.filteredAlvos = [];
-        this.filteredProjects = [];
-        this.filteredFuros = [];
-        this.carregarFurosId(furoId);
-      }
-    }
+  carregarFurosPorAlvoId() {
+    this._holeService
+      .getFurosPaginationByAlvoId(this.page, this.pageSize, this.alvoId)
+      .subscribe((result) => {
+        this.pageSize = result.pageSize;
+        this.totalPages = result.totalDatas;
+        this.page = result.pageNumber;
+        this.furos = result.data;
+
+        this.filtroFuros = this.furoControl.valueChanges.pipe(
+          startWith(""),
+          map((value) => {
+            const name = typeof value === "string" ? value : value?.nome;
+            return name
+              ? this._filterFuros(name as string)
+              : this.furos.slice();
+          }),
+        );
+      });
   }
 
-  carregarFurosSelect(id: string) {
-    this._holeService.getFurosByAlvoId(id).subscribe((furos) => {
-      this.furos = furos;
-    });
-  }
-
-  carregarFurosPorAlvoId(id: string) {
-    this._holeService.getFurosByAlvoId(id).subscribe((furos) => {
-      this.furos = furos;
-    });
-  }
-
-  carregarFurosId(id: string) {
-    this._holeService.getById(id).subscribe((furo) => {
-      this.furos = [furo];
-    });
-  }
-
-  carregarAlvosId(id: string) {
-    this._targetService.getById(id).subscribe((alvo) => {
-      this.filteredAlvos.push(alvo);
-    });
-  }
-
-  carregarProjetoPorId(id: string) {
-    this._projetoService.getById(id).subscribe((projeto) => {
-      this.filteredProjects.push(projeto);
-    });
+  carregarFurosPorFuroId() {
+    this._holeService
+      .getFurosPaginationByFuroId(this.page, this.pageSize, this.furoId)
+      .subscribe((result) => {
+        this.pageSize = result.pageSize;
+        this.totalPages = result.totalPages;
+        this.furos = result.data;
+      });
   }
 
   filtrarAlvosPorProjeto() {
@@ -241,12 +236,30 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
         .getTargetForProjectId(this.inputProject)
         .subscribe((alvos) => {
           this.alvos = alvos;
+          this.filtroAlvos = this.alvoControl.valueChanges.pipe(
+            startWith(""),
+            map((value) => {
+              const name = typeof value === "string" ? value : value?.nome;
+              return name
+                ? this._filterAlvos(name as string)
+                : this.alvos.slice();
+            }),
+          );
         });
     }
   }
-  // filtrarProjetosPorAlvo(alvoId:string){
-  //   this.projects = this.projects.filter(project => {project.alvos[0].id === alvoId})
-  // }
+
+  onPageChange(event: any) {
+    this.page = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    console.log(event);
+    if (this.furoId != "") {
+      this.carregarFurosPorFuroId();
+    }
+    if (this.alvoId != "") {
+      this.carregarFurosPorAlvoId();
+    }
+  }
 
   searchMap(municipio: MunicipioModel) {
     window.open(

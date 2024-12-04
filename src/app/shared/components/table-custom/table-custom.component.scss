@@ -100,21 +100,31 @@
   .search-filter {
     display: flex;
     align-items: start;
-    gap: 78px;
+    gap: 20px;
     .filter-option {
-      &:last-child {
-        text-align: center;
-        align-self: flex-end;
+      display: flex;
+      flex-direction: column;
+      &:first-child {
+        width: 14%;
       }
       .label {
-        font-size: 36px;
+        width: 100%;
+        font-size: 24px;
         text-align: left;
         text-transform: uppercase;
+      }
+      &.actions {
+        width: 60%;
+        label {
+          text-align: center;
+        }
       }
       .btn-options {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 0;
+        gap: 5px;
         button {
           width: 40px;
           height: 40px;
@@ -134,9 +144,14 @@
         position: relative;
         display: flex;
         align-items: center;
+        margin-top: 10px;
+        padding: 0;
+        input {
+          padding: 0 24px;
+        }
         mat-icon {
           position: absolute;
-          right: 5%;
+          right: 3px;
         }
       }
       select,
@@ -192,10 +207,30 @@
   padding: 8px;
   background-color: white;
   border-bottom: 5px solid #f2f2f2;
+  color: #4e0101;
+  font-weight: 700;
+  font-size: 20px;
+  &.full {
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h3 {
+      width: 100%;
+      font-size: 26px;
+      font-weight: 700;
+    }
+  }
+  .pavilhao {
+    width: 50%;
+  }
+  .actions {
+    width: 65%;
+  }
 }
 
 .table-content {
-  height: 450px;
+  height: 500px;
   overflow-y: auto;
 }
 
