@@ -107,16 +107,18 @@
       &:first-child {
         width: 14%;
       }
-      &.actions {
-        width: 80px !important;
-        text-align: center;
-        align-self: flex-end;
-      }
       .label {
         width: 100%;
         font-size: 24px;
         text-align: left;
         text-transform: uppercase;
+      }
+      &.actions {
+        width: 60%;
+        align-self: flex-end;
+        label {
+          text-align: center;
+        }
       }
       .btn-options {
         display: flex;
@@ -206,8 +208,14 @@
   padding: 8px;
   background-color: white;
   border-bottom: 5px solid #f2f2f2;
+  color: #4e0101;
+  font-weight: 700;
+  font-size: 20px;
   .pavilhao {
-    width: 14%;
+    width: 50%;
+  }
+  .actions {
+    width: 65%;
   }
 }
 
