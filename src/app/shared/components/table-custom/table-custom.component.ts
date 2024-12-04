@@ -236,7 +236,6 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
         .getTargetForProjectId(this.inputProject)
         .subscribe((alvos) => {
           this.alvos = alvos;
-
           this.filtroAlvos = this.alvoControl.valueChanges.pipe(
             startWith(""),
             map((value) => {

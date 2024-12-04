@@ -64,6 +64,9 @@
             [displayWith]="mostrarNomeAlvo"
             (optionSelected)="onAlvoSelected()"
           >
+            @if (alvos.length === 0) {
+              <mat-option [disabled]="true">Sem alvos associados</mat-option>
+            }
             @for (alvo of filtroAlvos | async; track $index) {
               <mat-option [value]="alvo">{{ alvo.nome }}</mat-option>
             }
@@ -89,6 +92,9 @@
             [displayWith]="mostrarNomeFuro"
             (optionSelected)="onFuroSelected()"
           >
+            @if (furos.length === 0) {
+              <mat-option [disabled]="true">Sem furos associados</mat-option>
+            }
             @for (furo of filtroFuros | async; track $index) {
               <mat-option [value]="furo">{{ furo.nome }}</mat-option>
             }
