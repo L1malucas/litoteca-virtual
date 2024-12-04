@@ -1,6 +1,6 @@
 {
   "URL": {
-    "LITOTECA": "http://localhost:7211/"
+    "LITOTECA": "https://localhost:7211/"
   },
   "PATHS": {
     "ALVO": "api/Alvo",

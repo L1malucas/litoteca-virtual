@@ -35,4 +35,24 @@ export class HoleService extends BaseResourceService<HoleModel> {
       .get<HoleModel[]>(`${this._url}BuscarFuroPorAlvoId/${id}`)
       .pipe(catchError(this.handleError));
   }
+
+  getFurosPaginationByAlvoId(
+    pageNumber: number,
+    pageSize: number,
+    alvoId: string,
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      `${this._url}BuscarComPaginacao?AlvoId=${alvoId}&PageNumber=${pageNumber}&PageSize=${pageSize}`,
+    );
+  }
+
+  getFurosPaginationByFuroId(
+    pageNumber: number,
+    pageSize: number,
+    furoId: string,
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      `${this._url}BuscarComPaginacao?Id=${furoId}&PageNumber=${pageNumber}&PageSize=${pageSize}`,
+    );
+  }
 }
