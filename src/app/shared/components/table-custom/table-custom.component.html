@@ -24,9 +24,11 @@
           <div class="input-field">
             <input
               type="text"
-              placeholder="Selecione ou digite o nome do PROJETO"
+              placeholder="Selecione ou digite o projeto"
               aria-label="Number"
               matInput
+              matTooltip="Selecione o projeto"
+              [matTooltipPosition]="toolPosition"
               [formControl]="projetoControl"
               [matAutocomplete]="autoProject"
             />
@@ -47,9 +49,11 @@
           <div class="input-field">
             <input
               type="text"
-              placeholder="Selecione ou digite o nome do Alvo"
+              placeholder="Selecione ou digite o nome do alvo"
               aria-label="Number"
               matInput
+              matTooltip="Selecione o alvo"
+              [matTooltipPosition]="toolPosition"
               [formControl]="alvoControl"
               [matAutocomplete]="autoAlvos"
             />
@@ -70,9 +74,11 @@
           <div class="input-field">
             <input
               type="text"
-              placeholder="Selecione ou digite o nome do Alvo"
+              placeholder="Selecione ou digite o furo"
               aria-label="Alvo"
               matInput
+              matTooltip="Selecione o furo"
+              [matTooltipPosition]="toolPosition"
               [formControl]="furoControl"
               [matAutocomplete]="autoFuro"
             />
@@ -101,17 +107,26 @@
           <div>{{ alvo.nome }}</div>
           <div>{{ furo.nome }}</div>
           <div class="actions">
-            <button mat-icon-button class="action-btn document">
+            <button
+              mat-icon-button
+              class="action-btn document"
+              matTooltip="Ver documento"
+              [matTooltipPosition]="toolPosition"
+            >
               <mat-icon>description</mat-icon>
             </button>
             <button
               mat-icon-button
+              matTooltip="Ver galeria"
+              [matTooltipPosition]="toolPosition"
               class="action-btn image"
               (click)="goToGalery(project, alvo, furo)"
             >
               <mat-icon>image</mat-icon>
             </button>
             <button
+              matTooltip="Ver localização"
+              [matTooltipPosition]="toolPosition"
               mat-icon-button
               class="action-btn location"
               (click)="
@@ -126,10 +141,11 @@
         </div>
       }
     </div>
+    <app-pagination
+      [pageSize]="pageSize"
+      [length]="totalPages"
+      (pageChange)="onPageChange($event)"
+      class="pagination"
+    ></app-pagination>
   </div>
 </div>
-<app-pagination
-  [pageSize]="pageSize"
-  [length]="totalPages"
-  (pageChange)="onPageChange($event)"
-></app-pagination>
