@@ -38,8 +38,8 @@ export class UserProfileComponent {
     private _authService: AuthService,
   ) {}
 
-  editProfile() {
-    this._router.navigate(["/editar-perfil"]);
+  editProfile(id: string) {
+    this._router.navigate(["/editar-perfil", id]);
   }
 
   logout() {

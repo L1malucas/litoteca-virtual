@@ -1,5 +1,6 @@
 import { MunicipioModel } from "@models/municipio.model";
 import { AlvoModel } from "./alvo.model";
+
 export class ProjetoModel {
   id?: string;
   nome: string;
@@ -8,8 +9,9 @@ export class ProjetoModel {
   localidade: string;
   operador: string;
   operadorId: string;
-  alvo: AlvoModel;
+  alvos: AlvoModel[];
   furo: string;
+
   constructor() {
     this.nome = "";
     this.municipioId = "";
@@ -17,7 +19,7 @@ export class ProjetoModel {
     this.localidade = "";
     this.operador = "";
     this.operadorId = "";
-    this.alvo = new AlvoModel();
+    this.alvos = [];
     this.furo = "";
   }
 }
