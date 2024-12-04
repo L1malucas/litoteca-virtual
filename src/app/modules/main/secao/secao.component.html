@@ -6,31 +6,47 @@
       <div class="secao-meio">
         <div class="secao-meio-left">
           <div class="secao-meio-left-caixa">
-            <div class="secao-meio-left-caixa-menos">-</div>
-            <div class="secao-meio-left-caixa-numero">Caixa 01</div>
-            <div class="secao-meio-left-caixa-mais">+</div>
+            <div class="secao-meio-left-caixa-menos" (click)="caixaAnterior()">
+              -
+            </div>
+            <div class="secao-meio-left-caixa-numero">{{ caixa.nome }}</div>
+            <div class="secao-meio-left-caixa-mais" (click)="proximaCaixa()">
+              +
+            </div>
           </div>
           <div class="secao-meio-left-tipo">
-            <div class="secao-meio-left-tipo-seca">SECA</div>
-            <div class="secao-meio-left-tipo-molhada">MOLHADA</div>
+            <div
+              class="secao-meio-left-tipo-seca"
+              [ngClass]="{ 'caixa-ativo': caixa.categoriaId === 1 }"
+              (click)="setCaixaMolhadaOuSeca(1)"
+            >
+              SECA
+            </div>
+            <div
+              class="secao-meio-left-tipo-molhada"
+              [ngClass]="{ 'caixa-ativo': caixa.categoriaId === 2 }"
+              (click)="setCaixaMolhadaOuSeca(0)"
+            >
+              MOLHADA
+            </div>
           </div>
           <div class="secao-meio-left-profundidade">
             <span class="secao-meio-left-profundidade-titulo"
               >PROFUNDIDADE DA CAIXA</span
             >
             <div class="secao-meio-left-profundidade-descricao">
-              <span>De: 0m</span>
-              <span>Até: 3,10m</span>
+              <span>De: {{ caixa.profundidadeInicial }}m</span>
+              <span>Até: {{ caixa.profundidadeFinal }}m</span>
             </div>
           </div>
           <div class="secao-meio-left-divisao">
             <div class="secao-meio-left-divisao-estante">
-              <span>ESTANTES</span>
-              <span>2</span>
+              <span>ESTANTE</span>
+              <span>{{ caixa.estante }}</span>
             </div>
             <div class="secao-meio-left-divisao-prateleira">
-              <span>PRATELEIRAS</span>
-              <span>0-15</span>
+              <span>PRATELEIRA</span>
+              <span>{{ caixa.prateleira }}</span>
             </div>
           </div>
           <div class="secao-meio-left-separadores">
@@ -38,93 +54,64 @@
             <div class="secao-meio-left-separadores-lista">
               <span>SEPARADOR</span>
               <ul>
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
-                <li>D</li>
-                <li>E</li>
+                <li
+                  [ngClass]="{ 'separador-ativo': separadorAtual === 1 }"
+                  (click)="setSeparator(1)"
+                >
+                  A
+                </li>
+                <li
+                  [ngClass]="{ 'separador-ativo': separadorAtual === 2 }"
+                  (click)="setSeparator(2)"
+                >
+                  B
+                </li>
+                <li
+                  [ngClass]="{ 'separador-ativo': separadorAtual === 3 }"
+                  (click)="setSeparator(3)"
+                >
+                  C
+                </li>
+                <li
+                  [ngClass]="{ 'separador-ativo': separadorAtual === 4 }"
+                  (click)="setSeparator(4)"
+                >
+                  D
+                </li>
+                <li
+                  [ngClass]="{ 'separador-ativo': separadorAtual === 5 }"
+                  (click)="setSeparator(5)"
+                >
+                  E
+                </li>
               </ul>
             </div>
           </div>
         </div>
         <div class="secao-meio-right">
-          <div class="secao-meio-right-imagem">
-            <img
-              src="../../../../assets/images/png/foto-caixa.png"
-              width="97"
-              height="62"
-            />
-            <span class="you-here"
-              ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
-              aqui</span
+          @for (captura of caixa.capturas; track captura.id) {
+            <div
+              class="secao-meio-right-imagem"
+              (click)="setCapturaAtual(captura)"
             >
-          </div>
-          <div class="secao-meio-right-imagem">
-            <img
-              src="../../../../assets/images/png/foto-caixa.png"
-              width="97"
-              height="62"
-            />
-            <span class="you-here"
-              ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
-              aqui</span
-            >
-          </div>
-          <div class="secao-meio-right-imagem">
-            <img
-              src="../../../../assets/images/png/foto-caixa.png"
-              width="97"
-              height="62"
-            />
-            <span class="you-here"
-              ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
-              aqui</span
-            >
-          </div>
-          <div class="secao-meio-right-imagem">
-            <img
-              src="../../../../assets/images/png/foto-caixa.png"
-              width="97"
-              height="62"
-            />
-            <span class="you-here"
-              ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
-              aqui</span
-            >
-          </div>
-          <div class="secao-meio-right-imagem">
-            <img
-              src="../../../../assets/images/png/foto-caixa.png"
-              width="97"
-              height="62"
-            />
-            <span class="you-here"
-              ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
-              aqui</span
-            >
-          </div>
-          <div class="secao-meio-right-imagem">
-            <img
-              src="../../../../assets/images/png/foto-caixa.png"
-              width="97"
-              height="62"
-            />
-            <span class="you-here"
-              ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
-              aqui</span
-            >
-          </div>
-          <div class="secao-meio-right-imagem">
-            <img
-              src="../../../../assets/images/png/foto-caixa.png"
-              width="97"
-              height="62"
-            />
-            <span class="you-here"
-              ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
-              aqui</span
-            >
-          </div>
+              <img
+                src="{{ captura.miniatureReference }}"
+                width="97"
+                height="62"
+              />
+              @if (captura.id === capturaAtual.id) {
+                <span class="you-here"
+                  ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
+                  aqui</span
+                >
+              } @else {
+                <span class="you-here"
+                  ><mat-icon class="mat-18">chevron_left</mat-icon> SEÇÃO
+                  {{ captura.secao }}</span
+                >
+              }
+            </div>
+          }
         </div>
       </div>
       <div class="secao-left-info">
@@ -154,59 +141,126 @@
     </div>
     <div class="secao-right">
       <div class="secao-right-bar">
-        <div>SEÇÃO 07</div>
-        <div>
+        <div class="secao-right-bar-info">
+          SEÇÃO {{ capturaAtual.secao + 1 }}
+        </div>
+        <div class="secao-right-bar-button" (click)="proximaCaptura()">
           <mat-icon>arrow_upward</mat-icon>
         </div>
-        <div>
+        <div class="secao-right-bar-button" (click)="capturaAnterior()">
           <mat-icon>arrow_downward</mat-icon>
         </div>
-        <div>SEÇÃO 06</div>
+        <div class="secao-right-bar-info">
+          SEÇÃO {{ capturaAtual.secao - 1 }}
+        </div>
+        <div class="secao-right-bar-imprimir" (click)="downloadImage()">
+          Imprimir <mat-icon>print</mat-icon>
+        </div>
       </div>
       <div class="secao-right-content">
         <div class="secao-right-content-separadores">
-          <div class="secao-right-content-separadores-txt">
-            SEPARADOR <br />
-            DA CAIXA
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(1)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 1 }">
+              <mat-icon>straight</mat-icon> A
+            </span>
           </div>
-          <div><mat-icon>straight</mat-icon> A</div>
-          <div><mat-icon>straight</mat-icon> B</div>
-          <div><mat-icon>straight</mat-icon> C</div>
-          <div><mat-icon>straight</mat-icon> D</div>
-          <div><mat-icon>straight</mat-icon> E</div>
-          <div class="secao-right-content-separadores-txt">
-            SEPARADOR <br />
-            DA CAIXA
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(2)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 2 }">
+              <mat-icon>straight</mat-icon> B
+            </span>
+          </div>
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(3)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 3 }"
+              ><mat-icon>straight</mat-icon> C</span
+            >
+          </div>
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(4)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 4 }"
+              ><mat-icon>straight</mat-icon> D</span
+            >
+          </div>
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(5)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 5 }"
+              ><mat-icon>straight</mat-icon> E</span
+            >
           </div>
         </div>
         <div class="secao-right-content-imagem">
-          <img src="../../../../assets/images/png/testelinha.png" />
+          <app-lupa
+            [imgSrc]="
+              capturaAtual.imageReference
+                ? capturaAtual.imageReference
+                : '../../../../assets/images/png/placeholder.png'
+            "
+            (mouseOverSeparator)="setSeparator($event)"
+          >
+          </app-lupa>
+          <!-- <img #magnifiedImg src="../../../../assets/images/png/testelinha.png" /> -->
         </div>
         <div class="secao-right-content-separadores">
-          <div class="secao-right-content-separadores-txt">
-            SEPARADOR <br />
-            DA CAIXA
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(1)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 1 }">
+              <mat-icon>straight</mat-icon> A
+            </span>
           </div>
-          <div><mat-icon>straight</mat-icon> A</div>
-          <div><mat-icon>straight</mat-icon> B</div>
-          <div><mat-icon>straight</mat-icon> C</div>
-          <div><mat-icon>straight</mat-icon> D</div>
-          <div><mat-icon>straight</mat-icon> E</div>
-          <div class="secao-right-content-separadores-txt">
-            SEPARADOR <br />
-            DA CAIXA
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(2)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 2 }">
+              <mat-icon>straight</mat-icon> B
+            </span>
+          </div>
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(3)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 3 }"
+              ><mat-icon>straight</mat-icon> C</span
+            >
+          </div>
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(4)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 4 }"
+              ><mat-icon>straight</mat-icon> D</span
+            >
+          </div>
+          <div
+            class="secao-right-content-separadores-separador"
+            (click)="setSeparator(5)"
+          >
+            <span [ngClass]="{ 'separador-ativo-image': separadorAtual === 5 }"
+              ><mat-icon>straight</mat-icon> E</span
+            >
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="secao-warp-footer">
-    <div class="back-to-gallery">
+    <div class="back-to-gallery" (click)="goConsultaProjeto()">
       <i class="material-icons">arrow_back</i>
-      <a> Voltar </a>
-    </div>
-    <div class="secao-warp-footer-imprimir">
-      Imprimir <mat-icon>print</mat-icon>
+      <a> Voltar para GALERIA</a>
     </div>
   </div>
 </section>

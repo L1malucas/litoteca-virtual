@@ -8,6 +8,7 @@ import { HeaderHomeComponent } from "./header-home/header-home.component";
 import { UserProfileComponent } from "./header-home/user-profile/user-profile.component";
 import { HeaderComponent } from "./header/header.component";
 import { LoadingComponent } from "./loading/loading.component";
+import { LupaComponent } from "./lupa/lupa.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { PaginationComponent } from "./pagination/pagination.component";
 import { PrimaryInputComponent } from "./primary-input/primary-input.component";
@@ -21,6 +22,7 @@ export const COMPONENTS = [
   FooterComponent,
   HeaderComponent,
   LoadingComponent,
+  LupaComponent,
   NavbarComponent,
   ConfirmDialogComponent,
   PaginationComponent,
