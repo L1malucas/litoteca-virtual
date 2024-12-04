@@ -17,9 +17,13 @@ export class TargetService extends BaseResourceService<AlvoModel> {
     super(`${helpConfig.ALVO_ENDPOINT}`, injector);
   }
 
-  getTargetForProjectId(projectId: string): Observable<AlvoModel> {
-    return this.httpClient.get<AlvoModel>(
+  getTargetForProjectId(projectId: string): Observable<AlvoModel[]> {
+    return this.httpClient.get<AlvoModel[]>(
       `${this._url}BuscarAlvosPorProjetoId/${projectId}`,
     );
+  }
+
+  override getById(id: string): Observable<AlvoModel> {
+    return this._httpClient.get<AlvoModel>(`${this._url}BuscarPorId/${id}`);
   }
 }

@@ -29,4 +29,10 @@ export class HoleService extends BaseResourceService<HoleModel> {
       .get<HoleModel>(`${this._url}BuscarPorId/${id}`)
       .pipe(catchError(this.handleError));
   }
+
+  getFurosByAlvoId(id: string): Observable<HoleModel[]> {
+    return this._httpClient
+      .get<HoleModel[]>(`${this._url}BuscarFuroPorAlvoId/${id}`)
+      .pipe(catchError(this.handleError));
+  }
 }
