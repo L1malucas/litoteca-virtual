@@ -3,11 +3,11 @@ import { FormControl } from "@angular/forms";
 import { TooltipPosition } from "@angular/material/tooltip";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlvoModel } from "@models/alvo.model";
-import { HoleModel } from "@models/furo.model";
+import { FuroModel } from "@models/furo.model";
 import { MunicipioModel } from "@models/municipio.model";
 import { ProjetoModel } from "@models/projeto.model";
 import { TargetService } from "@services/alvo.service";
-import { HoleService } from "@services/furo.service";
+import { FuroService } from "@services/furo.service";
 import { MunicipioService } from "@services/municipio.service";
 import { ProjetoService } from "@services/projeto.service";
 import { map, Observable, startWith } from "rxjs";
@@ -27,10 +27,10 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   searchTerm: string = "";
   filteredProjects: ProjetoModel[] = [];
   filteredAlvos: AlvoModel[] = [];
-  filteredFuros: HoleModel[] = [];
+  filteredFuros: FuroModel[] = [];
 
   alvos: AlvoModel[] = [];
-  furos: HoleModel[] = [];
+  furos: FuroModel[] = [];
   projects: ProjetoModel[] = [];
 
   inputProject: string = "";
@@ -46,7 +46,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   projetoControl = new FormControl<ProjetoModel>(new ProjetoModel());
   alvoControl = new FormControl<AlvoModel>(new AlvoModel());
-  furoControl = new FormControl<HoleModel>(new HoleModel());
+  furoControl = new FormControl<FuroModel>(new FuroModel());
 
   project: ProjetoModel = new ProjetoModel();
   alvo: AlvoModel = new AlvoModel();
@@ -57,12 +57,12 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     private _municipioService: MunicipioService,
     private _projetoService: ProjetoService,
     private _targetService: TargetService,
-    private _holeService: HoleService,
+    private _holeService: FuroService,
   ) {}
 
   filtroProjetos!: Observable<ProjetoModel[]>;
   filtroAlvos!: Observable<AlvoModel[]>;
-  filtroFuros!: Observable<HoleModel[]>;
+  filtroFuros!: Observable<FuroModel[]>;
 
   private _filterAlvos(value: string): AlvoModel[] {
     const filterValue = value.toLowerCase();
@@ -70,7 +70,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
       return option.nome.toLowerCase().includes(filterValue);
     });
   }
-  private _filterFuros(value: string): HoleModel[] {
+  private _filterFuros(value: string): FuroModel[] {
     const filterValue = value.toLowerCase();
     return this.furos.filter((option) => {
       return option.nome?.toLowerCase().includes(filterValue);
@@ -114,9 +114,9 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   //   }
   // }
 
-  goToGalery(project: ProjetoModel, target: AlvoModel, hole: HoleModel) {
+  goToGalery(project: ProjetoModel, target: AlvoModel, hole: FuroModel) {
     this.route.navigate(["/galeria"], {
-      queryParams: { projeto: project.id, alvo: target.id, hole: hole.id },
+      queryParams: { projeto: project.id, alvo: target.id, furo: hole.id },
     });
   }
 
@@ -153,7 +153,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   mostrarNomeAlvo(alvo: AlvoModel): string {
     return alvo && alvo.nome ? alvo.nome : "";
   }
-  mostrarNomeFuro(furo: HoleModel): string {
+  mostrarNomeFuro(furo: FuroModel): string {
     return furo && furo.nome ? furo.nome : "";
   }
 
