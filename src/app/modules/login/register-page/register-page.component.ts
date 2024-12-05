@@ -34,11 +34,11 @@ export class RegisterPageComponent implements OnInit {
     this.form = this.formBuilder.group({
       nome: ["", Validators.required],
       sobrenome: ["", Validators.required],
-      username: ["", Validators.required],
+      username: ["", [Validators.required, Validators.maxLength(50)]],
       telefone: ["", Validators.required],
       profissao: ["", Validators.required],
       pais: ["", Validators.required],
-      estado: ["", Validators.required],
+      estado: [""],
       cidade: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       confirmEmail: ["", [Validators.required, Validators.email]],
@@ -97,7 +97,10 @@ export class RegisterPageComponent implements OnInit {
         },
         (error: any) => {
           console.error("Erro:", error);
-          this._toast.error("Erro", error.error.details);
+          this._toast.error(
+            "Erro",
+            error.error.details ? error.error.details : error.error[0],
+          );
         },
       ),
     );

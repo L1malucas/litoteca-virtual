@@ -25,6 +25,7 @@ type InputTypes = "text" | "number" | "password" | "email" | "select";
           (focus)="onTouched && onTouched()"
           [disabled]="isDisabled"
           [maxLength]="maxLength"
+          (keypress)="onKeyPress($event)"
         />
       </div>
       <span class="error-message"> {{ ErrorMessage }} * </span>
@@ -39,6 +40,7 @@ export class PrimaryInputComponent implements ControlValueAccessor {
   @Input() maxLength: any;
   @Input() label: string = "";
   @Input() ErrorMessage: string = "";
+  @Input() blockNumbers: boolean = false;
   protected isDisabled: boolean = false;
   value: string = "";
   onChange: any = () => {};
@@ -63,5 +65,16 @@ export class PrimaryInputComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
+  }
+
+  onKeyPress(event: KeyboardEvent): void {
+    if (this.blockNumbers) {
+      const charCode = event.charCode || event.keyCode; // Captura o código do caractere
+      const char = String.fromCharCode(charCode); // Converte para caractere
+      const isNumber = /\d/.test(char); // Verifica se é um número
+      if (isNumber) {
+        event.preventDefault(); // Impede a entrada do caractere
+      }
+    }
   }
 }

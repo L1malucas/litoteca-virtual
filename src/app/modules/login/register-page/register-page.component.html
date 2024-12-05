@@ -38,6 +38,8 @@
               label="Nome"
               type="text"
               formControlName="nome"
+              [maxLength]="50"
+              [blockNumbers]="true"
               ErrorMessage="Nome é obrigatório"
             >
             </app-primary-input>
@@ -48,6 +50,8 @@
               label="Sobrenome"
               type="text"
               formControlName="sobrenome"
+              [maxLength]="50"
+              [blockNumbers]="true"
               ErrorMessage="Sobrenome é obrigatório"
             >
             </app-primary-input>
@@ -58,6 +62,7 @@
               label="Usuário"
               type="text"
               formControlName="username"
+              [maxLength]="50"
               ErrorMessage="Usuário é obrigatório"
             >
             </app-primary-input>
@@ -72,6 +77,7 @@
               formControlName="telefone"
               placeholder="(00) 00000-0000"
               mask="(00) 00000-0000"
+              [maxLength]="20"
               ErrorMessage="Telefone é obrigatório"
             >
             </app-primary-input>
@@ -82,6 +88,7 @@
               label="Profissão/Ocupação"
               type="text"
               formControlName="profissao"
+              [maxLength]="70"
               ErrorMessage="Profissão/Ocupação é obrigatório"
             >
             </app-primary-input>
@@ -90,52 +97,37 @@
 
         <div class="form-row">
           <div class="form-group">
-            <!-- <label for="country" class="form-label">País</label>
-            <select id="country" class="form-select" formControlName="pais">
-              <option value="">Selecione o país</option>
-              <option value="Brasil">Brasil</option>
-              <option value="Estados Unidos">Estados Unidos</option>
-              <option value="Canadá">Canadá</option>
-            </select> -->
             <app-primary-input
               label="País"
               type="text"
               formControlName="pais"
-              ErrorMessage="País é obrigatório"
+              [maxLength]="70"
+              [blockNumbers]="true"
+              ErrorMessage="País é obrigatório e deve conter apenas letras"
             >
             </app-primary-input>
           </div>
 
           <div class="form-group">
-            <!-- <label for="state" class="form-label">Estado</label>
-            <select id="state" class="form-select" formControlName="estado">
-              <option value="">Selecione o estado</option>
-              <option value="São Paulo">São Paulo</option>
-              <option value="Rio de Janeiro">Rio de Janeiro</option>
-              <option value="Minas Gerais">Minas Gerais</option>
-            </select> -->
             <app-primary-input
               label="Estado"
               type="text"
               formControlName="estado"
-              ErrorMessage="Estado é obrigatório"
+              [maxLength]="50"
+              [blockNumbers]="true"
+              ErrorMessage="Estado é obrigatório e deve conter apenas letras"
             >
             </app-primary-input>
           </div>
 
           <div class="form-group">
-            <!-- <label for="city" class="form-label">Cidade</label>
-            <select id="city" class="form-select" formControlName="cidade">
-              <option value="">Selecione a cidade</option>
-              <option value="São Paulo">São Paulo</option>
-              <option value="Rio de Janeiro">Rio de Janeiro</option>
-              <option value="Belo Horizonte">Belo Horizonte</option>
-            </select> -->
             <app-primary-input
               label="Cidade"
               type="text"
               formControlName="cidade"
-              ErrorMessage="Cidade é obrigatório"
+              [maxLength]="50"
+              [blockNumbers]="true"
+              ErrorMessage="Cidade é obrigatório e deve conter apenas letras"
             >
             </app-primary-input>
           </div>
@@ -147,6 +139,7 @@
               label="Email"
               type="email"
               formControlName="email"
+              [maxLength]="70"
               ErrorMessage="Email é obrigatório"
             >
             </app-primary-input>
@@ -157,6 +150,7 @@
               label="Confirme seu email"
               type="email"
               formControlName="confirmEmail"
+              [maxLength]="70"
               ErrorMessage="Confirmação de email é obrigatório"
             >
             </app-primary-input>
