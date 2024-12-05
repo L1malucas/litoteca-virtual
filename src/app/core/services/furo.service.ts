@@ -55,4 +55,10 @@ export class FuroService extends BaseResourceService<FuroModel> {
       `${this._url}BuscarComPaginacao?Id=${furoId}&PageNumber=${pageNumber}&PageSize=${pageSize}`,
     );
   }
+
+  getFurosWithParams(params?: { [param: string]: any }): Observable<any> {
+    return this.httpClient.get<any>(`${this._url}BuscarComPaginacao`, {
+      params,
+    });
+  }
 }

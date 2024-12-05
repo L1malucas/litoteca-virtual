@@ -37,6 +37,8 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   inputTarget: string = "";
   selectedPavilhao: number = 1;
 
+  isInputBeingShow: boolean[] = [false, false, false];
+
   pageSize: number = 5;
   page: number = 1;
   totalPages: number = 0;
@@ -163,6 +165,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
       this.inputProject = this.projetoControl.value.id;
       this.alvoControl.setValue(null);
       this.furoControl.setValue(null);
+      this.isInputBeingShow[0] = false;
       this.alvoControl.enable();
       this.furoControl.disable();
       this.filtrarAlvosPorProjeto();
@@ -175,6 +178,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
       if (this.alvoId) {
         this.furoControl.setValue(null);
         this.furoControl.enable();
+        this.isInputBeingShow[1] = false;
         this.alvo = this.alvoControl.value;
         this.carregarFurosPorAlvoId();
       }
@@ -187,6 +191,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
       if (this.furoId) {
         this.filteredAlvos = [];
         this.filteredProjects = [];
+        this.isInputBeingShow[2] = false;
         this.furos = [];
         this.carregarFurosPorFuroId();
       }
@@ -195,6 +200,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   goToMaps(selectedLink: string) {
     const link = document.createElement("a");
+    link.target = "_blank";
     link.href = selectedLink;
     link.click();
   }
@@ -259,6 +265,19 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
     if (this.alvoId != "") {
       this.carregarFurosPorAlvoId();
     }
+  }
+
+  focusBTN(event: HTMLInputElement, positionInput: number) {
+    const selectedInput = this.isInputBeingShow[positionInput];
+    if (selectedInput) {
+      event.blur();
+    } else {
+      event.focus();
+    }
+    this.isInputBeingShow[positionInput] = !selectedInput;
+  }
+  desfo(event: HTMLInputElement) {
+    event.blur();
   }
 
   searchMap(municipio: MunicipioModel) {
