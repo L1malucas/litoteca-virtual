@@ -24,6 +24,7 @@ type InputTypes = "text" | "number" | "password" | "email" | "select";
           (input)="onInput($event)"
           (focus)="onTouched && onTouched()"
           [disabled]="isDisabled"
+          [maxLength]="maxLength"
         />
       </div>
       <span class="error-message"> {{ ErrorMessage }} * </span>
@@ -35,6 +36,7 @@ export class PrimaryInputComponent implements ControlValueAccessor {
   @Input() type: InputTypes = "text";
   @Input() placeholder: string = "";
   @Input() mask: any;
+  @Input() maxLength: any;
   @Input() label: string = "";
   @Input() ErrorMessage: string = "";
   protected isDisabled: boolean = false;
