@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CaixaModel } from "@models/caixa.model";
 import { CapturaModel } from "@models/captura.model";
 import { CaixaService } from "@services/caixa.service";
+import { HoleService } from "@services/furo.service";
 import { DownloadService } from "@services/system/download.service";
+import { Toast } from "@services/system/toast.service";
 
 @Component({
   selector: "app-secao",
@@ -15,15 +17,20 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   caixa: CaixaModel = new CaixaModel();
   caixaAtual: number = 0; // Índice da caixa atual exibida
   caixasAgrupadas: CaixaModel[][] = []; // Caixas agrupadas por nome
+  caixasSecasImages: any[] = [];
+  caixasMolhadasImages: any[] = [];
   capturas: CapturaModel[] = [];
   capturaAtual: CapturaModel = new CapturaModel();
   separadorAtual: number = 0;
+  furoInfo: any = {};
 
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
     private _downloadService: DownloadService,
     private _caixaService: CaixaService,
+    private _furoService: HoleService,
+    private _toast: Toast,
   ) {}
 
   ngOnInit() {
@@ -35,11 +42,18 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   // Método para buscar caixas por furo
   getEntityByRoute() {
     const furo = this._route.snapshot.queryParams["furo"];
+    this._furoService.getFurosWithParams({ id: furo }).subscribe((furo) => {
+      this.furoInfo = furo.data[0];
+    });
     this._caixaService.buscarCaixaPorFuro(furo).subscribe((caixas) => {
       // ordenar caixas por nome
       caixas = this.ordenarCaixasPorNome(caixas);
       // receber as caixas agrupadas por nome
-      this.caixasAgrupadas = this.juntarCaixasPorNome(caixas);
+      const caixasAgrupadasObj = this.juntarCaixasPorNome(caixas);
+      this.caixasAgrupadas = Object.values(caixasAgrupadasObj).map((group) => {return [
+        ...group.secas,
+        ...group.molhadas,
+      ]});
 
       // Exibir a primeira caixa se houver
       if (this.caixasAgrupadas.length > 0) {
@@ -48,12 +62,58 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // metoro para criar novo array e agrupar duas caixas com mesmo nome, cada um com seu indice
+  // metoro para criar novo array e agrupar duas caixas com mesmo nome, cada um com seu indice e separando entre seca e molhada
   // Exemplo: [Caixa1, Caixa1, Caixa2, Caixa3, Caixa3] => [Caixa1:{Caixa1, Caixa1}, Caixa2:{Caixa2}, Caixa3:{Caixa3, Caixa3}]
+  // juntarCaixasPorNome(caixas: CaixaModel[]) {
+  //   const caixasAgrupadas: { [key: string]: CaixaModel[] } = {};
+  //   const caixaAtual: CaixaModel[][] = [];
+  //   caixas.forEach((caixa) => {
+  //     if (caixa.categoriaId === 1) {
+  //       this.caixasSecasImages = Array.isArray(caixa.capturas) ? caixa.capturas : [];
+  //     } else if (caixa.categoriaId === 2) {
+  //       this.caixasMolhadasImages = Array.isArray(caixa.capturas) ? caixa.capturas : [];
+  //     }
+  //     caixa.capturas = this.ordenarCapturasPorSecao(caixa.capturas);
+  //     caixa.capturas.forEach((captura) => {
+  //       captura.miniatureReference = this.getMiniatureUrl(
+  //         captura.miniatureReference,
+  //       );
+  //       captura.imageReference = this.getMiniatureUrl(captura.imageReference);
+  //     });
+  //     if (!caixasAgrupadas[caixa.nome]) {
+  //       caixasAgrupadas[caixa.nome] = [];
+  //     }
+
+  //     caixasAgrupadas[caixa.nome].push(caixa);
+  //   });
+  //   for (const key in caixasAgrupadas) {
+  //     caixaAtual.push(caixasAgrupadas[key]);
+  //   }
+  //   return caixaAtual;
+  // }
+
   juntarCaixasPorNome(caixas: CaixaModel[]) {
-    const caixasAgrupadas: { [key: string]: CaixaModel[] } = {};
-    const caixaAtual: CaixaModel[][] = [];
+    const caixasAgrupadas: {
+      [key: string]: { secas: CaixaModel[]; molhadas: CaixaModel[] };
+    } = {};
+
     caixas.forEach((caixa) => {
+      if (!caixasAgrupadas[caixa.nome]) {
+        caixasAgrupadas[caixa.nome] = { secas: [], molhadas: [] };
+      }
+
+      if (caixa.categoriaId === 1) {
+        this.caixasSecasImages = Array.isArray(caixa.capturas)
+          ? caixa.capturas
+          : [];
+        caixasAgrupadas[caixa.nome].secas.push(caixa);
+      } else if (caixa.categoriaId === 2) {
+        this.caixasMolhadasImages = Array.isArray(caixa.capturas)
+          ? caixa.capturas
+          : [];
+        caixasAgrupadas[caixa.nome].molhadas.push(caixa);
+      }
+
       caixa.capturas = this.ordenarCapturasPorSecao(caixa.capturas);
       caixa.capturas.forEach((captura) => {
         captura.miniatureReference = this.getMiniatureUrl(
@@ -61,15 +121,20 @@ export class SecaoComponent implements OnInit, AfterViewInit {
         );
         captura.imageReference = this.getMiniatureUrl(captura.imageReference);
       });
-      if (!caixasAgrupadas[caixa.nome]) {
-        caixasAgrupadas[caixa.nome] = [];
-      }
-      caixasAgrupadas[caixa.nome].push(caixa);
     });
-    for (const key in caixasAgrupadas) {
-      caixaAtual.push(caixasAgrupadas[key]);
-    }
-    return caixaAtual;
+
+    const sortedKeys = Object.keys(caixasAgrupadas).sort((a, b) =>
+      {return a.localeCompare(b)},
+    );
+    const sortedGroupedBoxes = sortedKeys.reduce(
+      (acc, key) => {
+        acc[key] = caixasAgrupadas[key];
+        return acc;
+      },
+      {} as { [key: string]: { secas: CaixaModel[]; molhadas: CaixaModel[] } },
+    );
+
+    return sortedGroupedBoxes;
   }
 
   // Método para modificar url das miniaturas
@@ -102,23 +167,25 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   // Exemplo: [0:{Caixa1, Caixa1}, 1:{Caixa2}, 2:{Caixa3, Caixa3}]
   setCaixaAtual(index: number) {
     this.caixasAtuais = this.caixasAgrupadas[index];
-    console.log("Caixas atuais: ", this.caixasAtuais);
     this.caixaAtual = index;
-    console.log("Caixa atual: ", this.caixaAtual);
-    this.setCaixaMolhadaOuSeca(0);
+    this.setCaixaMolhadaOuSeca(1);
   }
 
   // Método para definir a caixa molhada ou seca
-  setCaixaMolhadaOuSeca(index: number) {
-    this.caixa = this.caixasAtuais[index];
-    console.log("Caixa: ", this.caixa);
-    this.capturas = this.caixa.capturas;
+  setCaixaMolhadaOuSeca(categoriaId: number) {
+    const caixa = this.caixasAtuais.find((caixa) => {
+      return caixa.categoriaId === categoriaId;
+    });
+    if (caixa) {
+      this.setCaixaSelecionada(caixa);
+    } else {
+      this._toast.info("Nenhuma caixa encontrada.");
+    }
   }
 
   // Método para definir o separador atual
   setSeparator(separador: number) {
     this.separadorAtual = separador;
-    console.log("Separador atual: ", this.separadorAtual);
   }
 
   // Navegar para a próxima caixa
@@ -126,7 +193,7 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     if (this.caixaAtual < this.caixasAgrupadas.length - 1) {
       this.setCaixaAtual(this.caixaAtual + 1);
     } else {
-      console.log("Já está na última caixa.");
+      this._toast.info("Já está na última caixa.");
     }
   }
 
@@ -135,6 +202,7 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   setCaixaSelecionada(caixa: CaixaModel) {
     this.caixa = caixa;
     this.capturas = caixa.capturas;
+    this.setCapturaAtual(caixa.capturas[0]);
   }
 
   // Navegar para a caixa anterior
@@ -142,11 +210,11 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     if (this.caixaAtual > 0) {
       this.setCaixaAtual(this.caixaAtual - 1);
     } else {
-      console.log("Já está na primeira caixa.");
+      this._toast.info("Já está na primeira caixa.");
     }
   }
 
-  // Definir captura selecionada
+  // Definir captura selecionada, a primeira captura já deve vir selecionada
   setCapturaAtual(index: any) {
     this.capturaAtual = index;
   }
@@ -159,9 +227,8 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     if (currentIndex > 0) {
       this.setCapturaAtual(this.capturas[currentIndex - 1]);
     } else {
-      console.log("Já está na primeira captura.");
+      this._toast.info("Já está na primeira captura.");
     }
-    console.log("Captura anterior");
   }
 
   // Navegar para a próxima captura
@@ -171,8 +238,9 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     });
     if (currentIndex !== -1 && currentIndex < this.capturas.length - 1) {
       this.setCapturaAtual(this.capturas[currentIndex + 1]);
+    } else {
+      this._toast.info("Já está na última captura.");
     }
-    console.log("Próxima captura");
   }
 
   // Método para fazer download de imagem
