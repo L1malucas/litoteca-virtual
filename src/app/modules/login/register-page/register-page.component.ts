@@ -87,8 +87,11 @@ export class RegisterPageComponent implements OnInit {
           const successMessage = this.routeId
             ? "Usuário atualizado com sucesso."
             : "Usuário cadastrado com sucesso.";
+
+          const rote = this.routeId ? "/home" : "/confirmar-registro";
+
           this._toast.success("Sucesso", successMessage);
-          this._router.navigate(["/confirmar-registro"]);
+          this._router.navigate([rote]);
         },
         (error: any) => {
           console.error("Erro:", error);

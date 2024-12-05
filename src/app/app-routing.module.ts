@@ -18,10 +18,6 @@ const routes: Routes = [
       });
     },
   },
-  {
-    path: "editar-perfil/:id",
-    component: RegisterPageComponent,
-  },
   { path: "error", component: ErrorComponent },
   { path: "**", redirectTo: "/error", pathMatch: "full" },
 ];

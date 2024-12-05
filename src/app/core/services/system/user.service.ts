@@ -40,10 +40,12 @@ export class UserService extends BaseResourceService<UserModel> {
     );
   }
 
-  updateUser(id: string, resource: UserModel): Observable<UserModel> {
-    return this._httpClient.put<UserModel>(
+  updateUser(id: string, resource: any): Observable<any> {
+    const headers = { "Content-Type": "application/json" };
+    return this._httpClient.put<any>(
       `${this.helpConfig.USUARIO_ENDPOINT}Atualizar/${id}`,
       resource,
+      { headers },
     );
   }
 }
