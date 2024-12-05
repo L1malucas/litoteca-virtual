@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlvoModel } from "@models/alvo.model";
 import { BoxModel } from "@models/box.model";
+import { HoleModel } from "@models/furo.model";
 import { ProjetoModel } from "@models/projeto.model";
 import { TargetService } from "@services/alvo.service";
 import { BoxService } from "@services/box.service";
@@ -28,17 +30,18 @@ export class GalleryComponent {
   secoes = [];
   secoesMolhadas = [];
   imagens?: any[] = [];
-  caixasSecasImages!: any[];
-  caixasMolhadasImages!: any[];
+  caixasSecasImages: any[] = [];
+  caixasMolhadasImages: any[] = [];
   combineImagens?: any[];
-  project!: ProjetoModel;
-  projects!: ProjetoModel[];
+  project?: ProjetoModel;
   holeId!: string;
   boxId!: string;
   boxes!: any[];
   caixasMapeadas!: any;
   currentBoxIndex: number = 0;
   boxNames: any;
+  target!: AlvoModel;
+  hole?: HoleModel;
 
   constructor(
     private _router: Router,
@@ -52,7 +55,9 @@ export class GalleryComponent {
   ngOnInit(): void {
     this._activeRoute.queryParams.subscribe((params) => {
       if (params["projeto"]) {
-        this.getTargetInfo(params["projeto"]);
+        this.getTargetInfo(params["alvo"]);
+        this.getHoleIfo(params["hole"]);
+        this.getBoxesByHoleId(params["hole"]);
         this.getProjectById(params["projeto"]);
       }
     });
@@ -69,13 +74,17 @@ export class GalleryComponent {
     });
   }
 
-  getTargetInfo(projectId: string) {
-    this._targetService
-      .getTargetForProjectId(projectId)
-      .subscribe((target: any) => {
-        this.holeId = target[0]?.furos[0]?.id;
-        this.getBoxesByHoleId(this.holeId);
-      });
+  getHoleIfo(holeId: string) {
+    this._holeService.getById(holeId).subscribe((res) => {
+      this.hole = res;
+      this.formData.furo = this.hole.nome;
+    });
+  }
+
+  getTargetInfo(alvoId: string) {
+    this._targetService.getById(alvoId).subscribe((target: any) => {
+      this.target = target;
+    });
   }
 
   getBoxesByHoleId(holeId: string) {
@@ -122,10 +131,9 @@ export class GalleryComponent {
             return x.categoriaId;
           },
         );
-        boxIds.forEach((boxId: string) => {
-          categoriaIds.forEach((categoriaId: number) => {
-            return this.getBoxById(boxId, categoriaId);
-          });
+        boxIds.forEach((boxId: string, index: number) => {
+          const categoriaId = categoriaIds[index];
+          this.getBoxById(boxId, categoriaId);
         });
       }
     });
@@ -148,10 +156,9 @@ export class GalleryComponent {
             return x.categoriaId;
           },
         );
-        boxIds.forEach((boxId: string) => {
-          categoriaIds.forEach((categoriaId: number) => {
-            return this.getBoxById(boxId, categoriaId);
-          });
+        boxIds.forEach((boxId: string, index: number) => {
+          const categoriaId = categoriaIds[index];
+          this.getBoxById(boxId, categoriaId);
         });
       } else {
         console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
@@ -172,7 +179,7 @@ export class GalleryComponent {
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `http://cbpmged.renova.net.br/${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };
@@ -191,7 +198,7 @@ export class GalleryComponent {
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `http://cbpmged.renova.net.br/${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };
@@ -215,7 +222,6 @@ export class GalleryComponent {
           ...this.caixasSecasImages,
           ...this.caixasMolhadasImages,
         ];
-        console.log("combineImagens", this.combineImagens);
       },
       (err) => {
         console.error(`Erro ao buscar detalhes da caixa com ID ${id}:`, err);
