@@ -19,6 +19,7 @@ export class RegisterPageComponent implements OnInit {
   routeId!: string;
   nameButton!: string;
   labelBack!: string;
+  namePage!: string;
 
   private _router = inject(Router);
   private _toast = inject(Toast);
@@ -163,6 +164,7 @@ export class RegisterPageComponent implements OnInit {
     if (this.routeId !== null) {
       this.nameButton = "ATUALIZAR CONTA";
       this.labelBack = "Voltar para HOME";
+      this.namePage = "Gerenciar Conta";
       ["email", "confirmEmail", "username"].forEach((field) => {
         const control = this.form.get(field);
         if (control) {
@@ -198,6 +200,7 @@ export class RegisterPageComponent implements OnInit {
     } else {
       this.nameButton = "CRIAR CONTA";
       this.labelBack = "Voltar para LOGIN";
+      this.namePage = "Cadastre-se";
     }
   }
 }

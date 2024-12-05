@@ -4,7 +4,7 @@
   <app-header></app-header>
 
   <section class="registration-form-container">
-    <h1 class="form-title">Cadastre-se</h1>
+    <h1 class="form-title">{{ namePage }}</h1>
 
     <form class="registration-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-content">
