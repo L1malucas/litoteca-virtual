@@ -1,12 +1,12 @@
-import { BoxModel } from "./box.model";
+import { CaixaModel } from "./caixa.model";
 
-export class HoleModel {
+export class FuroModel {
   id?: string;
   nome?: string;
   alvoId?: string;
-  caixa?: BoxModel[];
+  caixa?: CaixaModel[];
 
-  constructor(options: HoleModel = {}) {
+  constructor(options: FuroModel = {}) {
     this.id = options.id || "";
     this.nome = options.nome || "";
     this.alvoId = options.alvoId || "";

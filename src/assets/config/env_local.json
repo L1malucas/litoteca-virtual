@@ -1,6 +1,7 @@
 {
   "URL": {
-    "LITOTECA": "https://localhost:7211/"
+    "LITOTECA": "https://localhost:7211/",
+    "FTP_URL": "https://cbpmged.renova.app.br"
   },
   "PATHS": {
     "ALVO": "api/Alvo",

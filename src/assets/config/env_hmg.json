@@ -1,6 +1,7 @@
 {
   "URL": {
-    "LITOTECA": "http://cbpm-dev-api.renova.app.br/"
+    "LITOTECA": "http://cbpm-dev-api.renova.app.br/",
+    "FTP_URL": "https://cbpmged.renova.app.br"
   },
   "ENDPOINTS": {
     "Alvo": {

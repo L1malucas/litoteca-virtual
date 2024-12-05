@@ -3,12 +3,12 @@ import { HelpConfig } from "../config/help-config";
 import { HttpClient } from "@angular/common/http";
 import { BaseResourceService } from "./system/base-resource.service";
 import { catchError, Observable, throwError } from "rxjs";
-import { HoleModel } from "@models/furo.model";
+import { FuroModel } from "@models/furo.model";
 
 @Injectable({
   providedIn: "root",
 })
-export class HoleService extends BaseResourceService<HoleModel> {
+export class FuroService extends BaseResourceService<FuroModel> {
   constructor(
     protected override injector: Injector,
     private helpConfig: HelpConfig,
@@ -24,15 +24,15 @@ export class HoleService extends BaseResourceService<HoleModel> {
     });
   }
 
-  override getById(id: string): Observable<HoleModel> {
+  override getById(id: string): Observable<FuroModel> {
     return this._httpClient
-      .get<HoleModel>(`${this._url}BuscarPorId/${id}`)
+      .get<FuroModel>(`${this._url}BuscarPorId/${id}`)
       .pipe(catchError(this.handleError));
   }
 
-  getFurosByAlvoId(id: string): Observable<HoleModel[]> {
+  getFurosByAlvoId(id: string): Observable<FuroModel[]> {
     return this._httpClient
-      .get<HoleModel[]>(`${this._url}BuscarFuroPorAlvoId/${id}`)
+      .get<FuroModel[]>(`${this._url}BuscarFuroPorAlvoId/${id}`)
       .pipe(catchError(this.handleError));
   }
 

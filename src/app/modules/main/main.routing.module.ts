@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { RegisterPageComponent } from "@modules/login/register-page/register-page.component";
 import { RegiaoResolver } from "@services/resolvers/regiao.resolver";
 import { AuthGuard } from "src/app/core/guards/auth-guard";
 
@@ -60,6 +61,11 @@ const MainRoutes: Routes = [
         return m.SecaoModule;
       });
     },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "editar-perfil/:id",
+    component: RegisterPageComponent,
     canActivate: [AuthGuard],
   },
 ];

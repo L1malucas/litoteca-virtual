@@ -1,13 +1,15 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { HelpConfig } from "@config/help-config";
 import { AlvoModel } from "@models/alvo.model";
-import { BoxModel } from "@models/box.model";
-import { HoleModel } from "@models/furo.model";
+import { CaixaModel } from "@models/caixa.model";
+import { FuroModel } from "@models/furo.model";
 import { ProjetoModel } from "@models/projeto.model";
 import { TargetService } from "@services/alvo.service";
-import { BoxService } from "@services/box.service";
-import { HoleService } from "@services/furo.service";
+import { CaixaService } from "@services/caixa.service";
+import { FuroService } from "@services/furo.service";
 import { ProjetoService } from "@services/projeto.service";
+import { Toast } from "@services/system/toast.service";
 
 @Component({
   selector: "app-gallery",
@@ -15,6 +17,7 @@ import { ProjetoService } from "@services/projeto.service";
   styleUrl: "./gallery.component.scss",
 })
 export class GalleryComponent {
+  private _toast = inject(Toast);
   public formData: any = {
     nome: "",
     municipio: "",
@@ -33,67 +36,69 @@ export class GalleryComponent {
   caixasSecasImages: any[] = [];
   caixasMolhadasImages: any[] = [];
   combineImagens?: any[];
-  project?: ProjetoModel;
-  holeId!: string;
-  boxId!: string;
-  boxes!: any[];
+  projeto?: ProjetoModel;
+  furoId!: string;
+  caixaId!: string;
+  caixas!: any[];
   caixasMapeadas!: any;
   currentBoxIndex: number = 0;
-  boxNames: any;
+  nomeCaixas: any;
   target!: AlvoModel;
-  hole?: HoleModel;
+  furo?: FuroModel;
 
   constructor(
     private _router: Router,
-    private _projectService: ProjetoService,
-    private _boxService: BoxService,
-    private _targetService: TargetService,
-    private _holeService: HoleService,
+    private _projetoService: ProjetoService,
+    private _caixaService: CaixaService,
+    private _alvoService: TargetService,
+    private _furoService: FuroService,
     private _activeRoute: ActivatedRoute,
+    private _helpConfig: HelpConfig,
   ) {}
 
   ngOnInit(): void {
     this._activeRoute.queryParams.subscribe((params) => {
       if (params["projeto"]) {
-        this.getTargetInfo(params["alvo"]);
-        this.getHoleIfo(params["hole"]);
-        this.getBoxesByHoleId(params["hole"]);
-        this.getProjectById(params["projeto"]);
+        this.buscarInformacoesDoAlvo(params["alvo"]);
+        this.buscarInformacoesDoFuro(params["furo"]);
+        this.buscarCaixasPorFuroId(params["furo"]);
+        this.buscarPorjetoPorId(params["projeto"]);
       }
     });
   }
 
-  getProjectById(id: string): void {
-    this._projectService.getById(id).subscribe((res) => {
-      this.project = res;
-      this.formData.nome = this.project.nome;
+  buscarPorjetoPorId(id: string): void {
+    this._projetoService.getById(id).subscribe((res) => {
+      this.projeto = res;
+      this.formData.nome = this.projeto.nome;
       this.formData.municipio = "NÃO INFORMADO";
-      this.formData.localidade = this.project.localidade;
+      this.formData.localidade = this.projeto.localidade;
       this.formData.pavilhao = "1";
-      this.formData.alvo = this.project.alvos[0]?.nome || "Sem alvo";
+      this.formData.alvo = this.projeto.alvos[0]?.nome || "Sem alvo";
     });
   }
 
-  getHoleIfo(holeId: string) {
-    this._holeService.getById(holeId).subscribe((res) => {
-      this.hole = res;
-      this.formData.furo = this.hole.nome;
+  buscarInformacoesDoFuro(furoId: string) {
+    this._furoService.getById(furoId).subscribe((res) => {
+      this.furo = res;
+      this.furoId = furoId;
+      this.formData.furo = this.furo?.nome;
     });
   }
 
-  getTargetInfo(alvoId: string) {
-    this._targetService.getById(alvoId).subscribe((target: any) => {
+  buscarInformacoesDoAlvo(alvoId: string) {
+    this._alvoService.buscarAlvoPorId(alvoId).subscribe((target: any) => {
       this.target = target;
     });
   }
 
-  getBoxesByHoleId(holeId: string) {
-    this._boxService.getBoxByHoleId(holeId).subscribe((res) => {
-      this.boxes = Array.isArray(res) ? res : [res];
+  buscarCaixasPorFuroId(furoId: string) {
+    this._caixaService.buscarCaixaPorFuro(furoId).subscribe((res) => {
+      this.caixas = Array.isArray(res) ? res : [res];
 
       const groupedBoxes: {
-        [key: string]: { name: string; boxes: BoxModel[] };
-      } = this.boxes.reduce((acc, box) => {
+        [key: string]: { name: string; boxes: CaixaModel[] };
+      } = this.caixas.reduce((acc, box) => {
         const boxName = box.nome;
         if (!acc[boxName]) {
           acc[boxName] = { name: boxName, boxes: [] };
@@ -103,7 +108,9 @@ export class GalleryComponent {
       }, {});
 
       const sortedKeys = Object.keys(groupedBoxes).sort((a, b) => {
-        return a.localeCompare(b);
+        const numA = parseInt(a.match(/\d+/)?.[0] || "0", 10);
+        const numB = parseInt(b.match(/\d+/)?.[0] || "0", 10);
+        return numA - numB;
       });
 
       const sortedGroupedBoxes = sortedKeys.reduce(
@@ -111,14 +118,15 @@ export class GalleryComponent {
           acc[key] = groupedBoxes[key];
           return acc;
         },
-        {} as { [key: string]: { name: string; boxes: BoxModel[] } },
+        {} as { [key: string]: { name: string; boxes: CaixaModel[] } },
       );
 
       this.caixasMapeadas = sortedGroupedBoxes;
-      this.boxNames = sortedKeys;
+      console.log(this.caixasMapeadas);
+      this.nomeCaixas = sortedKeys;
 
       this.currentBoxIndex = 0;
-      const currentBoxName = this.boxNames[this.currentBoxIndex];
+      const currentBoxName = this.nomeCaixas[this.currentBoxIndex];
       const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
         (x: any) => {
           return x.id;
@@ -133,41 +141,48 @@ export class GalleryComponent {
         );
         boxIds.forEach((boxId: string, index: number) => {
           const categoriaId = categoriaIds[index];
-          this.getBoxById(boxId, categoriaId);
+          this.buscarCaixaPorId(boxId, categoriaId);
         });
       }
     });
   }
 
-  navigateBox(direction: number) {
+  navegacaoPorCaixa(direction: number) {
     const newIndex = this.currentBoxIndex + direction;
-    if (newIndex >= 0 && newIndex < this.boxNames.length) {
-      this.currentBoxIndex = newIndex;
-      const currentBoxName = this.boxNames[this.currentBoxIndex];
-      const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
+
+    if (newIndex >= this.nomeCaixas.length) {
+      this._toast.info("Atenção", "Você já está na última caixa!");
+      return;
+    }
+
+    if (newIndex < 0) {
+      this._toast.info("Atenção", "Você já está na primeira caixa!");
+      return;
+    }
+
+    this.currentBoxIndex = newIndex;
+    const currentBoxName = this.nomeCaixas[this.currentBoxIndex];
+    const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map((x: any) => {
+      return x.id;
+    });
+
+    if (boxIds && boxIds.length > 0) {
+      const categoriaIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
         (x: any) => {
-          return x.id;
+          return x.categoriaId;
         },
       );
-
-      if (boxIds && boxIds.length > 0) {
-        const categoriaIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-          (x: any) => {
-            return x.categoriaId;
-          },
-        );
-        boxIds.forEach((boxId: string, index: number) => {
-          const categoriaId = categoriaIds[index];
-          this.getBoxById(boxId, categoriaId);
-        });
-      } else {
-        console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
-      }
+      boxIds.forEach((boxId: string, index: number) => {
+        const categoriaId = categoriaIds[index];
+        this.buscarCaixaPorId(boxId, categoriaId);
+      });
+    } else {
+      console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
     }
   }
 
-  getBoxById(id: string, categoriaId: number) {
-    this._boxService.getById(id).subscribe(
+  buscarCaixaPorId(id: string, categoriaId: number) {
+    this._caixaService.buscarCaixaPorId(id).subscribe(
       (res) => {
         this.formData.profundidadeInicial = res.profundidadeInicial;
         this.formData.profundidadeFinal = res.profundidadeFinal;
@@ -179,7 +194,7 @@ export class GalleryComponent {
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `${this._helpConfig.FTP_URL}${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };
@@ -198,7 +213,7 @@ export class GalleryComponent {
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `${this._helpConfig.FTP_URL}${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };
@@ -229,7 +244,14 @@ export class GalleryComponent {
     );
   }
 
-  back() {
+  voltar() {
     window.history.back();
+  }
+
+  navegarParSecao(furoId: string) {
+    console.log("ID do furo:", furoId);
+    this._router.navigate(["/secao"], {
+      queryParams: { furo: furoId },
+    });
   }
 }
