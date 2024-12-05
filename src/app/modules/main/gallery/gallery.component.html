@@ -155,7 +155,7 @@
         <div class="section">
           @if (imagem.secao !== 0) {
             <h4>SEÇÃO {{ imagem.secao }}</h4>
-            <img [src]="imagem.url" />
+            <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
           }
         </div>
       }
@@ -169,7 +169,7 @@
         <div class="section">
           @if (imagem.secao !== 0) {
             <h4>SEÇÃO {{ imagem.secao }}</h4>
-            <img [src]="imagem.url" />
+            <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
           }
         </div>
       }

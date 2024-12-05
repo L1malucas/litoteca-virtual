@@ -79,6 +79,7 @@ export class GalleryComponent {
   buscarInformacoesDoFuro(furoId: string) {
     this._furoService.getById(furoId).subscribe((res) => {
       this.furo = res;
+      this.furoId = furoId;
       this.formData.furo = this.furo?.nome;
     });
   }
@@ -119,6 +120,7 @@ export class GalleryComponent {
       );
 
       this.caixasMapeadas = sortedGroupedBoxes;
+      console.log(this.caixasMapeadas);
       this.nomeCaixas = sortedKeys;
 
       this.currentBoxIndex = 0;
@@ -158,13 +160,15 @@ export class GalleryComponent {
 
     this.currentBoxIndex = newIndex;
     const currentBoxName = this.nomeCaixas[this.currentBoxIndex];
-    const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-      (x: any) => {return x.id},
-    );
+    const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map((x: any) => {
+      return x.id;
+    });
 
     if (boxIds && boxIds.length > 0) {
       const categoriaIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-        (x: any) => {return x.categoriaId},
+        (x: any) => {
+          return x.categoriaId;
+        },
       );
       boxIds.forEach((boxId: string, index: number) => {
         const categoriaId = categoriaIds[index];
@@ -240,5 +244,12 @@ export class GalleryComponent {
 
   voltar() {
     window.history.back();
+  }
+
+  navegarParSecao(furoId: string) {
+    console.log("ID do furo:", furoId);
+    this._router.navigate(["/secao"], {
+      queryParams: { furo: furoId },
+    });
   }
 }
