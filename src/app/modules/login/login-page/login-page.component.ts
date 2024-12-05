@@ -85,12 +85,12 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const { email, senha } = this.form.getRawValue();
+    const { usuario, senha } = this.form.getRawValue();
     this.loading = true;
 
     this.subscription.add(
       this._authService.authenticate(
-        { username: email, senha },
+        { username: usuario, senha },
         this.onLoginSuccess.bind(this),
         this.onLoginError.bind(this),
       ),
@@ -167,7 +167,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   private _buildForm(): void {
     this.form = new FormGroup({
-      email: new FormControl("", [Validators.required]),
+      usuario: new FormControl("", [Validators.required]),
       senha: new FormControl("", [Validators.required]),
     });
   }
