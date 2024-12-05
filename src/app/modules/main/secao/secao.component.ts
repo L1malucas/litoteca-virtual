@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CaixaModel } from "@models/caixa.model";
 import { CapturaModel } from "@models/captura.model";
@@ -12,7 +12,7 @@ import { Toast } from "@services/system/toast.service";
   templateUrl: "./secao.component.html",
   styleUrls: ["./secao.component.scss"],
 })
-export class SecaoComponent implements OnInit, AfterViewInit {
+export class SecaoComponent implements OnInit {
   caixasAtuais: CaixaModel[] = []; // Caixas exibidas no momento
   caixa: CaixaModel = new CaixaModel();
   caixaAtual: number = 0; // Índice da caixa atual exibida
@@ -37,8 +37,6 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     this.getEntityByRoute();
   }
 
-  ngAfterViewInit() {}
-
   // Método para buscar caixas por furo
   getEntityByRoute() {
     const furo = this._route.snapshot.queryParams["furo"];
@@ -48,12 +46,12 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     this._caixaService.buscarCaixaPorFuro(furo).subscribe((caixas) => {
       // ordenar caixas por nome
       caixas = this.ordenarCaixasPorNome(caixas);
+
       // receber as caixas agrupadas por nome
       const caixasAgrupadasObj = this.juntarCaixasPorNome(caixas);
-      this.caixasAgrupadas = Object.values(caixasAgrupadasObj).map((group) => {return [
-        ...group.secas,
-        ...group.molhadas,
-      ]});
+      this.caixasAgrupadas = Object.values(caixasAgrupadasObj).map((group) => {
+        return [...group.secas, ...group.molhadas];
+      });
 
       // Exibir a primeira caixa se houver
       if (this.caixasAgrupadas.length > 0) {
@@ -62,36 +60,7 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // metoro para criar novo array e agrupar duas caixas com mesmo nome, cada um com seu indice e separando entre seca e molhada
-  // Exemplo: [Caixa1, Caixa1, Caixa2, Caixa3, Caixa3] => [Caixa1:{Caixa1, Caixa1}, Caixa2:{Caixa2}, Caixa3:{Caixa3, Caixa3}]
-  // juntarCaixasPorNome(caixas: CaixaModel[]) {
-  //   const caixasAgrupadas: { [key: string]: CaixaModel[] } = {};
-  //   const caixaAtual: CaixaModel[][] = [];
-  //   caixas.forEach((caixa) => {
-  //     if (caixa.categoriaId === 1) {
-  //       this.caixasSecasImages = Array.isArray(caixa.capturas) ? caixa.capturas : [];
-  //     } else if (caixa.categoriaId === 2) {
-  //       this.caixasMolhadasImages = Array.isArray(caixa.capturas) ? caixa.capturas : [];
-  //     }
-  //     caixa.capturas = this.ordenarCapturasPorSecao(caixa.capturas);
-  //     caixa.capturas.forEach((captura) => {
-  //       captura.miniatureReference = this.getMiniatureUrl(
-  //         captura.miniatureReference,
-  //       );
-  //       captura.imageReference = this.getMiniatureUrl(captura.imageReference);
-  //     });
-  //     if (!caixasAgrupadas[caixa.nome]) {
-  //       caixasAgrupadas[caixa.nome] = [];
-  //     }
-
-  //     caixasAgrupadas[caixa.nome].push(caixa);
-  //   });
-  //   for (const key in caixasAgrupadas) {
-  //     caixaAtual.push(caixasAgrupadas[key]);
-  //   }
-  //   return caixaAtual;
-  // }
-
+  // Método para juntar caixas por nome e separar por seca e molhada
   juntarCaixasPorNome(caixas: CaixaModel[]) {
     const caixasAgrupadas: {
       [key: string]: { secas: CaixaModel[]; molhadas: CaixaModel[] };
@@ -123,9 +92,9 @@ export class SecaoComponent implements OnInit, AfterViewInit {
       });
     });
 
-    const sortedKeys = Object.keys(caixasAgrupadas).sort((a, b) =>
-      {return a.localeCompare(b)},
-    );
+    const sortedKeys = Object.keys(caixasAgrupadas).sort((a, b) => {
+      return a.localeCompare(b);
+    });
     const sortedGroupedBoxes = sortedKeys.reduce(
       (acc, key) => {
         acc[key] = caixasAgrupadas[key];
