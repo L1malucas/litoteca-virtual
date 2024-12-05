@@ -200,6 +200,7 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   goToMaps(selectedLink: string) {
     const link = document.createElement("a");
+    link.target = "_blank";
     link.href = selectedLink;
     link.click();
   }
