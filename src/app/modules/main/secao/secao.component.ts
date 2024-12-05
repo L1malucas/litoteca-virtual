@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CaixaModel } from "@models/caixa.model";
 import { CapturaModel } from "@models/captura.model";
 import { CaixaService } from "@services/caixa.service";
-import { HoleService } from "@services/furo.service";
+import { FuroService } from "@services/furo.service";
 import { DownloadService } from "@services/system/download.service";
 import { Toast } from "@services/system/toast.service";
 
@@ -29,7 +29,7 @@ export class SecaoComponent implements OnInit {
     private _route: ActivatedRoute,
     private _downloadService: DownloadService,
     private _caixaService: CaixaService,
-    private _furoService: HoleService,
+    private _furoService: FuroService,
     private _toast: Toast,
   ) {}
 
