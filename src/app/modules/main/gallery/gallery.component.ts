@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlvoModel } from "@models/alvo.model";
 import { CaixaModel } from "@models/caixa.model";
@@ -8,6 +8,7 @@ import { TargetService } from "@services/alvo.service";
 import { CaixaService } from "@services/caixa.service";
 import { FuroService } from "@services/furo.service";
 import { ProjetoService } from "@services/projeto.service";
+import { Toast } from "@services/system/toast.service";
 
 @Component({
   selector: "app-gallery",
@@ -15,6 +16,7 @@ import { ProjetoService } from "@services/projeto.service";
   styleUrl: "./gallery.component.scss",
 })
 export class GalleryComponent {
+  private _toast = inject(Toast);
   public formData: any = {
     nome: "",
     municipio: "",
@@ -103,7 +105,9 @@ export class GalleryComponent {
       }, {});
 
       const sortedKeys = Object.keys(groupedBoxes).sort((a, b) => {
-        return a.localeCompare(b);
+        const numA = parseInt(a.match(/\d+/)?.[0] || "0", 10);
+        const numB = parseInt(b.match(/\d+/)?.[0] || "0", 10);
+        return numA - numB;
       });
 
       const sortedGroupedBoxes = sortedKeys.reduce(
@@ -141,28 +145,33 @@ export class GalleryComponent {
 
   navegacaoPorCaixa(direction: number) {
     const newIndex = this.currentBoxIndex + direction;
-    if (newIndex >= 0 && newIndex < this.nomeCaixas.length) {
-      this.currentBoxIndex = newIndex;
-      const currentBoxName = this.nomeCaixas[this.currentBoxIndex];
-      const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-        (x: any) => {
-          return x.id;
-        },
-      );
 
-      if (boxIds && boxIds.length > 0) {
-        const categoriaIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
-          (x: any) => {
-            return x.categoriaId;
-          },
-        );
-        boxIds.forEach((boxId: string, index: number) => {
-          const categoriaId = categoriaIds[index];
-          this.buscarCaixaPorId(boxId, categoriaId);
-        });
-      } else {
-        console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
-      }
+    if (newIndex >= this.nomeCaixas.length) {
+      this._toast.info("Atenção", "Você já está na última caixa!");
+      return;
+    }
+
+    if (newIndex < 0) {
+      this._toast.info("Atenção", "Você já está na primeira caixa!");
+      return;
+    }
+
+    this.currentBoxIndex = newIndex;
+    const currentBoxName = this.nomeCaixas[this.currentBoxIndex];
+    const boxIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
+      (x: any) => {return x.id},
+    );
+
+    if (boxIds && boxIds.length > 0) {
+      const categoriaIds = this.caixasMapeadas[currentBoxName]?.boxes.map(
+        (x: any) => {return x.categoriaId},
+      );
+      boxIds.forEach((boxId: string, index: number) => {
+        const categoriaId = categoriaIds[index];
+        this.buscarCaixaPorId(boxId, categoriaId);
+      });
+    } else {
+      console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
     }
   }
 
