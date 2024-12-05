@@ -21,18 +21,23 @@
         </div>
         <div class="filter-option filter-input">
           <label for="" class="label">Projetos</label>
-          <div class="input-field">
+          <div
+            class="input-field"
+            matTooltip="Selecione o projeto"
+            [matTooltipPosition]="toolPosition"
+          >
             <input
               type="text"
               placeholder="Selecione ou digite o projeto"
               aria-label="Number"
               matInput
-              matTooltip="Selecione o projeto"
-              [matTooltipPosition]="toolPosition"
               [formControl]="projetoControl"
               [matAutocomplete]="autoProject"
+              #inputProject
             />
-            <mat-icon>expand_more</mat-icon>
+            <button (click)="focusBTN(inputProject, 0)">
+              <mat-icon>expand_more</mat-icon>
+            </button>
           </div>
           <mat-autocomplete
             #autoProject="matAutocomplete"
@@ -46,18 +51,27 @@
         </div>
         <div class="filter-option filter-input">
           <label for="" class="label">Alvos</label>
-          <div class="input-field">
+          <div
+            class="input-field"
+            matTooltip="Selecione o alvo"
+            [matTooltipPosition]="toolPosition"
+          >
             <input
               type="text"
               placeholder="Selecione ou digite o nome do alvo"
               aria-label="Number"
               matInput
-              matTooltip="Selecione o alvo"
-              [matTooltipPosition]="toolPosition"
               [formControl]="alvoControl"
               [matAutocomplete]="autoAlvos"
+              [autofocus]="true"
+              #inputAlvo
             />
-            <mat-icon>expand_more</mat-icon>
+            <button
+              (click)="focusBTN(inputAlvo, 1)"
+              [disabled]="alvoControl.disabled"
+            >
+              <mat-icon>expand_more</mat-icon>
+            </button>
           </div>
           <mat-autocomplete
             #autoAlvos="matAutocomplete"
@@ -74,18 +88,26 @@
         </div>
         <div class="filter-option filter-input">
           <label for="projeto" class="label">Furo</label>
-          <div class="input-field">
+          <div
+            class="input-field"
+            matTooltip="Selecione o furo"
+            [matTooltipPosition]="toolPosition"
+          >
             <input
               type="text"
               placeholder="Selecione ou digite o furo"
               aria-label="Alvo"
               matInput
-              matTooltip="Selecione o furo"
-              [matTooltipPosition]="toolPosition"
               [formControl]="furoControl"
               [matAutocomplete]="autoFuro"
+              #inputFuro
             />
-            <mat-icon>expand_more</mat-icon>
+            <button
+              (click)="focusBTN(inputFuro, 2)"
+              [disabled]="furoControl.disabled"
+            >
+              <mat-icon>expand_more</mat-icon>
+            </button>
           </div>
           <mat-autocomplete
             #autoFuro="matAutocomplete"
