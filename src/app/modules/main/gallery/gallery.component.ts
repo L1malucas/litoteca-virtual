@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { HelpConfig } from "@config/help-config";
 import { AlvoModel } from "@models/alvo.model";
 import { CaixaModel } from "@models/caixa.model";
 import { FuroModel } from "@models/furo.model";
@@ -52,6 +53,7 @@ export class GalleryComponent {
     private _alvoService: TargetService,
     private _furoService: FuroService,
     private _activeRoute: ActivatedRoute,
+    private _helpConfig: HelpConfig,
   ) {}
 
   ngOnInit(): void {
@@ -192,7 +194,7 @@ export class GalleryComponent {
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `${this._helpConfig.FTP_URL}${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };
@@ -211,7 +213,7 @@ export class GalleryComponent {
             ? res.capturas
                 .map((x) => {
                   const imageUrl = x.miniatureReference
-                    ? `https://cbpmged.renova.app.br${x.miniatureReference.replace(/\\/g, "/")}`
+                    ? `${this._helpConfig.FTP_URL}${x.miniatureReference.replace(/\\/g, "/")}`
                     : null;
                   if (imageUrl) {
                     return { url: imageUrl, secao: x.secao };

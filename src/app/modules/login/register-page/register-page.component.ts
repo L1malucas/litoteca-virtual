@@ -6,6 +6,7 @@ import { Toast } from "@services/system/toast.service";
 import { UserService } from "@services/system/user.service";
 import { Subscription } from "rxjs";
 import { UserRequest } from "@models/user.model";
+import { HelpConfig } from "@config/help-config";
 
 @Component({
   selector: "app-register",
@@ -28,6 +29,7 @@ export class RegisterPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _userService: UserService,
     private _route: ActivatedRoute,
+    private _helpConfig: HelpConfig,
   ) {
     this.form = this.formBuilder.group({
       nome: ["", Validators.required],
@@ -182,7 +184,7 @@ export class RegisterPageComponent implements OnInit {
           setTimeout(() => {
             this.image =
               user.data[0].fotoReferenceFtp != ""
-                ? `https://cbpmged.renova.app.br${user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
+                ? `${this._helpConfig.FTP_URL}{user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
                 : "./assets/img/image_placeholder.jpg";
           }, 1);
         },

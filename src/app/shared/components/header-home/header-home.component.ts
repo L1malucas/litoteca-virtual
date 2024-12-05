@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { HelpConfig } from "@config/help-config";
 import { Token } from "@models/system/token.model";
 import { UserService } from "@services/system/user.service";
 import { jwtDecode } from "jwt-decode";
@@ -23,7 +24,10 @@ export class HeaderHomeComponent {
     id: "",
   };
 
-  constructor(private _userService: UserService) {}
+  constructor(
+    private _userService: UserService,
+    private _helpConfig: HelpConfig,
+  ) {}
 
   ngOnInit(): void {
     this.getUserInfoLogged();
@@ -57,7 +61,7 @@ export class HeaderHomeComponent {
       this.user.email = user.data[0].email;
       this.user.image =
         user.data[0].fotoReferenceFtp != ""
-          ? `https://cbpmged.renova.app.br${user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
+          ? `${this._helpConfig.FTP_URL}${user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
           : "./assets/img/image_placeholder.jpg";
     });
   }

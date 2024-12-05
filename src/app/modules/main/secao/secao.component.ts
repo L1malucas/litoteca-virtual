@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { HelpConfig } from "@config/help-config";
 import { CaixaModel } from "@models/caixa.model";
 import { CapturaModel } from "@models/captura.model";
 import { CaixaService } from "@services/caixa.service";
@@ -31,6 +32,7 @@ export class SecaoComponent implements OnInit {
     private _caixaService: CaixaService,
     private _furoService: FuroService,
     private _toast: Toast,
+    private _helpConfig: HelpConfig,
   ) {}
 
   ngOnInit() {
@@ -110,7 +112,7 @@ export class SecaoComponent implements OnInit {
   // Exemplo: LitotecaMiniatures/b717d4aa-926d-4984-ae4c-0a8687cd8c10-MOLHADA-6.jpg
   // => https://cbpmged.renova.app.br/LitotecaMiniatures/b717d4aa-926d-4984-ae4c-0a8687cd8c10-MOLHADA-6.jpg
   getMiniatureUrl(miniatureReference: string) {
-    return `https://cbpmged.renova.app.br/${miniatureReference}`;
+    return `${this._helpConfig.FTP_URL}/${miniatureReference}`;
   }
 
   // Método para ordenar caixas por nome
