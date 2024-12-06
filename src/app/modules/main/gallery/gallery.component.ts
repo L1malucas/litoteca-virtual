@@ -122,7 +122,6 @@ export class GalleryComponent {
       );
 
       this.caixasMapeadas = sortedGroupedBoxes;
-      console.log(this.caixasMapeadas);
       this.nomeCaixas = sortedKeys;
 
       this.currentBoxIndex = 0;
@@ -249,7 +248,6 @@ export class GalleryComponent {
   }
 
   navegarParSecao(furoId: string) {
-    console.log("ID do furo:", furoId);
     this._router.navigate(["/secao"], {
       queryParams: { furo: furoId },
     });

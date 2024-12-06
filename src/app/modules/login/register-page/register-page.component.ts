@@ -185,11 +185,12 @@ export class RegisterPageComponent implements OnInit {
             estado: user.data[0].estado,
             cidade: user.data[0].cidade,
             email: user.data[0].email,
+            confirmEmail: user.data[0].email,
           });
           setTimeout(() => {
             this.image =
               user.data[0].fotoReferenceFtp != ""
-                ? `${this._helpConfig.FTP_URL}{user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
+                ? `${this._helpConfig.FTP_URL}${user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
                 : "./assets/img/image_placeholder.jpg";
           }, 1);
         },
