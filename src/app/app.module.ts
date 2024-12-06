@@ -89,6 +89,7 @@ import { IMAGE_CONFIG } from "@angular/common";
       withSessionStorage(),
     ),
   ],
+  exports: [RegisterPageComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

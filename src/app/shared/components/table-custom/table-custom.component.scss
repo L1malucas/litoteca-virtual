@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 80vh;
   max-width: 100%;
   margin: 20px 30px;
   font-family: Arial, sans-serif;
@@ -79,7 +80,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 450px;
+  height: auto;
   border-collapse: collapse;
   background-color: #f2f2f2;
   text-align: center;
@@ -149,16 +150,23 @@
         input {
           padding: 0 24px;
         }
-        mat-icon {
-          position: absolute;
+        button {
+          height: 40px;
+          border-radius: 0 10px 10px 0;
+          cursor: pointer;
+          background-color: white;
+          border: none;
           right: 3px;
+          &:disabled {
+            background-color: #cccccc;
+          }
         }
       }
       select,
       input {
         width: 100%;
         height: 40px;
-        border-radius: 10px;
+        border-radius: 10px 0px 0px 10px;
         background-color: white;
         border: 0 none;
         padding: 0;
@@ -172,6 +180,7 @@
 
 .table-header div {
   width: 100%;
+  height: 100px;
   padding: 10px;
 }
 
@@ -230,7 +239,7 @@
 }
 
 .table-content {
-  height: 500px;
+  height: 40vh;
   overflow-y: auto;
 }
 

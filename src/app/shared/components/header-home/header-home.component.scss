@@ -38,8 +38,14 @@ header {
     display: flex;
     align-items: center;
     margin-right: 2rem;
+    .website {
+      mat-icon {
+        color: #6d3b30 !important;
+      }
+    }
 
-    img {
+    img,
+    .website {
       &:hover {
         transform: scale(1.05);
       }

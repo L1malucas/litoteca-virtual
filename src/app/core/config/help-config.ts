@@ -70,4 +70,8 @@ export class HelpConfig {
   public get USUARIO_ENDPOINT(): string {
     return this.configService.getEndPoint("LITOTECA", "USUARIO");
   }
+
+  public get FTP_URL(): string | null {
+    return this.configService.getUrl("FTP_URL", "URL");
+  }
 }

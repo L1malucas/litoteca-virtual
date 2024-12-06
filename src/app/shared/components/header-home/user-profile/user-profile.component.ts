@@ -51,7 +51,6 @@ export class UserProfileComponent {
   }
 
   closeMenu(element?: any): void {
-    console.log(element);
     if (!element) {
       return;
     } else if (element.target && element.target.id == "menubutton") {

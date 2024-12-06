@@ -23,12 +23,17 @@
   position: absolute;
   top: 40px;
   right: 60px;
-
+  .website {
+    mat-icon {
+      color: #6d3b30 !important;
+    }
+  }
   a {
     padding-right: 10px;
   }
 
-  img {
+  img,
+  .website {
     &:hover {
       transform: scale(1.05);
     }

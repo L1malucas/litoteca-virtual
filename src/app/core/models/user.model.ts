@@ -10,7 +10,7 @@ export class UserModel {
   pais?: string;
   estado?: string;
   cidade?: string;
-  fotoReferenceFtp?: string;
+  fotoReferenceFtp?: string | null;
 
   constructor(options: Partial<UserModel> = {}) {
     this.id = options.id || "";
@@ -29,6 +29,7 @@ export class UserModel {
 }
 
 export class UserRequest {
+  id?: string;
   nome?: string;
   sobrenome?: string;
   email?: string;
@@ -38,9 +39,10 @@ export class UserRequest {
   pais?: string;
   estado?: string;
   cidade?: string;
-  fotoReferenceFtp?: string;
+  foto?: string | null;
 
   constructor(options: UserRequest = {}) {
+    this.id = options.id || "";
     this.nome = options.nome || "";
     this.sobrenome = options.sobrenome || "";
     this.email = options.email || "";
@@ -50,6 +52,6 @@ export class UserRequest {
     this.pais = options.pais || "";
     this.estado = options.estado || "";
     this.cidade = options.cidade || "";
-    this.fotoReferenceFtp = options.fotoReferenceFtp || "";
+    this.foto = options.foto || "";
   }
 }
