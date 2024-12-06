@@ -219,6 +219,6 @@ export class SecaoComponent implements OnInit {
 
   // Método para retornar à página de consulta de projeto
   goConsultaProjeto() {
-    this._router.navigate(["/consultar-regiao-filtro/"]);
+    window.history.back();
   }
 }
