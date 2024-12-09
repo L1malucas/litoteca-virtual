@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ProjetoModel } from "@models/projeto.model";
 import { ProjetoService } from "@services/projeto.service";
+import { DownloadService } from "@services/system/download.service";
 
 @Component({
   selector: "app-consultar-regiao-filtro",
@@ -15,6 +16,7 @@ export class ConsultarRegiaoFiltroComponent implements OnInit {
     private _router: Router,
     private _activeRoute: ActivatedRoute,
     private _projetosService: ProjetoService,
+    private _downloadService: DownloadService,
   ) {}
 
   ngOnInit() {}

@@ -1,4 +1,7 @@
 <div class="lupa-container">
+  <div class="loader" *ngIf="loading">
+    <mat-spinner class="spinner" diameter="50"></mat-spinner>
+  </div>
   <img
     #magnifiedImg
     class="magnified-img"
@@ -6,7 +9,4 @@
     alt="SELECIONE UMA IMAGEM"
   />
   <div #magnify class="magnify"></div>
-  <div class="loader" *ngIf="loading">
-    <mat-spinner diameter="50"></mat-spinner>
-  </div>
 </div>

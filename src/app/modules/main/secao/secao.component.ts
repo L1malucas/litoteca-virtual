@@ -24,6 +24,7 @@ export class SecaoComponent implements OnInit {
   capturaAtual: CapturaModel = new CapturaModel();
   separadorAtual: number = 0;
   furoInfo: any = {};
+  lupaSize: number = 250;
 
   constructor(
     private _router: Router,
@@ -214,6 +215,18 @@ export class SecaoComponent implements OnInit {
     }
   }
 
+  // Metodo para aumentar o tamanho da lupa
+  aumentarLupa() {
+    this.lupaSize += 50;
+  }
+
+  // Metodo para diminuir o tamanho da lupa
+  diminuirLupa() {
+    if (this.lupaSize > 100) {
+      this.lupaSize -= 50;
+    }
+  }
+
   // Método para fazer download de imagem
   downloadImage() {
     this._downloadService.downloadImage(this.capturaAtual.imageReference);
@@ -221,6 +234,6 @@ export class SecaoComponent implements OnInit {
 
   // Método para retornar à página de consulta de projeto
   goConsultaProjeto() {
-    this._router.navigate(["/consultar-regiao-filtro/"]);
+    window.history.back();
   }
 }
