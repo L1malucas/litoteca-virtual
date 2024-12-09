@@ -19,6 +19,7 @@ export class RegisterPageComponent implements OnInit {
   routeId!: string;
   nameButton!: string;
   labelBack!: string;
+  namePage!: string;
 
   private _router = inject(Router);
   private _toast = inject(Toast);
@@ -34,11 +35,11 @@ export class RegisterPageComponent implements OnInit {
     this.form = this.formBuilder.group({
       nome: ["", Validators.required],
       sobrenome: ["", Validators.required],
-      username: ["", Validators.required],
+      username: ["", [Validators.required, Validators.maxLength(50)]],
       telefone: ["", Validators.required],
       profissao: ["", Validators.required],
       pais: ["", Validators.required],
-      estado: ["", Validators.required],
+      estado: [""],
       cidade: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       confirmEmail: ["", [Validators.required, Validators.email]],
@@ -52,6 +53,7 @@ export class RegisterPageComponent implements OnInit {
 
   onSubmit() {
     if (!this.form.valid) {
+      this.form.markAllAsTouched(); // marks
       this._toast.error("Erro", "Por favor, preencha os campos corretamente.");
       return;
     }
@@ -97,7 +99,10 @@ export class RegisterPageComponent implements OnInit {
         },
         (error: any) => {
           console.error("Erro:", error);
-          this._toast.error("Erro", error.error.details);
+          this._toast.error(
+            "Erro",
+            error.error.details ? error.error.details : error.error[0],
+          );
         },
       ),
     );
@@ -159,7 +164,8 @@ export class RegisterPageComponent implements OnInit {
     this.verifyRouteId();
     if (this.routeId !== null) {
       this.nameButton = "ATUALIZAR CONTA";
-      this.labelBack = "Voltar para HOME";
+      this.labelBack = "Voltar";
+      this.namePage = "Gerenciar Conta";
       ["email", "confirmEmail", "username"].forEach((field) => {
         const control = this.form.get(field);
         if (control) {
@@ -180,11 +186,12 @@ export class RegisterPageComponent implements OnInit {
             estado: user.data[0].estado,
             cidade: user.data[0].cidade,
             email: user.data[0].email,
+            confirmEmail: user.data[0].email,
           });
           setTimeout(() => {
             this.image =
               user.data[0].fotoReferenceFtp != ""
-                ? `${this._helpConfig.FTP_URL}{user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
+                ? `${this._helpConfig.FTP_URL}${user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
                 : "./assets/img/image_placeholder.jpg";
           }, 1);
         },
@@ -195,6 +202,7 @@ export class RegisterPageComponent implements OnInit {
     } else {
       this.nameButton = "CRIAR CONTA";
       this.labelBack = "Voltar para LOGIN";
+      this.namePage = "Cadastre-se";
     }
   }
 }
