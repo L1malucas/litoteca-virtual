@@ -163,7 +163,7 @@ export class RegisterPageComponent implements OnInit {
     this.verifyRouteId();
     if (this.routeId !== null) {
       this.nameButton = "ATUALIZAR CONTA";
-      this.labelBack = "Voltar para HOME";
+      this.labelBack = "Voltar";
       this.namePage = "Gerenciar Conta";
       ["email", "confirmEmail", "username"].forEach((field) => {
         const control = this.form.get(field);
