@@ -15,9 +15,16 @@ export class UserService extends BaseResourceService<UserModel> {
   }
 
   override create(resource: UserModel): Observable<UserModel> {
-    return this._httpClient.post<UserModel>(
-      `${this.helpConfig.USUARIO_ENDPOINT}Criar`,
+    // return this._httpClient.post<UserModel>(
+    //   `${this.helpConfig.USUARIO_ENDPOINT}Criar`,
+    //   resource,
+    // );
+
+    const headers = { "Content-Type": "application/json" };
+    return this._httpClient.put<any>(
+      `${this.helpConfig.USUARIO_ENDPOINT}Criar/`,
       resource,
+      { headers },
     );
   }
 

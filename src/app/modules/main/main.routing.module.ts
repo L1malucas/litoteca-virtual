@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { RegisterPageComponent } from "@modules/login/register-page/register-page.component";
-import { RegiaoResolver } from "@services/resolvers/regiao.resolver";
 import { AuthGuard } from "src/app/core/guards/auth-guard";
 
 const MainRoutes: Routes = [
@@ -10,7 +9,7 @@ const MainRoutes: Routes = [
     redirectTo: "home",
     pathMatch: "full",
     resolve: {
-      regioes: RegiaoResolver,
+      // regioes: RegiaoResolver,
     },
   },
   {
@@ -21,7 +20,7 @@ const MainRoutes: Routes = [
       });
     },
     resolve: {
-      regioes: RegiaoResolver,
+      // regioes: RegiaoResolver,
     },
     canActivate: [AuthGuard],
   },
@@ -65,6 +64,11 @@ const MainRoutes: Routes = [
   },
   {
     path: "editar-perfil/:id",
+    component: RegisterPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "cadastro",
     component: RegisterPageComponent,
     canActivate: [AuthGuard],
   },
