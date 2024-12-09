@@ -34,7 +34,7 @@ export class ConsultaRegiaoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.carregarRegioes();
+    // this.carregarRegioes();
   }
 
   //carregar região selecionada via query param

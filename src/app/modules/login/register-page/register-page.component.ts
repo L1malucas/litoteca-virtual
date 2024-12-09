@@ -92,7 +92,8 @@ export class RegisterPageComponent implements OnInit {
             ? "Usuário atualizado com sucesso."
             : "Usuário cadastrado com sucesso.";
 
-          const rote = this.routeId ? "/home" : "/confirmar-registro";
+          // const rote = this.routeId ? "/home" : "/confirmar-registro";
+          const rote = "/home";
 
           this._toast.success("Sucesso", successMessage);
           this._router.navigate([rote]);
@@ -201,8 +202,8 @@ export class RegisterPageComponent implements OnInit {
       });
     } else {
       this.nameButton = "CRIAR CONTA";
-      this.labelBack = "Voltar para LOGIN";
-      this.namePage = "Cadastre-se";
+      this.labelBack = "Voltar";
+      this.namePage = "Cadastrar Usuário";
     }
   }
 }

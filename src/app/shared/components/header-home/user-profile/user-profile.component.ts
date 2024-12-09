@@ -42,6 +42,10 @@ export class UserProfileComponent {
     this._router.navigate(["/editar-perfil", id]);
   }
 
+  navigateRegister(): void {
+    this._router.navigate(["/cadastro"]);
+  }
+
   logout() {
     this._authService.logout();
   }
