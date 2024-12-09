@@ -138,3 +138,7 @@ input {
   transition: all 0.3s;
   border-radius: 16px;
 }
+.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
+.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: var(--primary) !important;
+}

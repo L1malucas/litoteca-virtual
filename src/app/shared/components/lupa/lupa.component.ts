@@ -16,7 +16,7 @@ import {
 })
 export class LupaComponent implements OnInit, AfterViewInit {
   // Tamanho da lupa em pixels
-  lupaSize: number = 250;
+  @Input() lupaSize: number = 0;
 
   // Fator de desfoque (zoom)
   lupaDesfoque: number = 2;
@@ -29,7 +29,7 @@ export class LupaComponent implements OnInit, AfterViewInit {
   loading = true;
 
   //Tempo de carregamento da imagem em milissegundos: 0 = desativado, 2000 = 2 segundos
-  time = 1000;
+  time = 2500;
 
   //Referência para a imagem a ser ampliada
   @ViewChild("magnifiedImg") magnifiedImg!: ElementRef;
@@ -63,6 +63,19 @@ export class LupaComponent implements OnInit, AfterViewInit {
     );
   }
 
+  ngOnChanges(change: any) {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, this.time);
+
+    // Atualizar tamanho da lupa
+    if (change.lupaSize) {
+      this.lupaSize = change.lupaSize.currentValue;
+      this.ngAfterViewInit();
+    }
+  }
+
   /**
    * Cria dinamicamente o elemento da lupa (div) e adiciona ao container da imagem
    */
@@ -89,9 +102,6 @@ export class LupaComponent implements OnInit, AfterViewInit {
     lupaDesfoque: number,
     lupaSize: number,
   ) {
-    setTimeout(() => {
-      this.loading = false;
-    }, this.time);
     // Referência à imagem e ao elemento de zoom (lupa)
     const imageElement = imgElement;
     const magnifyElement = this.el.nativeElement.querySelector(".magnify");

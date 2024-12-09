@@ -24,6 +24,7 @@ export class SecaoComponent implements OnInit {
   capturaAtual: CapturaModel = new CapturaModel();
   separadorAtual: number = 0;
   furoInfo: any = {};
+  lupaSize: number = 250;
 
   constructor(
     private _router: Router,
@@ -211,6 +212,18 @@ export class SecaoComponent implements OnInit {
       this.setCapturaAtual(this.capturas[currentIndex + 1]);
     } else {
       this._toast.info("Já está na última captura.");
+    }
+  }
+
+  // Metodo para aumentar o tamanho da lupa
+  aumentarLupa() {
+    this.lupaSize += 50;
+  }
+
+  // Metodo para diminuir o tamanho da lupa
+  diminuirLupa() {
+    if (this.lupaSize > 100) {
+      this.lupaSize -= 50;
     }
   }
 
