@@ -53,6 +53,7 @@ export class RegisterPageComponent implements OnInit {
 
   onSubmit() {
     if (!this.form.valid) {
+      this.form.markAllAsTouched(); // marks
       this._toast.error("Erro", "Por favor, preencha os campos corretamente.");
       return;
     }
