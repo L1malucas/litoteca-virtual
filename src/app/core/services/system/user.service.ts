@@ -21,7 +21,7 @@ export class UserService extends BaseResourceService<UserModel> {
     // );
 
     const headers = { "Content-Type": "application/json" };
-    return this._httpClient.put<any>(
+    return this._httpClient.post<any>(
       `${this.helpConfig.USUARIO_ENDPOINT}Criar/`,
       resource,
       { headers },
