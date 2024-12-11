@@ -103,11 +103,22 @@
               >
                 -
               </div>
+              <div class="secao-meio-left-tamanho-lupa-buttons-tamanho-txt">
+                {{ lupaSize }}x
+              </div>
               <div
                 class="secao-meio-left-tamanho-lupa-buttons-tamanho"
                 (click)="aumentarLupa()"
               >
                 +
+              </div>
+            </div>
+            <div>
+              <div
+                class="secao-meio-left-tamanho-lupa-buttons-tamanho-reset"
+                (click)="resetarLupa()"
+              >
+                Tamanho Inicial
               </div>
             </div>
           </div>
