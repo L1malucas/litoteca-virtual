@@ -2,13 +2,12 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ErrorComponent } from "./shared/components/error/error.component";
 import { LoginPageComponent } from "@modules/login/login-page/login-page.component";
-import { ConfirmRegisterComponent } from "@modules/login/confirm-register/confirm-register.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginPageComponent },
   // { path: "cadastro", component: RegisterPageComponent },
-  { path: "confirmar-registro", component: ConfirmRegisterComponent },
+  // { path: "confirmar-registro", component: ConfirmRegisterComponent },
   {
     path: "",
     loadChildren: () => {

@@ -293,9 +293,13 @@
       grid-column: span 1;
       width: 11.875rem;
       height: 7.5rem;
-      -webkit-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
       transform: rotate(180deg);
+    }
+  }
+
+  .section:last-child {
+    img {
+      transform: none;
     }
   }
 }

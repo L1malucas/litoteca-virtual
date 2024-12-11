@@ -236,6 +236,8 @@ export class GalleryComponent {
           ...this.caixasSecasImages,
           ...this.caixasMolhadasImages,
         ];
+
+        console.log(this.caixasSecasImages);
       },
       (err) => {
         console.error(`Erro ao buscar detalhes da caixa com ID ${id}:`, err);
