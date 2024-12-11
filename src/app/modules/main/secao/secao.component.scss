@@ -339,6 +339,36 @@
                 cursor: pointer;
                 border: 1px solid #4e0101;
                 border-radius: 50px;
+
+                &-txt {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 50px;
+                  height: 40px;
+                  color: var(--primary);
+                  cursor: pointer;
+                  border: 1px solid #4e0101;
+                  border-radius: 15px;
+                }
+
+                &-reset {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 130px;
+                  height: 30px;
+                  color: var(--primary);
+                  cursor: pointer;
+                  border: 1px solid #4e0101;
+                  border-radius: 11px;
+                  margin-bottom: 10px;
+                }
+
+                &-reset:hover {
+                  background-color: var(--primary);
+                  color: var(--white);
+                }
               }
               &-tamanho:hover {
                 background-color: var(--primary);
