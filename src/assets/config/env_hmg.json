@@ -1,115 +1,23 @@
 {
   "URL": {
-    "LITOTECA": "http://cbpm-dev-api.renova.app.br/",
+    "LITOTECA": "https://cbpm-hmg-api.renova.app.br",
     "FTP_URL": "https://cbpmged.renova.app.br"
   },
-  "ENDPOINTS": {
-    "Alvo": {
-      "GET": [
-        "/api/Alvo/BuscarPorId/{id}",
-        "/api/Alvo/BuscarAlvos",
-        "/api/Alvo/BuscarAlvosPorProjetoId/{projetoId}"
-      ],
-      "POST": ["/api/Alvo/Criar"],
-      "PUT": ["/api/Alvo/Atualizar/{id}"],
-      "DELETE": ["/api/Alvo/Deletar/{id}"]
-    },
-    "Arquivo": {
-      "POST": ["/api/Arquivo/Upload"],
-      "GET": ["/api/Arquivo/GetDownload"]
-    },
-    "Caixa": {
-      "GET": [
-        "/api/Caixa/BuscarPorId/{id}",
-        "/api/Caixa/BuscarCaixaPorFuroId/{furoId}"
-      ],
-      "POST": ["/api/Caixa/Criar", "/api/Caixa/AdicionarCapturaInCaixa"],
-      "PUT": ["/api/Caixa/Atualizar/{id}"],
-      "DELETE": ["/api/Caixa/Deletar/{id}"]
-    },
-    "Candidato": {
-      "GET": [
-        "/api/Candidato/BuscarCandidatos",
-        "/api/Candidato/BuscarPorId/{id}",
-        "/api/Candidato/BuscarPorCpf/{cpf}",
-        "/api/Candidato/RecuperarIdCandidatoPorCpf/{cpf}"
-      ],
-      "POST": ["/api/Candidato/Criar"],
-      "PUT": ["/api/Candidato/Atualizar/{id}"],
-      "DELETE": ["/api/Candidato/Deletar/{id}"]
-    },
-    "Coleta": {
-      "GET": [
-        "/api/Coleta/BuscarPorId/{id}",
-        "/api/Coleta/BuscarPorCpf/{cpf}",
-        "/api/Coleta/BuscarPorCandidatoId/{id}"
-      ],
-      "POST": ["/api/Coleta/Criar"],
-      "PUT": ["/api/Coleta/Atualizar/{id}"],
-      "DELETE": ["/api/Coleta/Deletar/{id}"]
-    },
-    "FileConfiguration": {
-      "GET": ["/configuration"],
-      "POST": ["/configuration"]
-    },
-    "Ftp": {
-      "POST": ["/api/Ftp/uploadCapture"]
-    },
-    "Furo": {
-      "GET": [
-        "/api/Furo/BuscarPorId/{id}",
-        "/api/Furo/BuscarFuros",
-        "/api/Furo/BuscarFuroPorAlvoId/{alvoId}"
-      ],
-      "POST": ["/api/Furo/Criar"],
-      "PUT": ["/api/Furo/Atualizar/{id}"],
-      "DELETE": ["/api/Furo/Deletar/{id}"]
-    },
-    "Log": {
-      "GET": ["/api/Log/BuscarPorId/{id}"],
-      "POST": ["/api/Log/Criar", "/api/Log/CriarMultiplosLog"]
-    },
-    "Municipio": {
-      "GET": [
-        "/api/Municipio/BuscarPorId/{id}",
-        "/api/Municipio/BuscarMunicipioPorNomeUf/{nome}/{uf}",
-        "/api/Municipio/BuscarMunicipios",
-        "/api/Municipio/BuscarUfs",
-        "/api/Municipio/BuscarMunicipiosPorUf/{uf}"
-      ]
-    },
-    "Operador": {
-      "GET": ["/api/Operador/BuscarPorId/{id}"]
-    },
-    "OutputCache": {
-      "DELETE": ["/outputcache/{region}"]
-    },
-    "PontoAtendimento": {
-      "GET": [
-        "/api/PontoAtendimento/BuscarPontos",
-        "/api/PontoAtendimento/BuscarPorId/{id}"
-      ],
-      "POST": ["/api/PontoAtendimento/Criar"],
-      "PUT": ["/api/PontoAtendimento/Atualizar/{id}"],
-      "DELETE": ["/api/PontoAtendimento/Deletar/{id}"]
-    },
-    "Posto": {
-      "GET": ["/api/Posto/BuscarPostos", "/api/Posto/BuscarPorId/{id}"],
-      "POST": ["/api/Posto/Criar"],
-      "PUT": ["/api/Posto/Atualizar/{id}"],
-      "DELETE": ["/api/Posto/Deletar/{id}"]
-    },
-    "Projeto": {
-      "GET": [
-        "/api/Projeto/BuscarPorId/{id}",
-        "/api/Projeto/BuscarProjetos",
-        "/api/Projeto/BuscarPorNome/{nome}",
-        "/api/Projeto/BuscarPorMunicipio/{municipio}",
-        "/api/Projeto/BuscarPorMunicipioId/{municipioId}"
-      ],
-      "POST": ["/api/Projeto/Criar"],
-      "PUT": ["/api/Projeto/Atualizar/{id}"],
-      "DELETE": ["/api/Projeto/Deletar/{id}"]
-    }
+  "PATHS": {
+    "ALVO": "api/Alvo",
+    "ARQUIVO": "api/Arquivo",
+    "CAIXA": "api/Caixa",
+    "CANDIDATO": "api/Candidato",
+    "COLETA": "api/Coleta",
+    "FTP": "api/Ftp",
+    "FURO": "api/Furo",
+    "LOG": "api/Log",
+    "MUNICIPIO": "api/Municipio",
+    "OPERADOR": "api/Operador",
+    "PONTOATENDIMENTO": "api/PontoAtendimento",
+    "POSTO": "api/Posto",
+    "PROJETO": "api/Projeto",
+    "REGIAO": "api/Regiao",
+    "USUARIO": "api/Usuario"
   }
 }

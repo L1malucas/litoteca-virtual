@@ -49,26 +49,13 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": false,
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "500kb",
-                  "maximumError": "800kb"
-                }
-              ],
-              "outputHashing": "all"
+              "extractLicenses": true
             },
             "homologation": {
-              "optimization": true,
+              "optimization": false,
               "extractLicenses": true,
               "sourceMap": true,
               "fileReplacements": [
