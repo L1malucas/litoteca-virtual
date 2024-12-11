@@ -11,7 +11,7 @@ export interface Captura {
 }
 
 export class CaixaModel {
-  id?: string;
+  id: string;
   nome: string;
   categoriaId: number;
   furoId: string;

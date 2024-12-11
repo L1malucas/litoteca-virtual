@@ -43,6 +43,7 @@ export class SecaoComponent implements OnInit {
   // Método para buscar caixas por furo
   getEntityByRoute() {
     const furo = this._route.snapshot.queryParams["furo"];
+
     this._furoService.getFurosWithParams({ id: furo }).subscribe((furo) => {
       this.furoInfo = furo.data[0];
     });
@@ -217,14 +218,25 @@ export class SecaoComponent implements OnInit {
 
   // Metodo para aumentar o tamanho da lupa
   aumentarLupa() {
+    if (this.lupaSize >= 450) {
+      this._toast.info("Tamanho máximo da lupa atingido.");
+      return;
+    }
     this.lupaSize += 50;
+  }
+
+  // Método para resetar o tamanho da lupa
+  resetarLupa() {
+    this.lupaSize = 250;
   }
 
   // Metodo para diminuir o tamanho da lupa
   diminuirLupa() {
-    if (this.lupaSize > 100) {
-      this.lupaSize -= 50;
+    if (this.lupaSize <= 250) {
+      this._toast.info("Tamanho mínimo da lupa atingido.");
+      return;
     }
+    this.lupaSize -= 50;
   }
 
   // Método para fazer download de imagem
