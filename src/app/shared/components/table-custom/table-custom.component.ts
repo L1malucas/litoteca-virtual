@@ -263,7 +263,6 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   onPageChange(event: any) {
     this.page = event.pageIndex + 1;
     this.pageSize = event.pageSize;
-    console.log(event);
     if (this.furoId != "") {
       this.carregarFurosPorFuroId();
     }
@@ -294,7 +293,6 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
 
   obterTotalImagens(idProjeto: string) {
     this._projetoService.getTotalImages(idProjeto).subscribe((res: any) => {
-      console.log("res", res);
       this.totalGeralImagens = res.totalGeralImagens;
       this.totalImagensProjeto = res.totalImagensProjeto;
     });
