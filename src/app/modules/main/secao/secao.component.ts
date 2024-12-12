@@ -128,9 +128,9 @@ export class SecaoComponent implements OnInit {
   // Exemplo: [Captura1, Captura2, Captura3] => [Captura1, Captura2, Captura3]
   ordenarCapturasPorSecao(capturas: CapturaModel[]) {
     // Remover secao 0 e retornar capturas ordenadas por secao
-    capturas = capturas.filter((captura) => {
-      return captura.secao !== 0;
-    });
+    // capturas = capturas.filter((captura) => {
+    //   return captura.secao !== 0;
+    // });
     return capturas.sort((a, b) => {
       return a.secao - b.secao;
     });

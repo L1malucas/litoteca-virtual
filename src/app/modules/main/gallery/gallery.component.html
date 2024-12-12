@@ -153,10 +153,10 @@
       </div>
       @for (imagem of caixasSecasImages; track $index) {
         <div class="section">
-          @if (imagem.secao !== 0) {
-            <h4>SEÇÃO {{ imagem.secao }}</h4>
-            <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
-          }
+          <!-- @if (imagem.secao !== 0) { -->
+          <h4>SEÇÃO {{ imagem.secao }}</h4>
+          <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
+          <!-- } -->
         </div>
       }
     </div>
@@ -167,10 +167,10 @@
       </div>
       @for (imagem of caixasMolhadasImages; track $index) {
         <div class="section">
-          @if (imagem.secao !== 0) {
-            <h4>SEÇÃO {{ imagem.secao }}</h4>
-            <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
-          }
+          <!-- @if (imagem.secao !== 0) { -->
+          <h4>SEÇÃO {{ imagem.secao }}</h4>
+          <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
+          <!-- } -->
         </div>
       }
     </div>
