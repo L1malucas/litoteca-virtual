@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
         if (userData) {
           this.user = {
             id: userData.id,
-            name: `${userData.nome} ${userData.sobrenome}`,
+            name: `${userData.nome} ${userData.sobrenome.split(" ").slice(-1)[0]}`,
             info: userData.profissao,
             email: userData.email,
             image: userData.fotoReferenceFtp
