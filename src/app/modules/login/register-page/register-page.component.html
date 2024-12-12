@@ -35,9 +35,10 @@
         <div class="form-row">
           <div class="form-group">
             <app-primary-input
-              label="Nome"
+              label="Nome Completo"
               type="text"
               formControlName="nome"
+              placeholder="Digite seu nome completo..."
               [maxLength]="50"
               [blockNumbers]="true"
               ErrorMessage="Nome é obrigatório"
@@ -45,23 +46,25 @@
             </app-primary-input>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <app-primary-input
               label="Sobrenome"
               type="text"
               formControlName="sobrenome"
+              placeholder="Digite seu sobrenome..."
               [maxLength]="50"
               [blockNumbers]="true"
               ErrorMessage="Sobrenome é obrigatório"
             >
             </app-primary-input>
-          </div>
+          </div> -->
 
           <div class="form-group">
             <app-primary-input
-              label="Usuário"
+              label="Nome de Usuário"
               type="text"
               formControlName="username"
+              placeholder="Escolha um nome de usuário (ex: usuario123)..."
               [maxLength]="50"
               ErrorMessage="Usuário é obrigatório"
             >
@@ -75,8 +78,8 @@
               label="Telefone"
               type="text"
               formControlName="telefone"
-              placeholder="(00) 00000-0000"
-              mask="(00) 00000-0000"
+              placeholder="Digite seu número de telefone (ex: +55 11 99999-9999)..."
+              mask="+00 (00) 00000-0000"
               [maxLength]="20"
               ErrorMessage="Telefone é obrigatório"
             >
@@ -87,6 +90,7 @@
             <app-primary-input
               label="Profissão/Ocupação"
               type="text"
+              placeholder="Informe sua profissão ou ocupação atual..."
               formControlName="profissao"
               [maxLength]="70"
               ErrorMessage="Profissão/Ocupação é obrigatório"
@@ -101,6 +105,7 @@
               label="País"
               type="text"
               formControlName="pais"
+              placeholder="Digite seu país..."
               [maxLength]="70"
               [blockNumbers]="true"
               ErrorMessage="País é obrigatório"
@@ -113,6 +118,7 @@
               label="Estado"
               type="text"
               formControlName="estado"
+              placeholder="Digite seu estado..."
               [maxLength]="50"
               [blockNumbers]="true"
               ErrorMessage="Estado é obrigatório"
@@ -125,6 +131,7 @@
               label="Cidade"
               type="text"
               formControlName="cidade"
+              placeholder="Digite sua cidade..."
               [maxLength]="50"
               [blockNumbers]="true"
               ErrorMessage="Cidade é obrigatório"
@@ -139,6 +146,7 @@
               label="Email"
               type="email"
               formControlName="email"
+              placeholder="Insira um e-mail válido (ex: usuario@dominio.com)..."
               [maxLength]="70"
               ErrorMessage="Email é obrigatório"
             >
@@ -149,6 +157,7 @@
             <app-primary-input
               label="Confirme seu email"
               type="email"
+              placeholder="Confirme seu email..."
               formControlName="confirmEmail"
               [maxLength]="70"
               ErrorMessage="Confirmação de email é obrigatório"

@@ -34,7 +34,6 @@ export class RegisterPageComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       nome: ["", Validators.required],
-      sobrenome: ["", Validators.required],
       username: ["", [Validators.required, Validators.maxLength(50)]],
       telefone: ["", Validators.required],
       profissao: ["", Validators.required],
@@ -53,7 +52,7 @@ export class RegisterPageComponent implements OnInit {
 
   onSubmit() {
     if (!this.form.valid) {
-      this.form.markAllAsTouched(); // marks
+      this.form.markAllAsTouched();
       this._toast.error("Erro", "Por favor, preencha os campos corretamente.");
       return;
     }
@@ -64,8 +63,8 @@ export class RegisterPageComponent implements OnInit {
     }
 
     const payload: UserRequest = {
-      nome: this.form.value.nome,
-      sobrenome: this.form.value.sobrenome,
+      nome: this.form.value.nome.split(" ")[0],
+      sobrenome: this.form.value.nome.split(" ").slice(1).join(" "),
       telefone: this.form.value.telefone,
       profissao: this.form.value.profissao,
       pais: this.form.value.pais,
@@ -178,8 +177,7 @@ export class RegisterPageComponent implements OnInit {
       this._userService.getById(this.routeId).subscribe({
         next: (user) => {
           this.form.patchValue({
-            nome: user.data[0].nome,
-            sobrenome: user.data[0].sobrenome,
+            nome: `${user.data[0].nome} ${user.data[0].sobrenome}`.trim(),
             username: user.data[0].username,
             telefone: user.data[0].telefone,
             profissao: user.data[0].profissao,
