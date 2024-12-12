@@ -40,4 +40,12 @@ export class ProjetoService extends BaseResourceService<ProjetoModel> {
       >(`${this.helpConfig.PROJETO_ENDPOINT}BuscarPorMunicipioId/${municipioId}`)
       .pipe(catchError(this.handleError));
   }
+
+  getTotalImages(id: string): Observable<ProjetoModel[]> {
+    return this._httpClient
+      .get<
+        ProjetoModel[]
+      >(`${this.helpConfig.PROJETO_ENDPOINT}TotalImagens/${id}`)
+      .pipe(catchError(this.handleError));
+  }
 }

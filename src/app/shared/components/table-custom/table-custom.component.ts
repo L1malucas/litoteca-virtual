@@ -53,6 +53,9 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
   project: ProjetoModel = new ProjetoModel();
   alvo: AlvoModel = new AlvoModel();
 
+  totalGeralImagens: number = 0;
+  totalImagensProjeto: number = 0;
+
   constructor(
     private route: Router,
     private _router: ActivatedRoute,
@@ -252,6 +255,8 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
             }),
           );
         });
+
+      this.obterTotalImagens(this.inputProject);
     }
   }
 
@@ -285,5 +290,13 @@ export class TableCustomComponent implements OnInit, AfterViewInit {
       `https://www.google.com/maps/search/?api=1&query=${municipio.nome}+${municipio.uf}`,
       "_blank",
     );
+  }
+
+  obterTotalImagens(idProjeto: string) {
+    this._projetoService.getTotalImages(idProjeto).subscribe((res: any) => {
+      console.log("res", res);
+      this.totalGeralImagens = res.totalGeralImagens;
+      this.totalImagensProjeto = res.totalImagensProjeto;
+    });
   }
 }

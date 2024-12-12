@@ -22,7 +22,6 @@ export class HeaderHomeComponent {
       if (user) {
         const parsedUser = JSON.parse(user);
         this.user = parsedUser;
-        console.log(parsedUser);
         return parsedUser;
       } else {
         console.warn("No user information found in localStorage.");
