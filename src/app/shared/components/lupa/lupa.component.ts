@@ -57,7 +57,7 @@ export class LupaComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     this.magnifyImg(
-      this.magnifiedImg.nativeElement,
+      this.magnifiedImg?.nativeElement,
       this.lupaDesfoque,
       this.lupaSize,
     );
@@ -107,7 +107,7 @@ export class LupaComponent implements OnInit, AfterViewInit {
     const magnifyElement = this.el.nativeElement.querySelector(".magnify");
 
     // Adiciona o evento de movimentação do mouse sobre a imagem
-    imageElement.addEventListener("mousemove", (event: MouseEvent) => {
+    imageElement?.addEventListener("mousemove", (event: MouseEvent) => {
       imageElement.style.cursor = "none";
       magnifyElement.style.display = "block";
 
@@ -185,7 +185,7 @@ export class LupaComponent implements OnInit, AfterViewInit {
     });
 
     // Esconde a lupa quando o mouse sai da imagem
-    imageElement.addEventListener("mouseleave", () => {
+    imageElement?.addEventListener("mouseleave", () => {
       magnifyElement.style.display = "none";
     });
   }
