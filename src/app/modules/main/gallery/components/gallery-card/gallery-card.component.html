@@ -1,0 +1,18 @@
+<div class="gallery">
+  <div class="info-title">
+    <h3>Galeria</h3>
+  </div>
+  <div class="gallery-images">
+    @for (imagem of combineImagens; track $index) {
+      <div class="image-container">
+        <mat-spinner *ngIf="!imagem.loaded" diameter="30"></mat-spinner>
+        <img
+          [src]="imagem.url"
+          alt="Galeria de imagens"
+          (load)="imagem.loaded = true"
+          [class.loaded]="imagem.loaded"
+        />
+      </div>
+    }
+  </div>
+</div>
