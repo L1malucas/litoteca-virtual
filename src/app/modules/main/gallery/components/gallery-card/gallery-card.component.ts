@@ -6,5 +6,5 @@ import { Component, Input } from "@angular/core";
   styleUrl: "./gallery-card.component.scss",
 })
 export class GalleryCardComponent {
-  @Input() combineImagens: any[] = [];
+  @Input() combineImagens?: any[] = [];
 }
