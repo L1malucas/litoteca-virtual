@@ -120,8 +120,8 @@ $font-size-large: 40px;
 
     .options {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: end;
       margin-bottom: 15px;
 
       label {
@@ -136,6 +136,10 @@ $font-size-large: 40px;
     }
 
     .forgot-password {
+      .icon {
+        margin-right: 5px;
+      }
+      display: flex;
       font-size: $font-size-small;
       color: var(--primary);
       cursor: pointer;

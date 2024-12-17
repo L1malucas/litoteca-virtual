@@ -26,7 +26,8 @@
             type="button"
             class="btn-input-file"
             (click)="triggerFileInput()"
-            matTooltip="Adicionar foto"
+            [matTooltip]="toolTipImageText"
+            [matTooltipPosition]="'below'"
           >
             <i class="material-icons">edit</i>
           </button>

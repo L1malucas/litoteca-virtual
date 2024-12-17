@@ -9,6 +9,8 @@
         </p>
       } @else {
         <p class="forgot-password" (click)="forgotPassword()">
+          <mat-icon class="icon">arrow_back</mat-icon>
+
           Voltar para o Login
           <!-- <b (click)="registerPage()">Cadastre-se aqui!</b> -->
         </p>
@@ -39,10 +41,6 @@
           />
         </div>
         <div class="options">
-          <label>
-            <input type="checkbox" />
-            Lembrar de mim
-          </label>
           <p class="forgot-password" (click)="forgotPassword()">
             Esqueceu sua senha?
           </p>
