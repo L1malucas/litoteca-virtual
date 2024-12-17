@@ -1,12 +1,20 @@
 <div class="lupa-container">
+  <!-- Loader exibido enquanto a imagem está carregando -->
   <div class="loader" *ngIf="loading">
     <mat-spinner class="spinner" diameter="50"></mat-spinner>
   </div>
+
+  <!-- Imagem ampliada -->
   <img
     #magnifiedImg
     class="magnified-img"
-    src="{{ imgSrc }}"
+    [src]="imgSrc"
+    (load)="onLoad()"
+    (error)="onError()"
+    [hidden]="loading"
     alt="SELECIONE UMA IMAGEM"
   />
+
+  <!-- Div para funcionalidade de lupa -->
   <div #magnify class="magnify"></div>
 </div>
