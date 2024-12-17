@@ -9,9 +9,12 @@ import { ComponentsModule } from "@components/components.module";
 import { CoreModule } from "src/app/core/core.module";
 import { GalleryComponent } from "./gallery.component";
 import { GalleryRoutingModule } from "./gallery.routing.module";
+import { GalleryCardComponent } from "./components/gallery-card/gallery-card.component";
+import { SectionsCardComponent } from "./components/sections-card/sections-card.component";
+import { SecaoModule } from "../secao/secao.module";
 
 @NgModule({
-  declarations: [GalleryComponent],
+  declarations: [GalleryComponent, GalleryCardComponent, SectionsCardComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -22,6 +25,7 @@ import { GalleryRoutingModule } from "./gallery.routing.module";
     NgxMaskDirective,
     NgxMaskPipe,
     GalleryRoutingModule,
+    SecaoModule,
   ],
   providers: [AuthGuard, provideNgxMask()],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
