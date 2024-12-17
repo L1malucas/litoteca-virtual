@@ -133,49 +133,14 @@
         </div>
       </form>
     </div>
-
-    <!-- <div class="gallery">
-      <div class="info-title">
-        <h3>Galeria</h3>
-      </div>
-      <div class="gallery-images">
-        @for (imagem of combineImagens; track $index) {
-          <img [src]="imagem.url" alt="Galeria de imagens" />
-        }
-      </div>
-    </div> -->
     <app-gallery-card [combineImagens]="combineImagens"></app-gallery-card>
   </section>
 
-  <div class="section-two">
-    <!-- <div class="box">
-      <div class="info-title">
-        <h3>Caixa Seca</h3>
-      </div>
-      @for (imagem of caixasSecasImages; track $index) {
-        <div class="section">
-          <h4>SEÇÃO {{ imagem.secao }}</h4>
-          <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
-        </div>
-      }
-    </div>
-
-    <div class="box">
-      <div class="info-title">
-        <h3>Caixa Molhada</h3>
-      </div>
-      @for (imagem of caixasMolhadasImages; track $index) {
-        <div class="section">
-          <h4>SEÇÃO {{ imagem.secao }}</h4>
-          <img [src]="imagem.url" (click)="navegarParSecao(furoId)" />
-        </div>
-      }
-    </div> -->
-
+  <section class="section-two">
     <app-sections-card
       [caixasMolhadasImages]="caixasMolhadasImages"
       [caixasSecasImages]="caixasSecasImages"
       [furoId]="furoId"
     ></app-sections-card>
-  </div>
+  </section>
 </div>
