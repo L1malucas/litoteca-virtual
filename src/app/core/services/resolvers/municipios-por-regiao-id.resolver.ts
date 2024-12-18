@@ -21,8 +21,7 @@ export class MunicipiosPorRegiaoIdResolver
       map((municipios) => {
         return municipios;
       }),
-      catchError((error) => {
-        console.error(error);
+      catchError(() => {
         return of([]);
       }),
     );

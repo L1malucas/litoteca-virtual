@@ -15,8 +15,7 @@ export class RegiaoResolver implements Resolve<Observable<RegiaoModel[]>> {
       map((regioes) => {
         return regioes;
       }),
-      catchError((error) => {
-        console.error(error);
+      catchError((_error) => {
         return of([]);
       }),
     );

@@ -99,7 +99,6 @@ export class RegisterPageComponent implements OnInit {
           this._router.navigate([rote]);
         },
         (error: any) => {
-          console.error("Erro:", error);
           this._toast.error(
             "Erro",
             error.error.details ? error.error.details : error.error[0],
@@ -157,7 +156,7 @@ export class RegisterPageComponent implements OnInit {
         this.routeId = res["id"] ? res["id"] : null;
       },
       error: (err) => {
-        console.error(err);
+        return new Error(err);
       },
     });
   }
@@ -200,7 +199,7 @@ export class RegisterPageComponent implements OnInit {
           }, 1);
         },
         error: (err) => {
-          console.error(err);
+          return new Error(err);
         },
       });
     } else {
