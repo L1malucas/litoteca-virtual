@@ -7,11 +7,28 @@ export interface GroupedBoxes {
   profundidadeFinal: string;
   capturas: {
     categoriaId: number;
-    secao: {
+    secoes: {
       id: string;
       secao: number;
       imageReference: string;
       miniatureReference: string;
     }[];
   }[];
+}
+
+export interface Captura {
+  categoriaId: number;
+  secao: {
+    id: string;
+    secao: number;
+    imageReference: string;
+    miniatureReference: string;
+  }[];
+}
+
+export interface Secao {
+  id: string;
+  secao: number;
+  imageReference: string;
+  miniatureReference: string;
 }

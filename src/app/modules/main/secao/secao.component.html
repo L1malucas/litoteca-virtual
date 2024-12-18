@@ -56,7 +56,7 @@
           </div>
           <div class="secao-meio-left-separadores">
             <div class="secao-meio-left-separadores-secao">
-              SEÇÃO {{ secaoAtual.secao }}
+              SEÇÃO {{ secaoAtual[0].secao }}
             </div>
             <div class="secao-meio-left-separadores-lista">
               <span>SEPARADOR</span>
@@ -126,10 +126,10 @@
           </div>
         </div>
         <div class="secao-meio-right">
-          @for (captura of caixa.capturas; track captura.id) {
+          @for (captura of capturaAtual[0].secoes; track captura.id) {
             <div
               class="secao-meio-right-imagem"
-              (click)="setSecaoAtual(captura)"
+              (click)="setSecaoAtual(captura.secao)"
             >
               <img
                 [src]="captura.miniatureReference"
@@ -137,7 +137,7 @@
                 height="62"
                 loading="lazy"
               />
-              @if (captura.id === secaoAtual.id) {
+              @if (captura.id === secaoAtual[0].id) {
                 <span class="you-here"
                   ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
                   aqui</span
@@ -179,14 +179,18 @@
     </div>
     <div class="secao-right">
       <div class="secao-right-bar">
-        <div class="secao-right-bar-info">SEÇÃO {{ secaoAtual.secao - 1 }}</div>
+        <div class="secao-right-bar-info">
+          SEÇÃO {{ secaoAtual[0].secao - 1 }}
+        </div>
         <div class="secao-right-bar-button" (click)="capturaAnterior()">
           <mat-icon>arrow_upward</mat-icon>
         </div>
         <div class="secao-right-bar-button" (click)="proximaCaptura()">
           <mat-icon>arrow_downward</mat-icon>
         </div>
-        <div class="secao-right-bar-info">SEÇÃO {{ secaoAtual.secao + 1 }}</div>
+        <div class="secao-right-bar-info">
+          SEÇÃO {{ secaoAtual[0].secao + 1 }}
+        </div>
         <div class="secao-right-bar-imprimir" (click)="downloadImage()">
           Exportar <mat-icon>print</mat-icon>
         </div>
@@ -238,8 +242,8 @@
           <app-lupa
             [lupaSize]="lupaSize"
             [imgSrc]="
-              secaoAtual.imageReference
-                ? secaoAtual.imageReference
+              secaoAtual[0].imageReference
+                ? secaoAtual[0].imageReference
                 : '../../../../assets/images/png/placeholder.png'
             "
             (mouseOverSeparator)="setSeparator($event)"

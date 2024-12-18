@@ -1,13 +1,13 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-} from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { HelpConfig } from "@config/help-config";
 import { CaixaModel } from "@models/caixa.model";
 import { CapturaModel } from "@models/captura.model";
-import { GroupedBoxes } from "src/app/core/interfaces/groupedBoxes.interface";
+import {
+  GroupedBoxes,
+  Captura,
+  Secao,
+} from "src/app/core/interfaces/groupedBoxes.interface";
 import { FuroService } from "@services/furo.service";
 import { DownloadService } from "@services/system/download.service";
 import { Toast } from "@services/system/toast.service";
@@ -57,9 +57,9 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     this.caixasPorFuro = this.ordenarCaixasPorNome(this.caixasPorFuro);
     this.caixasAgrupadas = this.groupBoxes(this.caixasPorFuro);
 
-    const categoria = this._route.snapshot.queryParams["categoria"];
-    const caixa = this._route.snapshot.queryParams["caixa"];
-    const secao = this._route.snapshot.queryParams["secao"];
+    const caixa: string = this._route.snapshot.queryParams["caixa"];
+    const categoria: number = this._route.snapshot.queryParams["categoria"];
+    const secao: number = this._route.snapshot.queryParams["secao"];
 
     this.setCaixaAtual(caixa);
     this.setCapturaAtual(categoria);
@@ -70,7 +70,7 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   // Exemplo: LitotecaMiniatures/b717d4aa-926d-4984-ae4c-0a8687cd8c10-MOLHADA-6.jpg
   // => https://cbpmged.renova.app.br/LitotecaMiniatures/b717d4aa-926d-4984-ae4c-0a8687cd8c10-MOLHADA-6.jpg
   getMiniatureUrl(miniatureReference: string) {
-    return `${this._helpConfig.FTP_URL}/${miniatureReference}`;
+    return `${this._helpConfig.FTP_URL}${miniatureReference}`;
   }
 
   // Método para ordenar caixas por nome
@@ -90,7 +90,7 @@ export class SecaoComponent implements OnInit, AfterViewInit {
 
   // Definir a caixa atual com base no nome
   setCaixaAtual(nome: string) {
-    this.caixaAtual = this.caixasAgrupadas.find((caixa: any) => {
+    this.caixaAtual = this.caixasAgrupadas.find((caixa: GroupedBoxes) => {
       return caixa.nome === nome;
     });
   }
@@ -98,15 +98,15 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   // Método para definir a caixa molhada ou seca com base na categoriaId
   // Exemplo: 1 => Seca, 2 => Molhada
   setCapturaAtual(categoria: number) {
-    this.capturaAtual = this.caixaAtual.capturas.find((captura: any) => {
-      return captura.categoriaId === categoria;
-    });
+    this.capturaAtual = this.caixaAtual.capturas.filter(
+      (captura: Captura) => {return captura.categoriaId === Number(categoria)},
+    );
   }
 
   // Definir captura atual com base na categoriaId
   setSecaoAtual(secao: number) {
-    this.secaoAtual = this.capturaAtual.secao.find((captura: any) => {
-      return captura.secao === secao;
+    this.secaoAtual = this.capturaAtual[0].secoes.filter((item: Secao) => {
+      return item.secao === Number(secao);
     });
   }
 
@@ -122,6 +122,8 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     });
     if (index < this.caixasAgrupadas.length - 1) {
       this.caixaAtual = this.caixasAgrupadas[index + 1];
+      this.setCapturaAtual(1);
+      this.setSecaoAtual(1);
     } else {
       this._toast.info("Última caixa.");
     }
@@ -134,16 +136,41 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     });
     if (index > 0) {
       this.caixaAtual = this.caixasAgrupadas[index - 1];
+      this.setCapturaAtual(1);
+      this.setSecaoAtual(1);
     } else {
       this._toast.info("Primeira caixa.");
     }
   }
 
-  // Navegar para a captura anterior
-  capturaAnterior() {}
+  // Navegar para a seção anterior baseada no número da seção
+  capturaAnterior() {
+    const index = this.capturaAtual[0].secoes.find((secao: any) => {
+      return secao.secao === this.secaoAtual[0].secao;
+    }).secao;
+    console.log(index);
+    if (index > 0) {
+      this.secaoAtual = this.capturaAtual[0].secoes.filter((secao: any) => {
+        return secao.secao === index - 1;
+      });
+    } else {
+      this._toast.info("Primeira seção.");
+    }
+  }
 
-  // Navegar para a próxima captura
-  proximaCaptura() {}
+  // Navegar para a próxima seção baseada no número da seção
+  proximaCaptura() {
+    const index = this.capturaAtual[0].secoes.find((secao: any) => {
+      return secao.secao === this.secaoAtual[0].secao;
+    }).secao;
+    if (index < this.capturaAtual[0].secoes.length - 1) {
+      this.secaoAtual = this.capturaAtual[0].secoes.filter((secao: any) => {
+        return secao.secao === index + 1;
+      });
+    } else {
+      this._toast.info("Última seção.");
+    }
+  }
 
   // Metodo para aumentar o tamanho da lupa
   aumentarLupa() {
@@ -169,7 +196,9 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   }
 
   // Método para fazer download de imagem
-  downloadImage() {}
+  downloadImage() {
+    this._downloadService.downloadImage(this.secaoAtual[0].imageReference);
+  }
 
   // Método para retornar à página de consulta de projeto
   goConsultaProjeto() {
@@ -181,7 +210,9 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     const grouped: GroupedBoxes[] = [];
 
     data.forEach((item) => {
-      let group = grouped.find((g) => {return g.nome === item.nome});
+      let group = grouped.find((g) => {
+        return g.nome === item.nome;
+      });
       if (!group) {
         group = {
           id: item.id,
@@ -196,7 +227,7 @@ export class SecaoComponent implements OnInit, AfterViewInit {
       }
       group.capturas.push({
         categoriaId: item.categoriaId,
-        secao: item.capturas,
+        secoes: item.capturas,
       });
       // Ordenar capturas por categoriaId
       group.capturas = group.capturas.sort((a, b) => {
@@ -204,8 +235,18 @@ export class SecaoComponent implements OnInit, AfterViewInit {
       });
       // Ordenar capturas por secao
       group.capturas.forEach((captura) => {
-        captura.secao = captura.secao.sort((a, b) => {
+        captura.secoes = captura.secoes.sort((a, b) => {
           return a.secao - b.secao;
+        });
+      });
+
+      // Alterar url das miniaturas
+      group.capturas.forEach((captura) => {
+        captura.secoes.forEach((secao) => {
+          secao.imageReference = this.getMiniatureUrl(secao.imageReference);
+          secao.miniatureReference = this.getMiniatureUrl(
+            secao.miniatureReference,
+          );
         });
       });
     });
