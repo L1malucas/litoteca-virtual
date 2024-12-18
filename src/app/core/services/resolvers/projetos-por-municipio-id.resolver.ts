@@ -18,8 +18,7 @@ export class ProjetosPorMunicipioIdResolver
       map((projetos) => {
         return projetos;
       }),
-      catchError((error) => {
-        console.error(error);
+      catchError(() => {
         return of([]);
       }),
     );

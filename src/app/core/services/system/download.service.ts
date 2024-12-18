@@ -20,7 +20,7 @@ export class DownloadService {
         URL.revokeObjectURL(objectUrl);
       },
       (error) => {
-        console.error("Erro ao baixar a imagem:", error);
+        return new Error(error);
       },
     );
   }

@@ -6,6 +6,6 @@ platformBrowserDynamic()
   .bootstrapModule(AppModule, {
     ngZoneEventCoalescing: true,
   })
-  .catch((err) => {
-    return console.error(err);
+  .catch((_err) => {
+    return;
   });

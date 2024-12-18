@@ -18,9 +18,8 @@ export class TargetService extends BaseResourceService<AlvoModel> {
   }
 
   private handleError(error: any): Observable<never> {
-    console.error("An error occurred", error);
     return throwError(() => {
-      return new Error("Something bad happened; please try again later.");
+      return new Error(error);
     });
   }
 

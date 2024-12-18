@@ -175,8 +175,6 @@ export class GalleryComponent {
         const categoriaId = categoriaIds[index];
         this.buscarCaixaPorId(boxId, categoriaId);
       });
-    } else {
-      console.warn(`Nenhuma caixa encontrada para o nome: ${currentBoxName}`);
     }
   }
 
@@ -226,10 +224,6 @@ export class GalleryComponent {
                   return (b.secao ?? 0) - (a.secao ?? 0);
                 })
             : [];
-        } else {
-          console.warn(
-            `Categoria desconhecida para a caixa com ID ${id}: ${categoriaId}`,
-          );
         }
 
         this.combineImagens = [
@@ -238,7 +232,7 @@ export class GalleryComponent {
         ];
       },
       (err) => {
-        console.error(`Erro ao buscar detalhes da caixa com ID ${id}:`, err);
+        return new Error(`Erro ao buscar detalhes da caixa com ID ${id}:`, err);
       },
     );
   }

@@ -43,12 +43,10 @@ export class HeaderHomeComponent {
           const decodedToken: any = jwtDecode(this.token.access_token);
           this.emailUser = decodedToken.email;
         }
-      } catch (error) {
-        console.error("Erro ao analisar o token do localStorage:", error);
+      } catch {
         this.token = null;
       }
     } else {
-      console.warn("Token não encontrado no localStorage.");
       this.token = null;
     }
   }

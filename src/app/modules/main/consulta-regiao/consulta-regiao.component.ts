@@ -88,9 +88,9 @@ export class ConsultaRegiaoComponent implements OnInit {
       return municipioIdsComProjetos.has(String(municipio.id));
     });
 
-    if (this.municipiosFiltrados.length === 0) {
-      console.warn("Nenhum município com projeto encontrado para esta região.");
-    }
+    //if (this.municipiosFiltrados.length === 0) {
+    // console.warn("Nenhum município com projeto encontrado para esta região.");
+    //}
 
     return this.municipiosFiltrados;
   }
