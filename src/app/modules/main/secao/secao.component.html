@@ -23,14 +23,14 @@
             <div
               class="secao-meio-left-tipo-seca"
               [ngClass]="{ 'caixa-ativo': caixaAtual.categoriaId === 1 }"
-              (click)="setCaixaMolhadaOuSeca(1)"
+              (click)="setCapturaAtual(1)"
             >
               SECA
             </div>
             <div
               class="secao-meio-left-tipo-molhada"
               [ngClass]="{ 'caixa-ativo': caixaAtual.categoriaId === 2 }"
-              (click)="setCaixaMolhadaOuSeca(2)"
+              (click)="setCapturaAtual(2)"
             >
               MOLHADA
             </div>

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { RegisterPageComponent } from "@modules/login/register-page/register-page.component";
+import { CaixaPorFuroResolver } from "@services/resolvers/caixa-por-furo.resolver";
 import { AuthGuard } from "src/app/core/guards/auth-guard";
 
 const MainRoutes: Routes = [
@@ -59,6 +60,9 @@ const MainRoutes: Routes = [
       return import("./secao/secao.module").then((m) => {
         return m.SecaoModule;
       });
+    },
+    resolve: {
+      caixas: CaixaPorFuroResolver,
     },
     canActivate: [AuthGuard],
   },

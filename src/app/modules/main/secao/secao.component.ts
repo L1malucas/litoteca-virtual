@@ -1,10 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+} from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { HelpConfig } from "@config/help-config";
 import { CaixaModel } from "@models/caixa.model";
 import { CapturaModel } from "@models/captura.model";
 import { GroupedBoxes } from "src/app/core/interfaces/groupedBoxes.interface";
-import { CaixaService } from "@services/caixa.service";
 import { FuroService } from "@services/furo.service";
 import { DownloadService } from "@services/system/download.service";
 import { Toast } from "@services/system/toast.service";
@@ -14,35 +17,35 @@ import { Toast } from "@services/system/toast.service";
   templateUrl: "./secao.component.html",
   styleUrls: ["./secao.component.scss"],
 })
-export class SecaoComponent implements OnInit {
+export class SecaoComponent implements OnInit, AfterViewInit {
   caixasAgrupadas: GroupedBoxes[] = []; // Caixas agrupadas por nome
+  caixasPorFuro: any;
   caixa: any;
   caixaAtual: any;
+  capturaAtual: any;
   secaoAtual: any;
   separadorAtual: number = 0;
   furoInfo: any = {};
   lupaSize: number = 250;
 
   constructor(
-    private _router: Router,
     private _route: ActivatedRoute,
     private _downloadService: DownloadService,
-    private _caixaService: CaixaService,
     private _furoService: FuroService,
     private _toast: Toast,
     private _helpConfig: HelpConfig,
   ) {}
 
   ngOnInit() {
+    this.getFuroInfo();
     this.getEntityByRoute();
   }
 
-  ngAfterViewInit() {
-    console.log(this.caixaAtual);
-  }
+  ngAfterViewInit() {}
 
   // Método para buscar informações do furo
-  getFuroInfo(furo: string) {
+  getFuroInfo() {
+    const furo = this._route.snapshot.queryParams["furo"];
     this._furoService.getFurosWithParams({ id: furo }).subscribe((furo) => {
       this.furoInfo = furo.data[0];
     });
@@ -50,28 +53,17 @@ export class SecaoComponent implements OnInit {
 
   // Método para buscar caixas por furo
   getEntityByRoute() {
-    const furo = this._route.snapshot.queryParams["furo"];
+    this.caixasPorFuro = this._route.snapshot.data["caixas"];
+    this.caixasPorFuro = this.ordenarCaixasPorNome(this.caixasPorFuro);
+    this.caixasAgrupadas = this.groupBoxes(this.caixasPorFuro);
+
+    const categoria = this._route.snapshot.queryParams["categoria"];
     const caixa = this._route.snapshot.queryParams["caixa"];
     const secao = this._route.snapshot.queryParams["secao"];
 
-    if (furo) {
-      this.getFuroInfo(furo);
-    }
-
-    this._caixaService.buscarCaixaPorFuro(furo).subscribe((data) => {
-      // ordenar caixas por nome
-      data = this.ordenarCaixasPorNome(data);
-
-      // receber as caixas agrupadas por nome
-      const caixasAgrupadasObj = this.groupBoxes(data);
-      this.caixasAgrupadas = caixasAgrupadasObj;
-
-      // Exibir a caixa selecionada se houver
-      if (caixa) {
-        this.setCaixaAtual(caixa);
-        this.setSecaoAtual(secao);
-      }
-    });
+    this.setCaixaAtual(caixa);
+    this.setCapturaAtual(categoria);
+    this.setSecaoAtual(secao);
   }
 
   // Método para modificar url das miniaturas
@@ -96,29 +88,26 @@ export class SecaoComponent implements OnInit {
     });
   }
 
-  // Definir a caixa atual com base no id
-  setCaixaAtual(index: string) {
-    this.caixasAgrupadas.forEach((caixa) => {
-      const seca = caixa.seca.find((captura) => {return captura.id === index});
-      const molhada = caixa.molhada.find((captura) => {return captura.id === index});
-
-      if (seca) {
-        this.caixa = seca;
-        this.caixaAtual = seca;
-      } else if (molhada) {
-        this.caixa = molhada;
-        this.caixaAtual = molhada;
-      }
+  // Definir a caixa atual com base no nome
+  setCaixaAtual(nome: string) {
+    this.caixaAtual = this.caixasAgrupadas.find((caixa: any) => {
+      return caixa.nome === nome;
     });
   }
 
   // Método para definir a caixa molhada ou seca com base na categoriaId
-  setCaixaMolhadaOuSeca(categoriaId: number) {
-    if (categoriaId === 1) {
-      this.caixaAtual = this.caixa.seca;
-    } else if (categoriaId === 2) {
-      this.caixaAtual = this.caixa.molhada;
-    }
+  // Exemplo: 1 => Seca, 2 => Molhada
+  setCapturaAtual(categoria: number) {
+    this.capturaAtual = this.caixaAtual.capturas.find((captura: any) => {
+      return captura.categoriaId === categoria;
+    });
+  }
+
+  // Definir captura atual com base na categoriaId
+  setSecaoAtual(secao: number) {
+    this.secaoAtual = this.capturaAtual.secao.find((captura: any) => {
+      return captura.secao === secao;
+    });
   }
 
   // Método para definir o separador atual
@@ -127,17 +116,26 @@ export class SecaoComponent implements OnInit {
   }
 
   // Navegar para a próxima caixa
-  proximaCaixa() {}
+  proximaCaixa() {
+    const index = this.caixasAgrupadas.findIndex((caixa: any) => {
+      return caixa.nome === this.caixaAtual.nome;
+    });
+    if (index < this.caixasAgrupadas.length - 1) {
+      this.caixaAtual = this.caixasAgrupadas[index + 1];
+    } else {
+      this._toast.info("Última caixa.");
+    }
+  }
 
   // Navegar para a caixa anterior
-  caixaAnterior() {}
-
-  // Definir captura selecionada, a primeira captura já deve vir selecionada
-  setSecaoAtual(index: any) {
-    if (index) {
-      this.secaoAtual = this.caixa.capturas.find(
-        (captura: any) => {return captura.id === index},
-      );
+  caixaAnterior() {
+    const index = this.caixasAgrupadas.findIndex((caixa: any) => {
+      return caixa.nome === this.caixaAtual.nome;
+    });
+    if (index > 0) {
+      this.caixaAtual = this.caixasAgrupadas[index - 1];
+    } else {
+      this._toast.info("Primeira caixa.");
     }
   }
 
@@ -179,54 +177,39 @@ export class SecaoComponent implements OnInit {
   }
 
   // Método para agrupar caixas por nome e separar por seca e molhada segundo a interface GroupedBoxes
-  groupBoxes(caixas: CaixaModel[]): GroupedBoxes[] {
-    const groupedBoxesMap = new Map<string, GroupedBoxes>();
+  groupBoxes(data: any[]): GroupedBoxes[] {
+    const grouped: GroupedBoxes[] = [];
 
-    caixas.forEach((caixa) => {
-      // Inicializa o grupo para o nome da caixa, se necessário
-      if (!groupedBoxesMap.has(caixa.nome)) {
-        groupedBoxesMap.set(caixa.nome, {
-          seca: [],
-          molhada: [],
-        });
-      }
-
-      const currentGroup = groupedBoxesMap.get(caixa.nome)!;
-
-      // Determina o tipo da caixa (seca ou molhada) e adiciona as capturas
-      const targetArray =
-        caixa.categoriaId === 1 ? currentGroup.seca : currentGroup.molhada;
-
-      let existingEntry = targetArray.find((entry) => {return entry.id === caixa.id});
-
-      if (!existingEntry) {
-        existingEntry = {
-          id: caixa.id,
-          categoriaId: caixa.categoriaId,
-          nome: caixa.nome,
-          estante: caixa.estante,
-          prateleira: caixa.prateleira,
-          profundidadeInicial: caixa.profundidadeInicial,
-          profundidadeFinal: caixa.profundidadeFinal,
+    data.forEach((item) => {
+      let group = grouped.find((g) => {return g.nome === item.nome});
+      if (!group) {
+        group = {
+          id: item.id,
+          nome: item.nome,
+          estante: item.estante,
+          prateleira: item.prateleira,
+          profundidadeInicial: item.profundidadeInicial,
+          profundidadeFinal: item.profundidadeFinal,
           capturas: [],
         };
-        targetArray.push(existingEntry);
+        grouped.push(group);
       }
-
-      // Adiciona todas as capturas ao respectivo grupo
-      existingEntry.capturas.push(
-        ...caixa.capturas.map((captura) => {return {
-          id: captura.id,
-          secao: captura.secao,
-          imageReference: this.getMiniatureUrl(captura.imageReference),
-          miniatureReference: this.getMiniatureUrl(captura.miniatureReference),
-        }}),
-      );
-      // Ordena as capturas pela propriedade `secao`
-      existingEntry.capturas.sort((a, b) => {return b.secao - a.secao});
+      group.capturas.push({
+        categoriaId: item.categoriaId,
+        secao: item.capturas,
+      });
+      // Ordenar capturas por categoriaId
+      group.capturas = group.capturas.sort((a, b) => {
+        return a.categoriaId - b.categoriaId;
+      });
+      // Ordenar capturas por secao
+      group.capturas.forEach((captura) => {
+        captura.secao = captura.secao.sort((a, b) => {
+          return a.secao - b.secao;
+        });
+      });
     });
 
-    // Converte o mapa em um array de GroupedBoxes
-    return Array.from(groupedBoxesMap.values());
+    return grouped;
   }
 }
