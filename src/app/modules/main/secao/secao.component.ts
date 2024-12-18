@@ -98,9 +98,9 @@ export class SecaoComponent implements OnInit, AfterViewInit {
   // Método para definir a caixa molhada ou seca com base na categoriaId
   // Exemplo: 1 => Seca, 2 => Molhada
   setCapturaAtual(categoria: number) {
-    this.capturaAtual = this.caixaAtual.capturas.filter(
-      (captura: Captura) => {return captura.categoriaId === Number(categoria)},
-    );
+    this.capturaAtual = this.caixaAtual.capturas.filter((captura: Captura) => {
+      return captura.categoriaId === Number(categoria);
+    });
   }
 
   // Definir captura atual com base na categoriaId
@@ -148,7 +148,6 @@ export class SecaoComponent implements OnInit, AfterViewInit {
     const index = this.capturaAtual[0].secoes.find((secao: any) => {
       return secao.secao === this.secaoAtual[0].secao;
     }).secao;
-    console.log(index);
     if (index > 0) {
       this.secaoAtual = this.capturaAtual[0].secoes.filter((secao: any) => {
         return secao.secao === index - 1;

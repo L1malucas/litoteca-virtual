@@ -193,8 +193,6 @@ export class LupaComponent implements OnInit, AfterViewInit {
         this.lupaDesfoque,
         this.lupaSize,
       );
-    } else {
-      console.error("Elemento da imagem não encontrado");
     }
   }
 

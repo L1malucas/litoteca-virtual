@@ -19,8 +19,7 @@ export class CaixaPorFuroResolver implements Resolve<Observable<CaixaModel[]>> {
       map((caixa) => {
         return caixa;
       }),
-      catchError((error) => {
-        console.error(error);
+      catchError(() => {
         return of([]);
       }),
     );
