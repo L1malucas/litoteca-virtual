@@ -98,34 +98,42 @@
   color: #4e0101;
   padding: 10px;
   margin-top: 15px;
+
   .search-filter {
     display: flex;
     align-items: start;
     gap: 20px;
+
     .filter-option {
       display: flex;
       flex-direction: column;
+
       &:first-child {
         width: 14%;
       }
+
       .label {
         width: 100%;
         font-size: 24px;
         text-align: left;
         text-transform: uppercase;
       }
+
       &.actions {
         width: 60%;
+
         label {
           text-align: center;
         }
       }
+
       .btn-options {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0;
         gap: 5px;
+
         button {
           width: 40px;
           height: 40px;
@@ -136,20 +144,24 @@
           border-radius: 14px;
           font-weight: 700;
           cursor: pointer;
+
           &.active {
             background-color: #4e0101;
           }
         }
       }
+
       .input-field {
         position: relative;
         display: flex;
         align-items: center;
         margin-top: 10px;
         padding: 0;
+
         input {
           padding: 0 24px;
         }
+
         button {
           height: 40px;
           border-radius: 0 10px 10px 0;
@@ -157,11 +169,13 @@
           background-color: white;
           border: none;
           right: 3px;
+
           &:disabled {
             background-color: #cccccc;
           }
         }
       }
+
       select,
       input {
         width: 100%;
@@ -170,6 +184,7 @@
         background-color: white;
         border: 0 none;
         padding: 0;
+
         &:disabled {
           background-color: #cccccc;
         }
@@ -215,24 +230,28 @@
   flex-direction: row;
   padding: 8px;
   background-color: white;
-  border-bottom: 5px solid #f2f2f2;
+  // border-bottom: 5px solid #f2f2f2;
   color: #4e0101;
   font-weight: 700;
   font-size: 20px;
+
   &.full {
     height: 90%;
     display: flex;
     align-items: center;
     justify-content: center;
+
     h3 {
       width: 100%;
       font-size: 26px;
       font-weight: 700;
     }
   }
+
   .pavilhao {
     width: 50%;
   }
+
   .actions {
     width: 65%;
   }
@@ -275,4 +294,33 @@ a {
 
 ::ng-deep .mdc-text-field--disabled {
   background-color: #cccccc !important;
+}
+
+.foot-table {
+  display: flex;
+  margin-bottom: 50px;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.images-info {
+  padding: 5px;
+  display: flex;
+  gap: 20px;
+  border: none;
+  background-color: var(--primary);
+  border-radius: 15px;
+  width: 350px;
+  height: 60px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  opacity: 0.4;
+
+  p {
+    margin: 0;
+  }
 }

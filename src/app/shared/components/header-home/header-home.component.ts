@@ -56,7 +56,7 @@ export class HeaderHomeComponent {
   getUserInfo(email: string) {
     this._userService.getUserByEmail(email).subscribe((user: any) => {
       this.user.id = user.data[0].id;
-      this.user.name = user.data[0].nome + " " + user.data[0].sobrenome;
+      this.user.name = `${user.data[0].nome} ${user.data[0].sobrenome.split(" ").slice(-1)[0]}`;
       this.user.info = user.data[0].profissao;
       this.user.email = user.data[0].email;
       this.user.image =

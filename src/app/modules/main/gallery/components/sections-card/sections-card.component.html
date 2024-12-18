@@ -1,0 +1,41 @@
+<div class="box">
+  <div class="info-title">
+    <h3>Caixa Seca</h3>
+  </div>
+  @for (imagem of caixasSecasImages; track $index) {
+    <div class="section">
+      <h4>SEÇÃO {{ imagem.secao }}</h4>
+      <div class="image-container">
+        <mat-spinner *ngIf="!imagem.loaded" diameter="30"></mat-spinner>
+
+        <img
+          [src]="imagem.url"
+          (load)="imagem.loaded = true"
+          (click)="navegarParSecao(furoId)"
+          [class.loaded]="imagem.loaded"
+        />
+      </div>
+    </div>
+  }
+</div>
+
+<div class="box">
+  <div class="info-title">
+    <h3>Caixa Molhada</h3>
+  </div>
+  @for (imagem of caixasMolhadasImages; track $index) {
+    <div class="section">
+      <h4>SEÇÃO {{ imagem.secao }}</h4>
+      <div class="image-container">
+        <mat-spinner *ngIf="!imagem.loaded" diameter="30"></mat-spinner>
+
+        <img
+          [src]="imagem.url"
+          (load)="imagem.loaded = true"
+          (click)="navegarParSecao(furoId)"
+          [class.loaded]="imagem.loaded"
+        />
+      </div>
+    </div>
+  }
+</div>

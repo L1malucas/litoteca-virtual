@@ -20,6 +20,7 @@ export class RegisterPageComponent implements OnInit {
   nameButton!: string;
   labelBack!: string;
   namePage!: string;
+  toolTipImageText: string = "Adicionar foto";
 
   private _router = inject(Router);
   private _toast = inject(Toast);
@@ -34,7 +35,6 @@ export class RegisterPageComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       nome: ["", Validators.required],
-      sobrenome: ["", Validators.required],
       username: ["", [Validators.required, Validators.maxLength(50)]],
       telefone: ["", Validators.required],
       profissao: ["", Validators.required],
@@ -53,7 +53,7 @@ export class RegisterPageComponent implements OnInit {
 
   onSubmit() {
     if (!this.form.valid) {
-      this.form.markAllAsTouched(); // marks
+      this.form.markAllAsTouched();
       this._toast.error("Erro", "Por favor, preencha os campos corretamente.");
       return;
     }
@@ -64,8 +64,8 @@ export class RegisterPageComponent implements OnInit {
     }
 
     const payload: UserRequest = {
-      nome: this.form.value.nome,
-      sobrenome: this.form.value.sobrenome,
+      nome: this.form.value.nome.split(" ")[0],
+      sobrenome: this.form.value.nome.split(" ").slice(1).join(" "),
       telefone: this.form.value.telefone,
       profissao: this.form.value.profissao,
       pais: this.form.value.pais,
@@ -117,6 +117,7 @@ export class RegisterPageComponent implements OnInit {
 
       reader.onload = (e: any) => {
         this.image = e.target.result;
+        this.toolTipImageText = "Alterar foto";
       };
 
       reader.readAsDataURL(file);
@@ -178,8 +179,7 @@ export class RegisterPageComponent implements OnInit {
       this._userService.getById(this.routeId).subscribe({
         next: (user) => {
           this.form.patchValue({
-            nome: user.data[0].nome,
-            sobrenome: user.data[0].sobrenome,
+            nome: `${user.data[0].nome} ${user.data[0].sobrenome}`.trim(),
             username: user.data[0].username,
             telefone: user.data[0].telefone,
             profissao: user.data[0].profissao,
@@ -190,10 +190,13 @@ export class RegisterPageComponent implements OnInit {
             confirmEmail: user.data[0].email,
           });
           setTimeout(() => {
-            this.image =
-              user.data[0].fotoReferenceFtp != ""
-                ? `${this._helpConfig.FTP_URL}${user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`
-                : "./assets/img/image_placeholder.jpg";
+            if (user.data[0].fotoReferenceFtp != "") {
+              this.image = `${this._helpConfig.FTP_URL}${user.data[0].fotoReferenceFtp.replace(/\\/g, "/")}`;
+              this.toolTipImageText = "Alterar foto";
+            } else {
+              this.image = "./assets/img/image_placeholder.jpg";
+              this.toolTipImageText = "Adicionar foto";
+            }
           }, 1);
         },
         error: (err) => {
