@@ -1,9 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { HelpConfig } from "@config/help-config";
 import { CaixaModel } from "@models/caixa.model";
 import { CapturaModel } from "@models/captura.model";
-import { CaixaService } from "@services/caixa.service";
+import {
+  GroupedBoxes,
+  Captura,
+  Secao,
+} from "src/app/core/interfaces/groupedBoxes.interface";
 import { FuroService } from "@services/furo.service";
 import { DownloadService } from "@services/system/download.service";
 import { Toast } from "@services/system/toast.service";
@@ -13,108 +17,60 @@ import { Toast } from "@services/system/toast.service";
   templateUrl: "./secao.component.html",
   styleUrls: ["./secao.component.scss"],
 })
-export class SecaoComponent implements OnInit {
-  caixasAtuais: CaixaModel[] = []; // Caixas exibidas no momento
-  caixa: CaixaModel = new CaixaModel();
-  caixaAtual: number = 0; // Índice da caixa atual exibida
-  caixasAgrupadas: CaixaModel[][] = []; // Caixas agrupadas por nome
-  caixasSecasImages: any[] = [];
-  caixasMolhadasImages: any[] = [];
-  capturas: CapturaModel[] = [];
-  capturaAtual: CapturaModel = new CapturaModel();
+export class SecaoComponent implements OnInit, AfterViewInit {
+  caixasAgrupadas: GroupedBoxes[] = []; // Caixas agrupadas por nome
+  caixasPorFuro: any;
+  caixa: any;
+  caixaAtual: any;
+  capturaAtual: any;
+  secaoAtual: any;
   separadorAtual: number = 0;
   furoInfo: any = {};
   lupaSize: number = 250;
 
   constructor(
-    private _router: Router,
     private _route: ActivatedRoute,
     private _downloadService: DownloadService,
-    private _caixaService: CaixaService,
     private _furoService: FuroService,
     private _toast: Toast,
     private _helpConfig: HelpConfig,
   ) {}
 
   ngOnInit() {
+    this.getFuroInfo();
     this.getEntityByRoute();
+  }
+
+  ngAfterViewInit() {}
+
+  // Método para buscar informações do furo
+  getFuroInfo() {
+    const furo = this._route.snapshot.queryParams["furo"];
+    this._furoService.getFurosWithParams({ id: furo }).subscribe((furo) => {
+      this.furoInfo = furo.data[0];
+    });
   }
 
   // Método para buscar caixas por furo
   getEntityByRoute() {
-    const furo = this._route.snapshot.queryParams["furo"];
+    this.caixasPorFuro = this._route.snapshot.data["caixas"];
+    this.caixasPorFuro = this.ordenarCaixasPorNome(this.caixasPorFuro);
+    this.caixasAgrupadas = this.groupBoxes(this.caixasPorFuro);
 
-    this._furoService.getFurosWithParams({ id: furo }).subscribe((furo) => {
-      this.furoInfo = furo.data[0];
-    });
-    this._caixaService.buscarCaixaPorFuro(furo).subscribe((caixas) => {
-      // ordenar caixas por nome
-      caixas = this.ordenarCaixasPorNome(caixas);
+    const caixa: string = this._route.snapshot.queryParams["caixa"];
+    const categoria: number = this._route.snapshot.queryParams["categoria"];
+    const secao: number = this._route.snapshot.queryParams["secao"];
 
-      // receber as caixas agrupadas por nome
-      const caixasAgrupadasObj = this.juntarCaixasPorNome(caixas);
-      this.caixasAgrupadas = Object.values(caixasAgrupadasObj).map((group) => {
-        return [...group.secas, ...group.molhadas];
-      });
-
-      // Exibir a primeira caixa se houver
-      if (this.caixasAgrupadas.length > 0) {
-        this.setCaixaAtual(0);
-      }
-    });
-  }
-
-  // Método para juntar caixas por nome e separar por seca e molhada
-  juntarCaixasPorNome(caixas: CaixaModel[]) {
-    const caixasAgrupadas: {
-      [key: string]: { secas: CaixaModel[]; molhadas: CaixaModel[] };
-    } = {};
-
-    caixas.forEach((caixa) => {
-      if (!caixasAgrupadas[caixa.nome]) {
-        caixasAgrupadas[caixa.nome] = { secas: [], molhadas: [] };
-      }
-
-      if (caixa.categoriaId === 1) {
-        this.caixasSecasImages = Array.isArray(caixa.capturas)
-          ? caixa.capturas
-          : [];
-        caixasAgrupadas[caixa.nome].secas.push(caixa);
-      } else if (caixa.categoriaId === 2) {
-        this.caixasMolhadasImages = Array.isArray(caixa.capturas)
-          ? caixa.capturas
-          : [];
-        caixasAgrupadas[caixa.nome].molhadas.push(caixa);
-      }
-
-      caixa.capturas = this.ordenarCapturasPorSecao(caixa.capturas);
-      caixa.capturas.forEach((captura) => {
-        captura.miniatureReference = this.getMiniatureUrl(
-          captura.miniatureReference,
-        );
-        captura.imageReference = this.getMiniatureUrl(captura.imageReference);
-      });
-    });
-
-    const sortedKeys = Object.keys(caixasAgrupadas).sort((a, b) => {
-      return a.localeCompare(b);
-    });
-    const sortedGroupedBoxes = sortedKeys.reduce(
-      (acc, key) => {
-        acc[key] = caixasAgrupadas[key];
-        return acc;
-      },
-      {} as { [key: string]: { secas: CaixaModel[]; molhadas: CaixaModel[] } },
-    );
-
-    return sortedGroupedBoxes;
+    this.setCaixaAtual(caixa);
+    this.setCapturaAtual(categoria);
+    this.setSecaoAtual(secao);
   }
 
   // Método para modificar url das miniaturas
   // Exemplo: LitotecaMiniatures/b717d4aa-926d-4984-ae4c-0a8687cd8c10-MOLHADA-6.jpg
   // => https://cbpmged.renova.app.br/LitotecaMiniatures/b717d4aa-926d-4984-ae4c-0a8687cd8c10-MOLHADA-6.jpg
   getMiniatureUrl(miniatureReference: string) {
-    return `${this._helpConfig.FTP_URL}/${miniatureReference}`;
+    return `${this._helpConfig.FTP_URL}${miniatureReference}`;
   }
 
   // Método para ordenar caixas por nome
@@ -127,33 +83,31 @@ export class SecaoComponent implements OnInit {
   // Método para ordenar capturas por secao
   // Exemplo: [Captura1, Captura2, Captura3] => [Captura1, Captura2, Captura3]
   ordenarCapturasPorSecao(capturas: CapturaModel[]) {
-    // Remover secao 0 e retornar capturas ordenadas por secao
-    // capturas = capturas.filter((captura) => {
-    //   return captura.secao !== 0;
-    // });
     return capturas.sort((a, b) => {
       return a.secao - b.secao;
     });
   }
 
-  // Definir a caixa atual com base no índice
-  // Exemplo: [0:{Caixa1, Caixa1}, 1:{Caixa2}, 2:{Caixa3, Caixa3}]
-  setCaixaAtual(index: number) {
-    this.caixasAtuais = this.caixasAgrupadas[index];
-    this.caixaAtual = index;
-    this.setCaixaMolhadaOuSeca(1);
+  // Definir a caixa atual com base no nome
+  setCaixaAtual(nome: string) {
+    this.caixaAtual = this.caixasAgrupadas.find((caixa: GroupedBoxes) => {
+      return caixa.nome === nome;
+    });
   }
 
-  // Método para definir a caixa molhada ou seca
-  setCaixaMolhadaOuSeca(categoriaId: number) {
-    const caixa = this.caixasAtuais.find((caixa) => {
-      return caixa.categoriaId === categoriaId;
+  // Método para definir a caixa molhada ou seca com base na categoriaId
+  // Exemplo: 1 => Seca, 2 => Molhada
+  setCapturaAtual(categoria: number) {
+    this.capturaAtual = this.caixaAtual.capturas.filter(
+      (captura: Captura) => {return captura.categoriaId === Number(categoria)},
+    );
+  }
+
+  // Definir captura atual com base na categoriaId
+  setSecaoAtual(secao: number) {
+    this.secaoAtual = this.capturaAtual[0].secoes.filter((item: Secao) => {
+      return item.secao === Number(secao);
     });
-    if (caixa) {
-      this.setCaixaSelecionada(caixa);
-    } else {
-      this._toast.info("Nenhuma caixa encontrada.");
-    }
   }
 
   // Método para definir o separador atual
@@ -163,56 +117,58 @@ export class SecaoComponent implements OnInit {
 
   // Navegar para a próxima caixa
   proximaCaixa() {
-    if (this.caixaAtual < this.caixasAgrupadas.length - 1) {
-      this.setCaixaAtual(this.caixaAtual + 1);
+    const index = this.caixasAgrupadas.findIndex((caixa: any) => {
+      return caixa.nome === this.caixaAtual.nome;
+    });
+    if (index < this.caixasAgrupadas.length - 1) {
+      this.caixaAtual = this.caixasAgrupadas[index + 1];
+      this.setCapturaAtual(1);
+      this.setSecaoAtual(1);
     } else {
-      this._toast.info("Já está na última caixa.");
+      this._toast.info("Última caixa.");
     }
-  }
-
-  // Definir caixa selecionada entre seca e molhada
-  // Exemplo: [Caixa1, Caixa1] => Caixa1[Seca, Molhada]
-  setCaixaSelecionada(caixa: CaixaModel) {
-    this.caixa = caixa;
-    this.capturas = caixa.capturas;
-    this.setCapturaAtual(caixa.capturas[0]);
   }
 
   // Navegar para a caixa anterior
   caixaAnterior() {
-    if (this.caixaAtual > 0) {
-      this.setCaixaAtual(this.caixaAtual - 1);
+    const index = this.caixasAgrupadas.findIndex((caixa: any) => {
+      return caixa.nome === this.caixaAtual.nome;
+    });
+    if (index > 0) {
+      this.caixaAtual = this.caixasAgrupadas[index - 1];
+      this.setCapturaAtual(1);
+      this.setSecaoAtual(1);
     } else {
-      this._toast.info("Já está na primeira caixa.");
+      this._toast.info("Primeira caixa.");
     }
   }
 
-  // Definir captura selecionada, a primeira captura já deve vir selecionada
-  setCapturaAtual(index: any) {
-    this.capturaAtual = index;
-  }
-
-  // Navegar para a captura anterior
+  // Navegar para a seção anterior baseada no número da seção
   capturaAnterior() {
-    const currentIndex = this.capturas.findIndex((captura) => {
-      return captura === this.capturaAtual;
-    });
-    if (currentIndex > 0) {
-      this.setCapturaAtual(this.capturas[currentIndex - 1]);
+    const index = this.capturaAtual[0].secoes.find((secao: any) => {
+      return secao.secao === this.secaoAtual[0].secao;
+    }).secao;
+    console.log(index);
+    if (index > 0) {
+      this.secaoAtual = this.capturaAtual[0].secoes.filter((secao: any) => {
+        return secao.secao === index - 1;
+      });
     } else {
-      this._toast.info("Já está na primeira captura.");
+      this._toast.info("Primeira seção.");
     }
   }
 
-  // Navegar para a próxima captura
+  // Navegar para a próxima seção baseada no número da seção
   proximaCaptura() {
-    const currentIndex = this.capturas.findIndex((captura) => {
-      return captura === this.capturaAtual;
-    });
-    if (currentIndex !== -1 && currentIndex < this.capturas.length - 1) {
-      this.setCapturaAtual(this.capturas[currentIndex + 1]);
+    const index = this.capturaAtual[0].secoes.find((secao: any) => {
+      return secao.secao === this.secaoAtual[0].secao;
+    }).secao;
+    if (index < this.capturaAtual[0].secoes.length - 1) {
+      this.secaoAtual = this.capturaAtual[0].secoes.filter((secao: any) => {
+        return secao.secao === index + 1;
+      });
     } else {
-      this._toast.info("Já está na última captura.");
+      this._toast.info("Última seção.");
     }
   }
 
@@ -241,11 +197,60 @@ export class SecaoComponent implements OnInit {
 
   // Método para fazer download de imagem
   downloadImage() {
-    this._downloadService.downloadImage(this.capturaAtual.imageReference);
+    this._downloadService.downloadImage(this.secaoAtual[0].imageReference);
   }
 
   // Método para retornar à página de consulta de projeto
   goConsultaProjeto() {
     window.history.back();
+  }
+
+  // Método para agrupar caixas por nome e separar por seca e molhada segundo a interface GroupedBoxes
+  groupBoxes(data: any[]): GroupedBoxes[] {
+    const grouped: GroupedBoxes[] = [];
+
+    data.forEach((item) => {
+      let group = grouped.find((g) => {
+        return g.nome === item.nome;
+      });
+      if (!group) {
+        group = {
+          id: item.id,
+          nome: item.nome,
+          estante: item.estante,
+          prateleira: item.prateleira,
+          profundidadeInicial: item.profundidadeInicial,
+          profundidadeFinal: item.profundidadeFinal,
+          capturas: [],
+        };
+        grouped.push(group);
+      }
+      group.capturas.push({
+        categoriaId: item.categoriaId,
+        secoes: item.capturas,
+      });
+      // Ordenar capturas por categoriaId
+      group.capturas = group.capturas.sort((a, b) => {
+        return a.categoriaId - b.categoriaId;
+      });
+      // Ordenar capturas por secao
+      group.capturas.forEach((captura) => {
+        captura.secoes = captura.secoes.sort((a, b) => {
+          return a.secao - b.secao;
+        });
+      });
+
+      // Alterar url das miniaturas
+      group.capturas.forEach((captura) => {
+        captura.secoes.forEach((secao) => {
+          secao.imageReference = this.getMiniatureUrl(secao.imageReference);
+          secao.miniatureReference = this.getMiniatureUrl(
+            secao.miniatureReference,
+          );
+        });
+      });
+    });
+
+    return grouped;
   }
 }

@@ -12,7 +12,9 @@
             <div class="secao-meio-left-caixa-menos" (click)="caixaAnterior()">
               -
             </div>
-            <div class="secao-meio-left-caixa-numero">{{ caixa.nome }}</div>
+            <div class="secao-meio-left-caixa-numero">
+              {{ caixaAtual.nome }}
+            </div>
             <div class="secao-meio-left-caixa-mais" (click)="proximaCaixa()">
               +
             </div>
@@ -20,15 +22,15 @@
           <div class="secao-meio-left-tipo">
             <div
               class="secao-meio-left-tipo-seca"
-              [ngClass]="{ 'caixa-ativo': caixa.categoriaId === 1 }"
-              (click)="setCaixaMolhadaOuSeca(1)"
+              [ngClass]="{ 'caixa-ativo': caixaAtual.categoriaId === 1 }"
+              (click)="setCapturaAtual(1)"
             >
               SECA
             </div>
             <div
               class="secao-meio-left-tipo-molhada"
-              [ngClass]="{ 'caixa-ativo': caixa.categoriaId === 2 }"
-              (click)="setCaixaMolhadaOuSeca(2)"
+              [ngClass]="{ 'caixa-ativo': caixaAtual.categoriaId === 2 }"
+              (click)="setCapturaAtual(2)"
             >
               MOLHADA
             </div>
@@ -38,23 +40,23 @@
               >PROFUNDIDADE DA CAIXA</span
             >
             <div class="secao-meio-left-profundidade-descricao">
-              <span>De: {{ caixa.profundidadeInicial }}m</span>
-              <span>Até: {{ caixa.profundidadeFinal }}m</span>
+              <span>De: {{ caixaAtual.profundidadeInicial }}m</span>
+              <span>Até: {{ caixaAtual.profundidadeFinal }}m</span>
             </div>
           </div>
           <div class="secao-meio-left-divisao">
             <div class="secao-meio-left-divisao-estante">
               <span>ESTANTE</span>
-              <span>{{ caixa.estante }}</span>
+              <span>{{ caixaAtual.estante }}</span>
             </div>
             <div class="secao-meio-left-divisao-prateleira">
               <span>PRATELEIRA</span>
-              <span>{{ caixa.prateleira }}</span>
+              <span>{{ caixaAtual.prateleira }}</span>
             </div>
           </div>
           <div class="secao-meio-left-separadores">
             <div class="secao-meio-left-separadores-secao">
-              SEÇÃO {{ capturaAtual.secao }}
+              SEÇÃO {{ secaoAtual[0].secao }}
             </div>
             <div class="secao-meio-left-separadores-lista">
               <span>SEPARADOR</span>
@@ -124,17 +126,18 @@
           </div>
         </div>
         <div class="secao-meio-right">
-          @for (captura of caixa.capturas; track captura.id) {
+          @for (captura of capturaAtual[0].secoes; track captura.id) {
             <div
               class="secao-meio-right-imagem"
-              (click)="setCapturaAtual(captura)"
+              (click)="setSecaoAtual(captura.secao)"
             >
               <img
-                src="{{ captura.miniatureReference }}"
+                [src]="captura.miniatureReference"
                 width="97"
                 height="62"
+                loading="lazy"
               />
-              @if (captura.id === capturaAtual.id) {
+              @if (captura.id === secaoAtual[0].id) {
                 <span class="you-here"
                   ><mat-icon class="mat-18">chevron_left</mat-icon> Você está
                   aqui</span
@@ -177,7 +180,7 @@
     <div class="secao-right">
       <div class="secao-right-bar">
         <div class="secao-right-bar-info">
-          SEÇÃO {{ capturaAtual.secao - 1 }}
+          SEÇÃO {{ secaoAtual[0].secao - 1 }}
         </div>
         <div class="secao-right-bar-button" (click)="capturaAnterior()">
           <mat-icon>arrow_upward</mat-icon>
@@ -186,7 +189,7 @@
           <mat-icon>arrow_downward</mat-icon>
         </div>
         <div class="secao-right-bar-info">
-          SEÇÃO {{ capturaAtual.secao + 1 }}
+          SEÇÃO {{ secaoAtual[0].secao + 1 }}
         </div>
         <div class="secao-right-bar-imprimir" (click)="downloadImage()">
           Exportar <mat-icon>print</mat-icon>
@@ -239,8 +242,8 @@
           <app-lupa
             [lupaSize]="lupaSize"
             [imgSrc]="
-              capturaAtual.imageReference
-                ? capturaAtual.imageReference
+              secaoAtual[0].imageReference
+                ? secaoAtual[0].imageReference
                 : '../../../../assets/images/png/placeholder.png'
             "
             (mouseOverSeparator)="setSeparator($event)"

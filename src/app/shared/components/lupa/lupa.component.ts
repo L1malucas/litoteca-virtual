@@ -27,12 +27,13 @@ export class LupaComponent implements OnInit, AfterViewInit {
 
   //Loading da imagem
   loading = true;
+  isLoaded = false;
 
   //Tempo de carregamento da imagem em milissegundos: 0 = desativado, 2000 = 2 segundos
   time = 2500;
 
   //Referência para a imagem a ser ampliada
-  @ViewChild("magnifiedImg") magnifiedImg!: ElementRef;
+  @ViewChild("magnifiedImg", { static: false }) magnifiedImg!: ElementRef;
 
   //URL da imagem a ser ampliada
   @Input() imgSrc: string = "";
@@ -55,20 +56,14 @@ export class LupaComponent implements OnInit, AfterViewInit {
    * Método chamado após a visualização do componente ser renderizada
    * Configura a funcionalidade de zoom na imagem
    */
-  ngAfterViewInit() {
-    this.magnifyImg(
-      this.magnifiedImg?.nativeElement,
-      this.lupaDesfoque,
-      this.lupaSize,
-    );
-  }
+  ngAfterViewInit() {}
 
   ngOnChanges(change: any) {
-    this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-    }, this.time);
-
+    // Atualizar URL da imagem
+    if (change.imgSrc) {
+      this.imgSrc = change.imgSrc.currentValue;
+      this.loading = true;
+    }
     // Atualizar tamanho da lupa
     if (change.lupaSize) {
       this.lupaSize = change.lupaSize.currentValue;
@@ -188,5 +183,23 @@ export class LupaComponent implements OnInit, AfterViewInit {
     imageElement?.addEventListener("mouseleave", () => {
       magnifyElement.style.display = "none";
     });
+  }
+
+  onLoad() {
+    this.loading = false;
+    if (this.magnifiedImg && this.magnifiedImg.nativeElement) {
+      this.magnifyImg(
+        this.magnifiedImg.nativeElement,
+        this.lupaDesfoque,
+        this.lupaSize,
+      );
+    } else {
+      console.error("Elemento da imagem não encontrado");
+    }
+  }
+
+  onError() {
+    this.loading = false;
+    this.isLoaded = false;
   }
 }
