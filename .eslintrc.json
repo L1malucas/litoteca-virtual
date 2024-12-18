@@ -10,6 +10,7 @@
         "plugin:@typescript-eslint/recommended"
       ],
       "rules": {
+        "no-console": "error",
         "@typescript-eslint/no-explicit-any": "warn",
         "arrow-body-style": ["warn", "always"],
         "quotes": ["error", "double"],
